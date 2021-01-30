@@ -69,7 +69,22 @@ public class MainActivity extends AppCompatActivity {
         gameBoard.invalidate();
     }
 
-    public void validate(View view) {
+    public void reset(View view) {
+        gameBoardSolver.resetBoard();
+        gameBoard.invalidate();
+    }
 
+    public void validate(View view) {
+        if(gameBoardSolver.checkRuleBreaks(gameBoard) == false) {
+            System.out.println("Rule violations found");
+            return;
+        }
+
+        if(gameBoardSolver.validate(gameBoard)) {
+            System.out.println("Sudoku solved!");
+        }
+        else{
+            System.out.println("Not solved!");
+        }
     }
 }
