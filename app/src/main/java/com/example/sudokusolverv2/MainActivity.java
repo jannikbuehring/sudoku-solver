@@ -87,12 +87,24 @@ public class MainActivity extends AppCompatActivity {
 
         //new Thread(solveBoardThread).start();
 
+<<<<<<< HEAD
         if(gameBoardSolver.validateSudoku() == 2) {
             System.out.println("Too many solutions");
             //TODO: Check why this affects givenBoardState
         }
         else if (gameBoardSolver.validateSudoku() == 0){
             System.out.println("No solution found!");
+=======
+        if(gameBoardSolver.validateSudoku(gameBoardSolver.board) == 2) {
+            System.out.println("Too many solutions");
+            //TODO: Check why this affects givenBoardState
+            //Maybe add board parameter to function
+            return;
+        }
+        else if (gameBoardSolver.validateSudoku(gameBoardSolver.board) == 0){
+            System.out.println("No solution found!");
+            return;
+>>>>>>> 87181bc9ce12491a9cadfb7002e429d78c22dd32
         }
         else {
             System.out.println("Sudoku validated");
