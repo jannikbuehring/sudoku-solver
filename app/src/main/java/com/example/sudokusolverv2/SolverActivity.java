@@ -17,10 +17,10 @@ public class SolverActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         int[][] board = (int[][])b.getSerializable("Board");
-        gameBoard = new SudokuBoard(this, null);
+        gameBoard = findViewById(R.id.SudokuBoard);
         gameBoardSolver = gameBoard.getSolver();
         gameBoardSolver.board = board;
-        //gameBoard.invalidate();
+        gameBoard.invalidate();
     }
 
     public void BTNOnePress(View view) {

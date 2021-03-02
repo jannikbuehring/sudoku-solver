@@ -37,6 +37,8 @@ public class SudokuBoard extends View {
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+        //Obtain attrs from attrs.xml file
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SudokuBoard, 0, 0);
 
         try {

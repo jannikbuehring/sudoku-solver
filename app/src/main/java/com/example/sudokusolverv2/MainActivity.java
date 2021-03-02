@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     private SudokuBoard gameBoard;
@@ -77,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void validate(View view) {
 
+        Solver gameBoardSolverUnsolved;
+        gameBoardSolverUnsolved = (Solver) SerializationUtils.clone(gameBoardSolver);
+
         if(!gameBoardSolver.validateBoard()) {
             // TODO: Add error message
             System.out.println("Rule violations found");
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             // Starting the next activity and giving over the game state
             Intent intent = new Intent(MainActivity.this, SolverActivity.class);
             Bundle b = new Bundle();
-            b.putSerializable("Board", gameBoardSolver.board);
+            b.putSerializable("Board", gameBoardSolverUnsolved.board);
             intent.putExtras(b);
             MainActivity.this.startActivity(intent);
         }

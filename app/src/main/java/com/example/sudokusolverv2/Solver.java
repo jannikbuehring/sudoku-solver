@@ -1,10 +1,11 @@
 package com.example.sudokusolverv2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Solver {
+public class Solver implements Serializable {
 
     int[][] board;
     ArrayList<ArrayList<Object>> emptyBoxIndex;
@@ -17,7 +18,7 @@ public class Solver {
     // Store blocks
     Set blockSet = new HashSet();
 
-    Solver() {
+    public Solver() {
         selected_row = -1;
         selected_column = -1;
 
@@ -53,14 +54,6 @@ public class Solver {
                 this.board[this.selected_row-1][this.selected_column-1] = number;
             }
         }
-    }
-
-    public int[][] getBoard() {
-        return this.board;
-    }
-
-    public ArrayList<ArrayList<Object>> getEmptyBoxIndex() {
-        return this.emptyBoxIndex;
     }
 
     private boolean check(int row, int column) {
@@ -207,6 +200,14 @@ public class Solver {
         }
 
         this.emptyBoxIndex = new ArrayList<>();
+    }
+
+    public int[][] getBoard() {
+        return this.board;
+    }
+
+    public ArrayList<ArrayList<Object>> getEmptyBoxIndex() {
+        return this.emptyBoxIndex;
     }
 
     public int getSelectedRow() {

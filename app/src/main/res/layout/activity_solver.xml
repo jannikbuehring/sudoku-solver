@@ -18,7 +18,7 @@
         custom:cellFillColor="#6600DDFF"
         custom:cellsHighlightColor="#2600DDFF"
         custom:letterColor="@color/black"
-        custom:letterColorSolve="@color/black">
+        custom:letterColorSolve="#DD003366">
     </com.example.sudokusolverv2.SudokuBoard>
 
     <LinearLayout
