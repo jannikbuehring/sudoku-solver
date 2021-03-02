@@ -159,21 +159,14 @@ public class Solver {
     }
 
     //Function to validate Sudoku (check if there is one/more than one solution)
-<<<<<<< HEAD
+
     public int validateSudoku() {
-=======
-    public int validateSudoku(int[][] gameBoard) {
->>>>>>> 87181bc9ce12491a9cadfb7002e429d78c22dd32
         int row = -1;
         int col = -1;
 
         for (int r=0; r<9; r++) {
             for (int c=0; c<9; c++) {
-<<<<<<< HEAD
                 if (this.board[r][c] == 0) {
-=======
-                if (gameBoard[r][c] == 0) {
->>>>>>> 87181bc9ce12491a9cadfb7002e429d78c22dd32
                     row = r;
                     col = c;
                     break;
@@ -184,18 +177,13 @@ public class Solver {
         // only passes if sudoku field is fully filled
         if (row == -1 || col == -1) {
             //save solution and try to find another one
-<<<<<<< HEAD
             solutions.add(this.board);
-=======
-            solutions.add(gameBoard);
->>>>>>> 87181bc9ce12491a9cadfb7002e429d78c22dd32
             System.out.println(solutions);
             System.out.println(solutions.size());
             return 1;
         }
 
         for (int i=1; i<10; i++) {
-<<<<<<< HEAD
             this.board[row][col] = i;
 
             if (check(row, col)) {
@@ -203,24 +191,10 @@ public class Solver {
                     return 2;
                 }
                 else if (validateSudoku() == 1) {
-=======
-            gameBoard[row][col] = i;
-
-            if (check(row, col)) {
-                if (validateSudoku(gameBoard) == 1 && solutions.size() > 1) {
-                    return 2;
-                }
-                else if (validateSudoku(gameBoard) == 1) {
->>>>>>> 87181bc9ce12491a9cadfb7002e429d78c22dd32
                     return 1;
                 }
             }
-
-<<<<<<< HEAD
             this.board[row][col] = 0;
-=======
-            gameBoard[row][col] = 0;
->>>>>>> 87181bc9ce12491a9cadfb7002e429d78c22dd32
         }
         return 0;
     }
