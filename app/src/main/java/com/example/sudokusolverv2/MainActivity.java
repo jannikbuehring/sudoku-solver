@@ -2,6 +2,7 @@ package com.example.sudokusolverv2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -75,16 +76,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void validate(View view) {
-        if(gameBoardSolver.checkRuleBreaks(gameBoard) == false) {
+
+        if(!gameBoardSolver.validateBoard()) {
+            // TODO: Add error message
             System.out.println("Rule violations found");
             return;
         }
 
-        if(gameBoardSolver.validate(gameBoard)) {
-            System.out.println("Sudoku solved!");
+        //SolveBoardThread solveBoardThread = new SolveBoardThread();
+
+        //new Thread(solveBoardThread).start();
+
+        if(gameBoardSolver.validateSudoku(gameBoardSolver.board) == 2) {
+            System.out.println("Too many solutions");
+            //TODO: Check why this affects givenBoardState
+            //Maybe add board parameter to function
+            return;
         }
-        else{
-            System.out.println("Not solved!");
+        else if (gameBoardSolver.validateSudoku(gameBoardSolver.board) == 0){
+            System.out.println("No solution found!");
+            return;
+        }
+        else {
+            System.out.println("Sudoku validated");
+
+            // Starting the next activity and giving over the game state
+            Intent intent = new Intent(MainActivity.this, SolverActivity.class);
+            Bundle b = new Bundle();
+            b.putSerializable("Board", gameBoardSolver.board);
+            intent.putExtras(b);
+            MainActivity.this.startActivity(intent);
+        }
+
+
+    }
+    /*
+    class SolveBoardThread implements Runnable {
+        @Override
+        public void run() {
+            gameBoardSolver.validateSudoku(gameBoard, 0);
         }
     }
+
+     */
 }

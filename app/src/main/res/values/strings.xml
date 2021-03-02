@@ -12,5 +12,9 @@
     <string name="Nine">9</string>
 
     <string name="Validate">Validate</string>
-    <string name="Reset">Reset</string>
+    <string name="Reset">Clear</string>
+    <string name="Back">Back</string>
+    <string name="Tip">Tip</string>
+    <string name="Solution">Sol</string>
+    <string name="Forward">Fwd</string>
 </resources>

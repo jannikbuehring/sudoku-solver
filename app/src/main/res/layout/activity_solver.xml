@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SolverActivity">
 
     <com.example.sudokusolverv2.SudokuBoard
         android:id="@+id/SudokuBoard"
@@ -18,7 +18,7 @@
         custom:cellFillColor="#6600DDFF"
         custom:cellsHighlightColor="#2600DDFF"
         custom:letterColor="@color/black"
-        custom:letterColorSolve="#1A00FF00">
+        custom:letterColorSolve="@color/black">
     </com.example.sudokusolverv2.SudokuBoard>
 
     <LinearLayout
@@ -69,7 +69,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/LinearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -123,7 +123,7 @@
         android:orientation="horizontal"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        custom:layout_constraintTop_toBottomOf="@+id/LinearLayout2">
 
         <Button
             android:id="@+id/button7"
@@ -159,30 +159,70 @@
             android:textSize="24sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/validateButton"
+    <LinearLayout
+        android:id="@+id/LinearLayout4"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/validate_btn"
-        android:onClick="validate"
-        android:text="@string/Validate"
-        android:textSize="18sp"
+        android:layout_height="90dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
+        custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3">
 
-    <Button
-        android:id="@+id/resetButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:background="@drawable/validate_btn"
-        android:onClick="reset"
-        android:text="@string/Reset"
-        android:textSize="18sp"
-        custom:layout_constraintEnd_toEndOf="parent"
-        custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
+        <Button
+            android:id="@+id/backButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/validate_btn"
+            android:text="@string/Back"
+            android:textSize="18sp"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
+
+        <Button
+            android:id="@+id/tipButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/validate_btn"
+            android:text="@string/Tip"
+            android:textSize="18sp"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
+
+        <Button
+            android:id="@+id/solutionButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/validate_btn"
+            android:text="@string/Solution"
+            android:textSize="18sp"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
+
+        <Button
+            android:id="@+id/forwardButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/validate_btn"
+            android:text="@string/Forward"
+            android:textSize="18sp"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

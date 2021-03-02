@@ -123,7 +123,7 @@ public class SudokuBoard extends View {
                 letterPaint);
     }
 
-    private void drawNumbers(Canvas canvas) {
+    public void drawNumbers(Canvas canvas) {
         letterPaint.setTextSize(cellSize-cellSize/3);
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {

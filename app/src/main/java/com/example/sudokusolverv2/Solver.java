@@ -9,6 +9,8 @@ public class Solver {
     int[][] board;
     ArrayList<ArrayList<Object>> emptyBoxIndex;
 
+    public HashSet<int[][]> solutions = new HashSet<>();
+
     int selected_row;
     int selected_column;
 
@@ -87,124 +89,83 @@ public class Solver {
         return true;
     }
 
-    // Check if a section is valid
-    private boolean isValid(int i, int j) {
-        // Loop the column
-        for(int c = i; c < i+3; c++) {
-            // Loop the row
-            for(int r = j; r < j+3; r++) {
-                // False if already in the set
-                if(blockSet.contains(this.board[r][c]))
+    // Function to check if a given row is valid
+    public boolean validateRow(int row){
+        int temp[] = this.board[row];
+        Set<Integer>set = new HashSet<Integer>();
+        for (int value : temp) {
+
+            //Checking for repeated values.
+            if (value != 0){
+                if (!set.add(value)) {
                     return false;
-                // If still in a section, add it
-                if(board[c][r] != 0)
-                    blockSet.add(this.board[r][c]);
-            }
-        }
-
-        // Is valid!
-        return true;
-    }
-
-    public boolean checkRuleBreaks(SudokuBoard display) {
-
-        // Row and Column variables to check against
-        Set rowSet = new HashSet<>();
-        Set colSet = new HashSet<>();
-
-        // Loop through the column
-        for(int c = 0; c<9; c++){
-            // Loop through the row
-            for(int r = 0; r<9; r++){
-                // False if exists in column
-                if(colSet.contains(this.board[r][c]))
-                    return false;
-                // False if exists in row
-                if(rowSet.contains(this.board[r][c]))
-                    return false;
-
-                // Add to column and row
-                if(this.board[r][c] != 0) colSet.add(this.board[r][c]);
-                if(this.board[r][c] != 0) rowSet.add(this.board[r][c]);
-            }
-            // Clear this run at the end
-            rowSet.clear();
-            colSet.clear();
-        }
-        System.out.println("row and cols clear");
-
-        // While we loop the board
-        int i = 0, j = 0;
-        while(i < 9 && j < 9) {
-            while(i < 9) {
-                // False if not valid
-                if(!isValid(i, j))
-                    return false;
-                // Increment one section
-                i += 3;
-                // Clear the board
-                blockSet.clear();
-            }
-            // Next column/row
-            i = 0;
-            j += 3;
-        }
-
-        // Is valid!
-        return true;
-    }
-
-    /*
-        // row checker
-        for(int row = 0; row < 9; row++) {
-            for (int col = 0; col < 8; col++) {
-                for (int col2 = col + 1; col2 < 9; col2++) {
-                    if (this.board[row][col] == this.board[row][col2] && this.board[row][col] != 0) {
-                        return false;
-                    }
                 }
             }
         }
+        return true;
+    }
 
-        // column checker
-        for(int col = 0; col < 9; col++) {
-            for (int row = 0; row < 8; row++) {
-                for (int row2 = row + 1; row2 < 9; row2++) {
-                    if (this.board[row][col] == this.board[row2][col] && this.board[row][col] != 0) {
-                        return false;
-                    }
+    // Function to check if a given column is valid
+    public boolean validateCol(int col){
+        Set<Integer>set = new HashSet<Integer>();
+        for (int i =0 ; i< 9; i++) {
+
+            // Checking for repeated values.
+            if (this.board[i][col] != 0){
+                if (!set.add(this.board[i][col])) {
+                    return false;
                 }
             }
         }
+        return true;
+    }
 
-        // grid checker
-        for(int row = 0; row < 9; row += 3) {
-            for (int col = 0; col < 9; col += 3) {
-                // row, col is start of the 3 by 3 grid
-                for (int pos = 0; pos < 8; pos++) {
-                    for (int pos2 = pos + 1; pos2 < 9; pos2++) {
-                        if (this.board[row + pos % 3][col + pos / 3] ==
-                                this.board[row + pos2 % 3][col + pos2 / 3]
-                                && this.board[row][col] != 0) {
-                            return false;
+    // Function to check if all the subsquares are valid
+    public boolean validateSubsquares(){
+        for (int row = 0 ; row < 9; row = row + 3) {
+            for (int col = 0; col < 9; col = col + 3) {
+                Set<Integer>set = new HashSet<Integer>();
+                for(int r = row; r < row+3; r++) {
+                    for(int c= col; c < col+3; c++) {
+
+                        // Checking for repeated values.
+                        if (this.board[r][c] != 0){
+                            if (!set.add(this.board[r][c])) {
+                                return false;
+                            }
                         }
                     }
                 }
             }
         }
-
         return true;
+    }
 
+    //Function to check if the board valid (check for rule violations)
+    public boolean validateBoard(){
 
-    }*/
+        // Check the rows and columns
+        for (int i =0 ; i< 9; i++) {
+            if (!validateRow(i)) {
+                return false;
+            }
+            if (!validateCol(i)) {
+                return false;
+            }
+        }
 
-    public boolean validate(SudokuBoard display) {
+        // Check the subsquares
+        return validateSubsquares();
+    }
+
+    //Function to validate Sudoku (check if there is one/more than one solution)
+    public int validateSudoku(int[][] gameBoard) {
         int row = -1;
         int col = -1;
 
         for (int r=0; r<9; r++) {
             for (int c=0; c<9; c++) {
-                if (this.board[r][c] == 0) {
+                if (gameBoard[r][c] == 0) {
                     row = r;
                     col = c;
                     break;
@@ -212,23 +173,30 @@ public class Solver {
             }
         }
 
-        if (row == -1 || col == -1){
-            return true;
+        // only passes if sudoku field is fully filled
+        if (row == -1 || col == -1) {
+            //save solution and try to find another one
+            solutions.add(gameBoard);
+            System.out.println(solutions);
+            System.out.println(solutions.size());
+            return 1;
         }
 
         for (int i=1; i<10; i++) {
-            this.board[row][col] = i;
+            gameBoard[row][col] = i;
 
             if (check(row, col)) {
-                if (validate(display)) {
-                    return true;
+                if (validateSudoku(gameBoard) == 1 && solutions.size() > 1) {
+                    return 2;
+                }
+                else if (validateSudoku(gameBoard) == 1) {
+                    return 1;
                 }
             }
 
-            this.board[row][col] = 0;
+            gameBoard[row][col] = 0;
         }
-
-        return false;
+        return 0;
     }
 
     public void resetBoard() {
