@@ -1,5 +1,7 @@
 package com.example.sudokusolverv2;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,6 +10,7 @@ import java.util.Set;
 public class Solver implements Serializable {
 
     int[][] board;
+    int maxRecursion = 0;
     ArrayList<ArrayList<Object>> emptyBoxIndex;
 
     public HashSet<int[][]> solutions = new HashSet<>();
@@ -56,6 +59,7 @@ public class Solver implements Serializable {
         }
     }
 
+    // Zeile und Spalte angeben, überprüfen ob Eintrag dort valide ist
     private boolean check(int row, int column) {
         if(this.board[row][column] > 0) {
             for(int i = 0; i<9; i++) {
@@ -80,6 +84,39 @@ public class Solver implements Serializable {
         }
 
         return true;
+    }
+
+    // give in a number and a position and check if that number is valid in this position
+    public boolean checkNumberinPosition(int row, int column, int number) {
+        if(this.board[row][column] == 0) {
+            for(int i = 0; i<9; i++) {
+
+                //check row
+                if(this.board[row][i] == number) {
+                    return false;
+                }
+
+                //check column
+                if(this.board[i][column] == number) {
+                    return false;
+                }
+            }
+
+            int boxRow = row/3;
+            int boxColumn = column/3;
+
+            for(int r=boxRow*3; r<boxRow*3 + 3; r++) {
+                for(int c=boxColumn*3; c<boxColumn*3 + 3; c++) {
+                    if(this.board[r][c] == number) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     // Function to check if a given row is valid
@@ -152,11 +189,74 @@ public class Solver implements Serializable {
     }
 
     //Function to validate Sudoku (check if there is one/more than one solution)
+    public boolean checkIfSudokuHasTooManySolutions(int[][] unsolvedBoard) {
 
-    public int validateSudoku() {
+        maxRecursion++;
+        if(maxRecursion > 1000) {
+            return false;
+        }
+
         int row = -1;
         int col = -1;
 
+        outerLoop:
+        for (int r=0; r<9; r++) {
+            for (int c=0; c<9; c++) {
+                if (this.board[r][c] == 0) {
+                    row = r;
+                    col = c;
+                    break outerLoop;
+                }
+            }
+        }
+
+        // only passes if sudoku field is fully filled
+        if (row == -1 || col == -1) {
+
+            // only add if board is valid
+            if(validateBoard()) {
+                // and if it has not been added yet
+                // save solution and try to find another one
+                if(solutions.add(this.board)) {
+                    // reset board state
+                    int[][] newBoard;
+                    newBoard = SerializationUtils.clone(unsolvedBoard);
+                    this.board = newBoard;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+
+        // assign the board position all possible values and check
+        for (int i=1; i<10; i++) {
+            this.board[row][col] = i;
+
+            // check if i in position is valid
+            if (check(row, col)) {
+
+                if(checkIfSudokuHasTooManySolutions(unsolvedBoard) && solutions.size() > 1) {
+                    return true;
+                }
+            }
+            this.board[row][col] = 0;
+        }
+        return false;
+    }
+
+    public boolean checkIfSudokuHasOneSolution() {
+        maxRecursion++;
+        if (maxRecursion > 100000) {
+            return false;
+        }
+
+        int row = -1;
+        int col = -1;
+
+        outerLoop:
         for (int r=0; r<9; r++) {
             for (int c=0; c<9; c++) {
                 if (this.board[r][c] == 0) {
@@ -169,28 +269,47 @@ public class Solver implements Serializable {
 
         // only passes if sudoku field is fully filled
         if (row == -1 || col == -1) {
-            //save solution and try to find another one
-            solutions.add(this.board);
-            System.out.println(solutions);
-            System.out.println(solutions.size());
-            return 1;
+            return true;
         }
 
+
+        // assign the board position all possible values and check
         for (int i=1; i<10; i++) {
             this.board[row][col] = i;
 
+            // check if i in position is valid
             if (check(row, col)) {
-                if (validateSudoku() == 1 && solutions.size() > 1) {
-                    return 2;
-                }
-                else if (validateSudoku() == 1) {
-                    return 1;
+
+                if(checkIfSudokuHasOneSolution()) {
+                    return true;
                 }
             }
             this.board[row][col] = 0;
         }
-        return 0;
+        // no solution
+        return false;
     }
+
+    public ArrayList<ArrayList<Integer>> updateCandidates() {
+        ArrayList<ArrayList<Integer>> candidates = new ArrayList<>();
+        //TODO: add proper data structure for candidates (something like list[][] of int[]s)
+
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                if (this.board[r][c] == 0) {
+                    for (int i = 1; i < 10; i++) {
+                        if (checkNumberinPosition(r, c, i)) {
+                            // Add to list of possible candidates for row and col
+                            //candidates[r][c].add(i);
+                            //System.out.println(candidates[r][c]);
+                        }
+                    }
+                }
+            }
+        }
+        return candidates;
+    }
+
 
     public void resetBoard() {
         for(int r = 0; r<9; r++) {

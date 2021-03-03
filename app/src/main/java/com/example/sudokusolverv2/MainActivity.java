@@ -14,8 +14,6 @@ public class MainActivity extends AppCompatActivity {
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
 
-    private Button validateBTN;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         gameBoard = findViewById(R.id.SudokuBoard);
         gameBoardSolver = gameBoard.getSolver();
 
-        validateBTN = findViewById(R.id.validateButton);
     }
 
     public void BTNOnePress(View view) {
@@ -88,16 +85,22 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        // TODO: pre-check (less than 17 cells)
+        // TODO: pre-check (are more than 2 numbers not occuring?)
+
         //SolveBoardThread solveBoardThread = new SolveBoardThread();
 
         //new Thread(solveBoardThread).start();
+        gameBoardSolver.maxRecursion = 0;
 
-
-        if(gameBoardSolver.validateSudoku() == 2) {
+        if(gameBoardSolver.checkIfSudokuHasTooManySolutions(gameBoardSolverUnsolved.board)) {
             System.out.println("Too many solutions");
-            //TODO: Check why this affects givenBoardState
+            return;
         }
-        else if (gameBoardSolver.validateSudoku() == 0){
+
+        gameBoardSolver.maxRecursion = 0;
+
+        if (!gameBoardSolver.checkIfSudokuHasOneSolution()){
             System.out.println("No solution found!");
         }
         else {

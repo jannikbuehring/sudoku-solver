@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SolverActivity extends AppCompatActivity {
 
     private SudokuBoard gameBoard;
@@ -21,6 +24,9 @@ public class SolverActivity extends AppCompatActivity {
         gameBoardSolver = gameBoard.getSolver();
         gameBoardSolver.board = board;
         gameBoard.invalidate();
+
+        //TODO: Make given numbers unchangeable
+        //TODO: Change color of newly added numbers
     }
 
     public void BTNOnePress(View view) {
@@ -66,5 +72,22 @@ public class SolverActivity extends AppCompatActivity {
     public void BTNNinePress(View view) {
         gameBoardSolver.setNumberPos(9);
         gameBoard.invalidate();
+    }
+
+    public void backButtonPress(View view) {
+
+    }
+
+    public void forwardButtonPress(View view) {
+
+    }
+
+    public void tipButtonPress(View view) {
+        ArrayList<ArrayList<Integer>> candidates = gameBoardSolver.updateCandidates();
+        System.out.println(candidates);
+    }
+
+    public void solutionButtonPress(View view) {
+
     }
 }
