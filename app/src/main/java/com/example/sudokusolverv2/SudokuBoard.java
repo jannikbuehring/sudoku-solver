@@ -141,8 +141,12 @@ public class SudokuBoard extends View {
             int r = (int) letter.get(0);
             int c = (int) letter.get(1);
 
-            updateSudokuBoard(canvas, r, c);
+            if (solver.getBoard()[r][c] != 0) {
+                updateSudokuBoard(canvas, r, c);
+            }
         }
+
+        letterPaint.setColor(letterColor);
     }
 
     private void colorCell(Canvas canvas, int row, int column) {

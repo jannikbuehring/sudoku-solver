@@ -119,6 +119,36 @@ public class Solver implements Serializable {
         }
     }
 
+    // check if given board has less than 17 given cells (uniqueness violated)
+    public boolean preCheckLessThan17Cells() {
+        emptyBoxIndex.clear();
+        getEmptyBoxIndexes();
+        System.out.println(emptyBoxIndex.size());
+        if(emptyBoxIndex.size() > 64) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean preCheckMoreThan2NumbersNotOccuring() {
+
+        HashSet<Integer> occuringNumbers = new HashSet<>();
+
+        for(int r = 0; r < 9; r++) {
+            for(int c = 0; c < 9; c++) {
+                if(this.board[r][c] != 0) {
+                    occuringNumbers.add(this.board[r][c]);
+                }
+            }
+        }
+        if(occuringNumbers.size() < 8) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     // Function to check if a given row is valid
     public boolean validateRow(int row){
         int temp[] = this.board[row];
@@ -192,7 +222,7 @@ public class Solver implements Serializable {
     public boolean checkIfSudokuHasTooManySolutions(int[][] unsolvedBoard) {
 
         maxRecursion++;
-        if(maxRecursion > 1000) {
+        if(maxRecursion > 10000) {
             return false;
         }
 
@@ -249,14 +279,13 @@ public class Solver implements Serializable {
 
     public boolean checkIfSudokuHasOneSolution() {
         maxRecursion++;
-        if (maxRecursion > 100000) {
+        if (maxRecursion > 1000000) {
             return false;
         }
 
         int row = -1;
         int col = -1;
 
-        outerLoop:
         for (int r=0; r<9; r++) {
             for (int c=0; c<9; c++) {
                 if (this.board[r][c] == 0) {
