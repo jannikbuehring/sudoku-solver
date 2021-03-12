@@ -83,7 +83,10 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void tipButtonPress(View view) {
-
+        if(gameBoardSolver.NakedSingleTip() != null) {
+            int[] pos = gameBoardSolver.NakedSingleTip();
+            //TODO: Function to give a tip based on position
+        }
     }
 
     public void solutionButtonPress(View view) {

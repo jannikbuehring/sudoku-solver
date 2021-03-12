@@ -428,6 +428,23 @@ public class Solver implements Serializable {
         return false;
     }
 
+    public int[] NakedSingleTip() {
+        for(int r = 0; r < 9; r++) {
+            for(int c = 0; c < 9; c++) {
+                HashSet<Integer> candidates = getCandidates(r,c);
+                if(candidates != null && candidates.size() == 1) {
+                    for(int i : candidates) {
+                        int[] pos = new int[2];
+                        pos[0] = r;
+                        pos[1] = c;
+                        return pos;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public void resetBoard() {
         for(int r = 0; r<9; r++) {
             for(int c = 0; c<9; c++) {
