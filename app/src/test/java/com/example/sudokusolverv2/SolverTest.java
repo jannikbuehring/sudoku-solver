@@ -11,6 +11,22 @@ public class SolverTest extends TestCase {
     public void testGetEmptyBoxIndexes() {
     }
 
+    public void testUpdateSubsquareCandidates() {
+        Solver solver = new Solver();
+        solver.board = new int[][]{
+                {8, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 3, 6, 0, 0, 0, 0, 0},
+                {0, 7, 0, 0, 9, 0, 0, 0, 9},
+                {0, 5, 0, 0, 0, 7, 0, 0, 0},
+                {0, 0, 0, 0, 4, 5, 7, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 3, 0},
+                {0, 0, 0, 0, 0, 0, 0, 6, 8},
+                {0, 0, 8, 5, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        System.out.println(solver.updateSubsquareCandidates());
+    }
+
     public void testGetRowCandidates() {
         Solver solver = new Solver();
         solver.board = new int[][]{

@@ -15,7 +15,7 @@ public class Solver implements Serializable {
 
     ArrayList<HashSet<Integer>> rowCandidates = new ArrayList<>();
     ArrayList<HashSet<Integer>> colCandidates = new ArrayList<>();
-    ArrayList<HashSet<Integer>> boxCandidates = new ArrayList<>();
+    ArrayList<HashSet<Integer>> subsquareCandidates = new ArrayList<>();
 
 
     public HashSet<int[][]> solutions = new HashSet<>();
@@ -84,6 +84,26 @@ public class Solver implements Serializable {
         return this.colCandidates;
     }
 
+    public ArrayList<HashSet<Integer>> updateSubsquareCandidates() {
+        for (int row = 0 ; row < 9; row = row + 3) {
+            for (int col = 0; col < 9; col = col + 3) {
+                HashSet<Integer> subsquareSet = new HashSet<>();
+                for(int i = 1; i < 10; i++) {
+                    subsquareSet.add(i);
+                }
+                for(int r = row; r < row+3; r++) {
+                    for(int c= col; c < col+3; c++) {
+                        if (this.board[r][c] != 0){
+                            subsquareSet.remove(this.board[r][c]);
+                        }
+                    }
+                }
+                this.subsquareCandidates.add(subsquareSet);
+            }
+        }
+        return this.subsquareCandidates;
+    }
+
     public HashSet<Integer> getRowCandidates(int row) {
         this.rowCandidates = updateRowCandidates();
         return this.rowCandidates.get(row);
@@ -94,11 +114,26 @@ public class Solver implements Serializable {
         return this.colCandidates.get(col);
     }
 
+    public HashSet<Integer> getSubsquareCandidates(int row, int col) {
+        this.subsquareCandidates = updateSubsquareCandidates();
+        int boxRow = row/3;
+        int boxCol = col/3;
+        return this.subsquareCandidates.get(boxRow + boxCol * 3);
+    }
+
     public HashSet<Integer> getCandidates(int row, int col) {
+        // return null (no candidates) if there is a number on the board
+        if(this.board[row][col] != 0) {
+            return null;
+        }
         HashSet<Integer> rowSet = getRowCandidates(row);
         HashSet<Integer> colSet = getColCandidates(col);
+        HashSet<Integer> subsquareSet = getSubsquareCandidates(row, col);
+
+        // only return numbers that are contained in all three sets
         HashSet<Integer> candidateSet = new HashSet<>(rowSet);
         candidateSet.retainAll(colSet);
+        candidateSet.retainAll(subsquareSet);
         return candidateSet;
     }
 
