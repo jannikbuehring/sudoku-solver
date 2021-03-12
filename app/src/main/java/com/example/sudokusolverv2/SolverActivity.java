@@ -83,11 +83,12 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void tipButtonPress(View view) {
-        ArrayList<ArrayList<Integer>> candidates = gameBoardSolver.updateCandidates();
-        System.out.println(candidates);
+
     }
 
     public void solutionButtonPress(View view) {
-
+        if(gameBoardSolver.NakedSingle()) {
+            return;
+        }
     }
 }

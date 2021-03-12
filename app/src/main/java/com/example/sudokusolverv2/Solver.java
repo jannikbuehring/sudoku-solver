@@ -40,6 +40,8 @@ public class Solver implements Serializable {
 
     //TODO: Add function to set board to input state (Solver (board) https://github.com/corinneleopold/Sudoku_Solver_AI/blob/master/src/SudokuSolver.java)
 
+    //TODO: Draw candidates
+
     public void getEmptyBoxIndexes() {
         for(int r = 0; r<9; r++) {
             for(int c = 0; c<9; c++) {
@@ -53,6 +55,7 @@ public class Solver implements Serializable {
     }
 
     public ArrayList<HashSet<Integer>> updateRowCandidates() {
+        this.rowCandidates.clear();
         for (int row = 0; row < 9; row++) {
             HashSet<Integer> rowSet = new HashSet<>();
             for(int i = 1; i < 10; i++) {
@@ -69,6 +72,7 @@ public class Solver implements Serializable {
     }
 
     public ArrayList<HashSet<Integer>> updateColCandidates() {
+        this.colCandidates.clear();
         for (int col = 0; col < 9; col++) {
             HashSet<Integer> colSet = new HashSet<>();
             for(int i = 1; i < 10; i++) {
@@ -85,6 +89,7 @@ public class Solver implements Serializable {
     }
 
     public ArrayList<HashSet<Integer>> updateSubsquareCandidates() {
+        this.subsquareCandidates.clear();
         for (int row = 0 ; row < 9; row = row + 3) {
             for (int col = 0; col < 9; col = col + 3) {
                 HashSet<Integer> subsquareSet = new HashSet<>();
@@ -118,7 +123,7 @@ public class Solver implements Serializable {
         this.subsquareCandidates = updateSubsquareCandidates();
         int boxRow = row/3;
         int boxCol = col/3;
-        return this.subsquareCandidates.get(boxRow + boxCol * 3);
+        return this.subsquareCandidates.get(boxCol + boxRow * 3);
     }
 
     public HashSet<Integer> getCandidates(int row, int col) {
@@ -408,26 +413,20 @@ public class Solver implements Serializable {
         return false;
     }
 
-    public ArrayList<ArrayList<Integer>> updateCandidates() {
-        ArrayList<ArrayList<Integer>> candidates = new ArrayList<>();
-        //TODO: add proper data structure for candidates (something like list[][] of int[]s)
-
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
-                if (this.board[r][c] == 0) {
-                    for (int i = 1; i < 10; i++) {
-                        if (checkNumberinPosition(r, c, i)) {
-                            // Add to list of possible candidates for row and col
-                            //candidates[r][c].add(i);
-                            //System.out.println(candidates[r][c]);
-                        }
+    public boolean NakedSingle() {
+        for(int r = 0; r < 9; r++) {
+            for(int c = 0; c < 9; c++) {
+                HashSet<Integer> candidates = getCandidates(r,c);
+                if(candidates != null && candidates.size() == 1) {
+                    for(int i : candidates) {
+                        this.board[r][c] = i;
+                        return true;
                     }
                 }
             }
         }
-        return candidates;
+        return false;
     }
-
 
     public void resetBoard() {
         for(int r = 0; r<9; r++) {
