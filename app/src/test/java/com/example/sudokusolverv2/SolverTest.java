@@ -4,9 +4,67 @@ import junit.framework.TestCase;
 
 import org.apache.commons.lang3.SerializationUtils;
 
+import java.util.HashSet;
+
 public class SolverTest extends TestCase {
 
     public void testGetEmptyBoxIndexes() {
+    }
+
+    public void testGetRowCandidates() {
+        Solver solver = new Solver();
+        solver.board = new int[][]{
+                {8, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 3, 6, 0, 0, 0, 0, 0},
+                {0, 7, 0, 0, 9, 0, 0, 0, 9},
+                {0, 5, 0, 0, 0, 7, 0, 0, 0},
+                {0, 0, 0, 0, 4, 5, 7, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 3, 0},
+                {0, 0, 0, 0, 0, 0, 0, 6, 8},
+                {0, 0, 8, 5, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        HashSet<Integer> rowSet = new HashSet<>();
+        rowSet.add(1);
+        rowSet.add(2);
+        rowSet.add(4);
+        rowSet.add(5);
+        rowSet.add(7);
+        rowSet.add(8);
+        rowSet.add(9);
+        assertEquals(solver.getRowCandidates(1), rowSet);
+    }
+
+    public void testGetColCandidates() {
+        Solver solver = new Solver();
+        solver.board = new int[][]{
+                {8, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 3, 6, 0, 0, 0, 0, 0},
+                {0, 7, 0, 0, 9, 0, 0, 0, 9},
+                {0, 5, 0, 0, 0, 7, 0, 0, 0},
+                {0, 0, 0, 0, 4, 5, 7, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 3, 0},
+                {0, 0, 0, 0, 0, 0, 0, 6, 8},
+                {0, 0, 8, 5, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+    }
+
+    public void testGetCandidates() {
+        Solver solver = new Solver();
+        solver.board = new int[][]{
+                {8, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 3, 6, 0, 0, 0, 0, 0},
+                {0, 7, 0, 0, 9, 0, 0, 0, 9},
+                {0, 5, 0, 0, 0, 7, 0, 0, 0},
+                {0, 0, 0, 0, 4, 5, 7, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 3, 0},
+                {0, 0, 0, 0, 0, 0, 0, 6, 8},
+                {0, 0, 8, 5, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+
+        System.out.println(solver.getCandidates(0,1));
     }
 
     public void testSetNumberPos() {

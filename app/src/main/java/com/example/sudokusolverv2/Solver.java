@@ -13,13 +13,15 @@ public class Solver implements Serializable {
     int maxRecursion = 0;
     ArrayList<ArrayList<Object>> emptyBoxIndex;
 
+    ArrayList<HashSet<Integer>> rowCandidates = new ArrayList<>();
+    ArrayList<HashSet<Integer>> colCandidates = new ArrayList<>();
+    ArrayList<HashSet<Integer>> boxCandidates = new ArrayList<>();
+
+
     public HashSet<int[][]> solutions = new HashSet<>();
 
     int selected_row;
     int selected_column;
-
-    // Store blocks
-    Set blockSet = new HashSet();
 
     public Solver() {
         selected_row = -1;
@@ -36,6 +38,8 @@ public class Solver implements Serializable {
         emptyBoxIndex = new ArrayList<>();
     }
 
+    //TODO: Add function to set board to input state (Solver (board) https://github.com/corinneleopold/Sudoku_Solver_AI/blob/master/src/SudokuSolver.java)
+
     public void getEmptyBoxIndexes() {
         for(int r = 0; r<9; r++) {
             for(int c = 0; c<9; c++) {
@@ -46,6 +50,56 @@ public class Solver implements Serializable {
                 }
             }
         }
+    }
+
+    public ArrayList<HashSet<Integer>> updateRowCandidates() {
+        for (int row = 0; row < 9; row++) {
+            HashSet<Integer> rowSet = new HashSet<>();
+            for(int i = 1; i < 10; i++) {
+                rowSet.add(i);
+            }
+            for (int c = 0; c < 9; c++) {
+                if(this.board[row][c] != 0) {
+                    rowSet.remove(this.board[row][c]);
+                }
+            }
+            this.rowCandidates.add(rowSet);
+        }
+        return this.rowCandidates;
+    }
+
+    public ArrayList<HashSet<Integer>> updateColCandidates() {
+        for (int col = 0; col < 9; col++) {
+            HashSet<Integer> colSet = new HashSet<>();
+            for(int i = 1; i < 10; i++) {
+                colSet.add(i);
+            }
+            for (int r = 0; r < 9; r++) {
+                if(this.board[r][col] != 0) {
+                    colSet.remove(this.board[r][col]);
+                }
+            }
+            this.colCandidates.add(colSet);
+        }
+        return this.colCandidates;
+    }
+
+    public HashSet<Integer> getRowCandidates(int row) {
+        this.rowCandidates = updateRowCandidates();
+        return this.rowCandidates.get(row);
+    }
+
+    public HashSet<Integer> getColCandidates(int col) {
+        this.colCandidates = updateColCandidates();
+        return this.colCandidates.get(col);
+    }
+
+    public HashSet<Integer> getCandidates(int row, int col) {
+        HashSet<Integer> rowSet = getRowCandidates(row);
+        HashSet<Integer> colSet = getColCandidates(col);
+        HashSet<Integer> candidateSet = new HashSet<>(rowSet);
+        candidateSet.retainAll(colSet);
+        return candidateSet;
     }
 
     public void setNumberPos(int number) {
