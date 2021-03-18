@@ -4,9 +4,19 @@ import junit.framework.TestCase;
 
 import org.apache.commons.lang3.SerializationUtils;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 public class SolverTest extends TestCase {
+
+    public void testSet() {
+        HashSet<Integer> emptySet = new HashSet<>();
+        HashSet<Integer> newset = (HashSet<Integer>) emptySet.clone();
+        emptySet.add(1);
+        System.out.println(emptySet);
+        System.out.println(newset);
+    }
 
     public void testSolver() {
         int[][] sudokuBoard = new int[][]{

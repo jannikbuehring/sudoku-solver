@@ -37,6 +37,7 @@ public class SudokuBoard extends View {
 
     private final Solver solver = new Solver();
     boolean showAllCandidates;
+    boolean showPersonalCandidates;
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -92,6 +93,7 @@ public class SudokuBoard extends View {
         drawBoard(canvas);
         drawNumbers(canvas);
         drawCandidateNumbers(canvas);
+        drawPersonalCandidateNumbers(canvas);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -262,6 +264,133 @@ public class SudokuBoard extends View {
         }
     }
 
+    public void updatePersonalCandidates(Canvas canvas, int r, int c) {
+        ArrayList<HashSet<Integer>> personalCandidates = solver.getPersonalCandidates();
+        HashSet<Integer> candidateSet = personalCandidates.get(r * 9 + c);
+        if(candidateSet.size() > 0) {
+            for(int candidate : candidateSet) {
+                if (candidate == 1) {
+                    String text = Integer.toString(candidate);
+                    float width, height;
+
+                    letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
+                    width = letterPaint.measureText(text);
+                    height = letterPaintBounds.height();
+
+                    canvas.drawText(text,
+                            (c * cellSize) + ((cellSize - width) / 6),
+                            (r * cellSize + cellSize) - ((cellSize - height) / (1 + (1/6f))),
+                            letterPaint);
+
+                }
+                else if (candidate == 2) {
+                    String text = Integer.toString(candidate);
+                    float width, height;
+
+                    letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
+                    width = letterPaint.measureText(text);
+                    height = letterPaintBounds.height();
+
+                    canvas.drawText(text,
+                            (c * cellSize) + ((cellSize - width) / 2),
+                            (r * cellSize + cellSize) - ((cellSize - height) / (1 + (1/6f))),
+                            letterPaint);
+                }
+                else if (candidate == 3) {
+                    String text = Integer.toString(candidate);
+                    float width, height;
+
+                    letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
+                    width = letterPaint.measureText(text);
+                    height = letterPaintBounds.height();
+
+                    canvas.drawText(text,
+                            (c * cellSize) + ((cellSize - width) / (1 + (1/6f))),
+                            (r * cellSize + cellSize) - ((cellSize - height) / (1 + (1/6f))),
+                            letterPaint);
+                }
+                else if (candidate == 4) {
+                    String text = Integer.toString(candidate);
+                    float width, height;
+
+                    letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
+                    width = letterPaint.measureText(text);
+                    height = letterPaintBounds.height();
+
+                    canvas.drawText(text,
+                            (c * cellSize) + ((cellSize - width) / 6),
+                            (r * cellSize + cellSize) - ((cellSize - height) / 2),
+                            letterPaint);
+                }
+                else if (candidate == 5) {
+                    String text = Integer.toString(candidate);
+                    float width, height;
+
+                    letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
+                    width = letterPaint.measureText(text);
+                    height = letterPaintBounds.height();
+
+                    canvas.drawText(text,
+                            (c * cellSize) + ((cellSize - width) / 2),
+                            (r * cellSize + cellSize) - ((cellSize - height) / 2),
+                            letterPaint);
+                }
+                else if (candidate == 6) {
+                    String text = Integer.toString(candidate);
+                    float width, height;
+
+                    letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
+                    width = letterPaint.measureText(text);
+                    height = letterPaintBounds.height();
+
+                    canvas.drawText(text,
+                            (c * cellSize) + ((cellSize - width) / (1 + (1/6f))),
+                            (r * cellSize + cellSize) - ((cellSize - height) / 2),
+                            letterPaint);
+                }
+                else if (candidate == 7) {
+                    String text = Integer.toString(candidate);
+                    float width, height;
+
+                    letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
+                    width = letterPaint.measureText(text);
+                    height = letterPaintBounds.height();
+
+                    canvas.drawText(text,
+                            (c * cellSize) + ((cellSize - width) / 6),
+                            (r * cellSize + cellSize) - ((cellSize - height) / 6),
+                            letterPaint);
+                }
+                else if (candidate == 8) {
+                    String text = Integer.toString(candidate);
+                    float width, height;
+
+                    letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
+                    width = letterPaint.measureText(text);
+                    height = letterPaintBounds.height();
+
+                    canvas.drawText(text,
+                            (c * cellSize) + ((cellSize - width) / 2),
+                            (r * cellSize + cellSize) - ((cellSize - height) / 6),
+                            letterPaint);
+                }
+                else if (candidate == 9) {
+                    String text = Integer.toString(candidate);
+                    float width, height;
+
+                    letterPaint.getTextBounds(text, 0, text.length(), letterPaintBounds);
+                    width = letterPaint.measureText(text);
+                    height = letterPaintBounds.height();
+
+                    canvas.drawText(text,
+                            (c * cellSize) + ((cellSize - width) / (1 + (1/6f))),
+                            (r * cellSize + cellSize) - ((cellSize - height) / 6),
+                            letterPaint);
+                }
+            }
+        }
+    }
+
     public void drawNumbers(Canvas canvas) {
         letterPaint.setTextSize(cellSize-cellSize/3);
         for (int r = 0; r < 9; r++) {
@@ -288,6 +417,18 @@ public class SudokuBoard extends View {
                         letterPaint.setColor(candidateColor);
                         updateSudokuBoardCandidates(canvas, r, c);
                     }
+                }
+            }
+        }
+    }
+
+    public void drawPersonalCandidateNumbers(Canvas canvas) {
+        letterPaint.setTextSize(cellSize - cellSize / 1.3f);
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                if (solver.getBoard()[r][c] == 0) {
+                    letterPaint.setColor(candidateColor);
+                    updatePersonalCandidates(canvas, r, c);
                 }
             }
         }
@@ -377,5 +518,9 @@ public class SudokuBoard extends View {
 
     public void setShowAllCandidates(boolean bool) {
         showAllCandidates = bool;
+    }
+
+    public void setShowPersonalCandidates(boolean bool) {
+        showPersonalCandidates = bool;
     }
 }

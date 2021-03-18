@@ -4,6 +4,7 @@ import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ public class Solver implements Serializable {
     ArrayList<HashSet<Integer>> colCandidates = new ArrayList<>();
     ArrayList<HashSet<Integer>> subsquareCandidates = new ArrayList<>();
 
+    ArrayList<HashSet<Integer>> personalCandidates = new ArrayList<>(81);
 
     public HashSet<int[][]> solutions = new HashSet<>();
 
@@ -39,6 +41,11 @@ public class Solver implements Serializable {
         }
 
         emptyBoxIndex = new ArrayList<>();
+
+        for (int i = 0; i < 81; i++) {
+            HashSet<Integer> emptySet = new HashSet<>();
+            personalCandidates.add(emptySet);
+        }
     }
 
     public Solver(int [][] sudokuBoard) {
@@ -157,6 +164,7 @@ public class Solver implements Serializable {
         return candidateSet;
     }
 
+    // Set a number on the board
     public void setNumberPos(int number) {
         if(this.selected_row != -1 && this.selected_column != -1) {
             if(this.board[this.selected_row-1][this.selected_column-1] == number) {
@@ -168,10 +176,33 @@ public class Solver implements Serializable {
         }
     }
 
+    // Set a candidate on the board
     public void setCandidatePos(int number) {
         if(this.selected_row != -1 && this.selected_column != -1) {
             if(this.board[this.selected_row-1][this.selected_column-1] == 0) {
                 // add number to list of personal candidates
+                if(personalCandidates.get(((this.selected_row - 1) * 9) + this.selected_column - 1).contains(number)) {
+                    personalCandidates.get(((this.selected_row - 1) * 9) + this.selected_column - 1).remove(number);
+                }
+                else {
+                    personalCandidates.get(((this.selected_row - 1) * 9) + this.selected_column - 1).add(number);
+                }
+            }
+        }
+    }
+
+    // Update the list of user added candidates when a new number gets added
+    // If a number of the personal candidate set is no longer in the set of all candidates, remove it
+    public void updatePersonalCandidates() {
+        for(int r = 0; r < 9; r++) {
+            for(int c = 0; c < 9; c++) {
+                HashSet<Integer> allCandidates = getCandidates(r,c);
+                HashSet<Integer> personalCandidateSet = (HashSet<Integer>) personalCandidates.get(r * 9 + c).clone();
+                for (int candidate : personalCandidateSet) {
+                    if(!allCandidates.contains(candidate)) {
+                        personalCandidates.get(r * 9 + c).remove(candidate);
+                    }
+                }
             }
         }
     }
@@ -482,6 +513,10 @@ public class Solver implements Serializable {
 
     public int getSelectedColumn() {
         return selected_column;
+    }
+
+    public ArrayList<HashSet<Integer>> getPersonalCandidates() {
+        return this.personalCandidates;
     }
 
     public void setSelectedRow(int row) {

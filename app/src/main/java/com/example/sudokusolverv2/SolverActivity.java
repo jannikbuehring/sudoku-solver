@@ -32,80 +32,96 @@ public class SolverActivity extends AppCompatActivity {
 
     public void BTNOnePress(View view) {
         if(this.editCandidatesButtonSelected) {
-
+            gameBoardSolver.setCandidatePos(1);
+            gameBoard.invalidate();
         }
         else {
             gameBoardSolver.setNumberPos(1);
+            gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
         }
     }
 
     public void BTNTwoPress(View view) {
         if(this.editCandidatesButtonSelected) {
-
+            gameBoardSolver.setCandidatePos(2);
+            gameBoard.invalidate();
         }
         else {
             gameBoardSolver.setNumberPos(2);
+            gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
         }
     }
 
     public void BTNThreePress(View view) {
         if(this.editCandidatesButtonSelected) {
-
+            gameBoardSolver.setCandidatePos(3);
+            gameBoard.invalidate();
         }
         else {
             gameBoardSolver.setNumberPos(3);
+            gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
         }
     }
 
     public void BTNFourPress(View view) {
         if(this.editCandidatesButtonSelected) {
-
+            gameBoardSolver.setCandidatePos(4);
+            gameBoard.invalidate();
         }
         else {
             gameBoardSolver.setNumberPos(4);
+            gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
         }
     }
 
     public void BTNFivePress(View view) {
         if(this.editCandidatesButtonSelected) {
-
+            gameBoardSolver.setCandidatePos(5);
+            gameBoard.invalidate();
         }
         else {
             gameBoardSolver.setNumberPos(5);
+            gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
         }
     }
 
     public void BTNSixPress(View view) {
         if(this.editCandidatesButtonSelected) {
-
+            gameBoardSolver.setCandidatePos(6);
+            gameBoard.invalidate();
         }
         else {
             gameBoardSolver.setNumberPos(6);
+            gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
         }
     }
 
     public void BTNSevenPress(View view) {
         if(this.editCandidatesButtonSelected) {
-
+            gameBoardSolver.setCandidatePos(7);
+            gameBoard.invalidate();
         }
         else {
             gameBoardSolver.setNumberPos(7);
+            gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
         }
     }
 
     public void BTNEightPress(View view) {
         if(this.editCandidatesButtonSelected) {
-
+            gameBoardSolver.setCandidatePos(8);
+            gameBoard.invalidate();
         }
         else {
             gameBoardSolver.setNumberPos(8);
+            gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
         }
     }
@@ -117,6 +133,7 @@ public class SolverActivity extends AppCompatActivity {
         }
         else {
             gameBoardSolver.setNumberPos(9);
+            gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
         }
     }
@@ -133,10 +150,12 @@ public class SolverActivity extends AppCompatActivity {
         Button editCandidatesButton = findViewById(R.id.editCandidatesButton);
         if(editCandidatesButton.isSelected()) {
             editCandidatesButton.setSelected(false);
+
             this.editCandidatesButtonSelected = false;
         }
         else {
             editCandidatesButton.setSelected(true);
+
             this.editCandidatesButtonSelected = true;
         }
 
