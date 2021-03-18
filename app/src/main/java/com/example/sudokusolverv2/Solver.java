@@ -168,6 +168,14 @@ public class Solver implements Serializable {
         }
     }
 
+    public void setCandidatePos(int number) {
+        if(this.selected_row != -1 && this.selected_column != -1) {
+            if(this.board[this.selected_row-1][this.selected_column-1] == 0) {
+                // add number to list of personal candidates
+            }
+        }
+    }
+
     // Zeile und Spalte angeben, überprüfen ob Eintrag dort valide ist
     private boolean check(int row, int column) {
         if(this.board[row][column] > 0) {

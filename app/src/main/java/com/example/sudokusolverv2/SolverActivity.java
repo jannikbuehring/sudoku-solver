@@ -15,7 +15,7 @@ public class SolverActivity extends AppCompatActivity {
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
 
-    private boolean editCandidatesButtonPressed = false;
+    private boolean editCandidatesButtonSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,48 +31,94 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void BTNOnePress(View view) {
-        gameBoardSolver.setNumberPos(1);
-        gameBoard.invalidate();
+        if(this.editCandidatesButtonSelected) {
+
+        }
+        else {
+            gameBoardSolver.setNumberPos(1);
+            gameBoard.invalidate();
+        }
     }
 
     public void BTNTwoPress(View view) {
-        gameBoardSolver.setNumberPos(2);
-        gameBoard.invalidate();
+        if(this.editCandidatesButtonSelected) {
+
+        }
+        else {
+            gameBoardSolver.setNumberPos(2);
+            gameBoard.invalidate();
+        }
     }
 
     public void BTNThreePress(View view) {
-        gameBoardSolver.setNumberPos(3);
-        gameBoard.invalidate();
+        if(this.editCandidatesButtonSelected) {
+
+        }
+        else {
+            gameBoardSolver.setNumberPos(3);
+            gameBoard.invalidate();
+        }
     }
 
     public void BTNFourPress(View view) {
-        gameBoardSolver.setNumberPos(4);
-        gameBoard.invalidate();
+        if(this.editCandidatesButtonSelected) {
+
+        }
+        else {
+            gameBoardSolver.setNumberPos(4);
+            gameBoard.invalidate();
+        }
     }
 
     public void BTNFivePress(View view) {
-        gameBoardSolver.setNumberPos(5);
-        gameBoard.invalidate();
+        if(this.editCandidatesButtonSelected) {
+
+        }
+        else {
+            gameBoardSolver.setNumberPos(5);
+            gameBoard.invalidate();
+        }
     }
 
     public void BTNSixPress(View view) {
-        gameBoardSolver.setNumberPos(6);
-        gameBoard.invalidate();
+        if(this.editCandidatesButtonSelected) {
+
+        }
+        else {
+            gameBoardSolver.setNumberPos(6);
+            gameBoard.invalidate();
+        }
     }
 
     public void BTNSevenPress(View view) {
-        gameBoardSolver.setNumberPos(7);
-        gameBoard.invalidate();
+        if(this.editCandidatesButtonSelected) {
+
+        }
+        else {
+            gameBoardSolver.setNumberPos(7);
+            gameBoard.invalidate();
+        }
     }
 
     public void BTNEightPress(View view) {
-        gameBoardSolver.setNumberPos(8);
-        gameBoard.invalidate();
+        if(this.editCandidatesButtonSelected) {
+
+        }
+        else {
+            gameBoardSolver.setNumberPos(8);
+            gameBoard.invalidate();
+        }
     }
 
     public void BTNNinePress(View view) {
-        gameBoardSolver.setNumberPos(9);
-        gameBoard.invalidate();
+        if(this.editCandidatesButtonSelected) {
+            gameBoardSolver.setCandidatePos(9);
+            gameBoard.invalidate();
+        }
+        else {
+            gameBoardSolver.setNumberPos(9);
+            gameBoard.invalidate();
+        }
     }
 
     public void backButtonPress(View view) {
@@ -83,14 +129,15 @@ public class SolverActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     public void editCandidatesButtonPress(View view) {
         Button editCandidatesButton = findViewById(R.id.editCandidatesButton);
         if(editCandidatesButton.isSelected()) {
             editCandidatesButton.setSelected(false);
+            this.editCandidatesButtonSelected = false;
         }
         else {
             editCandidatesButton.setSelected(true);
+            this.editCandidatesButtonSelected = true;
         }
 
     }
