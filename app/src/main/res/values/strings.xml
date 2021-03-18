@@ -18,4 +18,5 @@
     <string name="Solution">Sol</string>
     <string name="Forward">Fwd</string>
     <string name="EditCandidates">Cand</string>
+    <string name="ShowAllCandidates">EZ MODE</string>
 </resources>

@@ -18,7 +18,8 @@
         custom:cellFillColor="#6600DDFF"
         custom:cellsHighlightColor="#2600DDFF"
         custom:letterColor="@color/black"
-        custom:letterColorSolve="@color/black">
+        custom:letterColorSolve="@color/black"
+        custom:candidateColor="#99000000">
     </com.example.sudokusolverv2.SudokuBoard>
 
     <LinearLayout
@@ -164,7 +165,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/validate_btn"
+        android:background="@drawable/default_btn_selector"
         android:onClick="validate"
         android:text="@string/Validate"
         android:textSize="18sp"
@@ -177,7 +178,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="85dp"
-        android:background="@drawable/validate_btn"
+        android:background="@drawable/default_btn_selector"
         android:onClick="reset"
         android:text="@string/Reset"
         android:textSize="18sp"

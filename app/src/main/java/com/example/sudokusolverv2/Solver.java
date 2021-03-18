@@ -57,8 +57,6 @@ public class Solver implements Serializable {
         board = sudokuBoard;
     }
 
-    //TODO: Draw candidates
-
     public void getEmptyBoxIndexes() {
         for(int r = 0; r<9; r++) {
             for(int c = 0; c<9; c++) {
@@ -235,10 +233,7 @@ public class Solver implements Serializable {
         emptyBoxIndex.clear();
         getEmptyBoxIndexes();
         System.out.println(emptyBoxIndex.size());
-        if(emptyBoxIndex.size() > 64) {
-            return false;
-        }
-        return true;
+        return emptyBoxIndex.size() <= 64;
     }
 
     public boolean preCheckMoreThan2NumbersNotOccurring() {
@@ -252,17 +247,12 @@ public class Solver implements Serializable {
                 }
             }
         }
-        if(occurringNumbers.size() < 8) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return occurringNumbers.size() >= 8;
     }
 
     // Function to check if a given row is valid
     public boolean validateRow(int row){
-        int temp[] = this.board[row];
+        int[] temp = this.board[row];
         Set<Integer>set = new HashSet<Integer>();
         for (int value : temp) {
 

@@ -2,8 +2,10 @@ package com.example.sudokusolverv2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,6 @@ public class SolverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solver);
-
         Bundle b = getIntent().getExtras();
         int[][] board = (int[][])b.getSerializable("Board");
         gameBoard = findViewById(R.id.SudokuSolvingBoard);
@@ -82,21 +83,34 @@ public class SolverActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void editCandidatesButtonPress(View view) {
-        if(!editCandidatesButtonPressed) {
-            // change color
-            editCandidatesButtonPressed = true;
+        Button editCandidatesButton = findViewById(R.id.editCandidatesButton);
+        if(editCandidatesButton.isSelected()) {
+            editCandidatesButton.setSelected(false);
         }
         else {
-            // change color
-            editCandidatesButtonPressed = false;
+            editCandidatesButton.setSelected(true);
         }
+
     }
 
     public void tipButtonPress(View view) {
         if(gameBoardSolver.NakedSingleTip() != null) {
             int[] pos = gameBoardSolver.NakedSingleTip();
             //TODO: Function to give a tip based on position
+        }
+    }
+
+    public void showAllCandidatesButtonPress(View view) {
+        Button showAllCandidatesButton = findViewById(R.id.showAllCandidatesButton);
+        if (showAllCandidatesButton.isSelected()) {
+            showAllCandidatesButton.setSelected(false);
+            gameBoard.setShowAllCandidates(false);
+        }
+        else {
+            showAllCandidatesButton.setSelected(true);
+            gameBoard.setShowAllCandidates(true);
         }
     }
 
