@@ -147,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             // Starting the next activity and giving over the game state
+
+            // Set board back to unsolved state
+            this.gameBoardSolver.board = gameBoardSolverUnsolved.getBoard();
             Intent intent = new Intent(MainActivity.this, SolverActivity.class);
             Bundle b = new Bundle();
             b.putSerializable("Board", gameBoardSolverUnsolved.board);

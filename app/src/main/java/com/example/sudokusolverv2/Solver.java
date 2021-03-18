@@ -58,7 +58,6 @@ public class Solver implements Serializable {
     }
 
     //TODO: Draw candidates
-    //TODO: Fix solution showing up after validating
 
     public void getEmptyBoxIndexes() {
         for(int r = 0; r<9; r++) {
