@@ -13,6 +13,8 @@ public class SolverActivity extends AppCompatActivity {
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
 
+    private boolean editCandidatesButtonPressed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +82,17 @@ public class SolverActivity extends AppCompatActivity {
 
     public void forwardButtonPress(View view) {
 
+    }
+
+    public void editCandidatesButtonPress(View view) {
+        if(!editCandidatesButtonPressed) {
+            // change color
+            editCandidatesButtonPressed = true;
+        }
+        else {
+            // change color
+            editCandidatesButtonPressed = false;
+        }
     }
 
     public void tipButtonPress(View view) {

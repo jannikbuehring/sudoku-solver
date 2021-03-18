@@ -17,4 +17,5 @@
     <string name="Tip">Tip</string>
     <string name="Solution">Sol</string>
     <string name="Forward">Fwd</string>
+    <string name="EditCandidates">Cand</string>
 </resources>

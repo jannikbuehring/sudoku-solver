@@ -8,6 +8,26 @@ import java.util.HashSet;
 
 public class SolverTest extends TestCase {
 
+    public void testSolver() {
+        int[][] sudokuBoard = new int[][]{
+                {8, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 3, 6, 0, 0, 0, 0, 0},
+                {0, 7, 0, 0, 9, 0, 0, 0, 9},
+                {0, 5, 0, 0, 0, 7, 0, 0, 0},
+                {0, 0, 0, 0, 4, 5, 7, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 3, 0},
+                {0, 0, 0, 0, 0, 0, 0, 6, 8},
+                {0, 0, 8, 5, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        Solver solver = new Solver(sudokuBoard);
+        for(int r = 0; r < 9; r++) {
+            for(int c = 0; c < 9; c++) {
+                assertEquals(solver.board[r][c], sudokuBoard[r][c]);
+            }
+        }
+    }
+
     public void testGetEmptyBoxIndexes() {
     }
 
@@ -334,9 +354,11 @@ public class SolverTest extends TestCase {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        //apparently this is not possible this way
-        //debugging shows that the two arrays are equal
-        assertEquals(emptyBoard, solver.board);
+        for(int r = 0; r < 9; r++) {
+            for(int c = 0; c < 9; c++) {
+                assertEquals(solver.board[r][c], emptyBoard[r][c]);
+            }
+        }
     }
 
     public void testGetBoard() {

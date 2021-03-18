@@ -38,7 +38,9 @@ public class Solver implements Serializable {
         emptyBoxIndex = new ArrayList<>();
     }
 
-    //TODO: Add function to set board to input state (Solver (board) https://github.com/corinneleopold/Sudoku_Solver_AI/blob/master/src/SudokuSolver.java)
+    public Solver(int [][] sudokuBoard) {
+        this.board = sudokuBoard;
+    }
 
     //TODO: Draw candidates
 
