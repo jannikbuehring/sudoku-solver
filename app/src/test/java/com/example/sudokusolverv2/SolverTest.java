@@ -141,7 +141,7 @@ public class SolverTest extends TestCase {
         assertTrue(solver2.preCheckLessThan17Cells());
     }
 
-    public void testPreCheckMoreThan2NumbersNotOccuring() {
+    public void testPreCheckMoreThan2NumbersNotOccurring() {
         Solver solver = new Solver();
         solver.board = new int[][]{
                 {8, 0, 0, 0, 0, 0, 0, 0, 0},

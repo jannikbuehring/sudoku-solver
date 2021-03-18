@@ -22,13 +22,11 @@ public class SolverActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         int[][] board = (int[][])b.getSerializable("Board");
-        gameBoard = findViewById(R.id.SudokuBoard);
+        gameBoard = findViewById(R.id.SudokuSolvingBoard);
         gameBoardSolver = gameBoard.getSolver();
         gameBoardSolver.board = board;
         gameBoard.invalidate();
-
-        //TODO: Make given numbers unchangeable
-        //TODO: Change color of newly added numbers
+        gameBoard.fixNumbers();
     }
 
     public void BTNOnePress(View view) {

@@ -101,9 +101,17 @@ public class SudokuBoard extends View {
         int action = event.getAction();
 
         if (action == MotionEvent.ACTION_DOWN) {
-            solver.setSelectedRow((int) Math.ceil(y / cellSize));
-            solver.setSelectedColumn((int) Math.ceil(x / cellSize));
-            isValid = true;
+            int row = (int) Math.ceil(y / cellSize);
+            int col = (int) Math.ceil(x / cellSize);
+            if (solver.fixed[row-1][col-1]) {
+                isValid = false;
+            }
+            else {
+                solver.setSelectedRow(row);
+                solver.setSelectedColumn(col);
+                isValid = true;
+            }
+
         } else {
             isValid = false;
         }
@@ -130,23 +138,27 @@ public class SudokuBoard extends View {
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
                 if (solver.getBoard()[r][c] != 0) {
-                    updateSudokuBoard(canvas, r, c);
+                    if (solver.fixed[r][c]) {
+                        letterPaint.setColor(letterColor);
+                        updateSudokuBoard(canvas, r, c);
+                    }
+                    else {
+                        letterPaint.setColor(letterColorSolve);
+                        updateSudokuBoard(canvas, r, c);
+                    }
                 }
             }
         }
+    }
 
-        letterPaint.setColor(letterColorSolve);
-
-        for (ArrayList<Object> letter : solver.getEmptyBoxIndex()) {
-            int r = (int) letter.get(0);
-            int c = (int) letter.get(1);
-
-            if (solver.getBoard()[r][c] != 0) {
-                updateSudokuBoard(canvas, r, c);
+    public void fixNumbers() {
+        for(int r = 0; r < 9; r++) {
+            for(int c = 0; c < 9; c++) {
+                if(solver.getBoard()[r][c] != 0) {
+                    solver.fixed[r][c] = true;
+                }
             }
         }
-
-        letterPaint.setColor(letterColor);
     }
 
     private void colorCell(Canvas canvas, int row, int column) {

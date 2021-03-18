@@ -10,6 +10,7 @@ import java.util.Set;
 public class Solver implements Serializable {
 
     int[][] board;
+    boolean[][] fixed;
     int maxRecursion = 0;
     ArrayList<ArrayList<Object>> emptyBoxIndex;
 
@@ -28,10 +29,12 @@ public class Solver implements Serializable {
         selected_column = -1;
 
         board = new int[9][9];
+        fixed = new boolean[9][9];
 
         for(int r = 0; r<9; r++) {
             for(int c = 0; c<9; c++) {
                 board[r][c] = 0;
+                fixed[r][c] = false;
             }
         }
 
@@ -39,10 +42,23 @@ public class Solver implements Serializable {
     }
 
     public Solver(int [][] sudokuBoard) {
+        selected_row = -1;
+        selected_column = -1;
+
+        board = new int[9][9];
+        fixed = new boolean[9][9];
+
+        for(int r = 0; r<9; r++) {
+            for(int c = 0; c<9; c++) {
+                board[r][c] = sudokuBoard[r][c];
+                fixed[r][c] = false;
+            }
+        }
         board = sudokuBoard;
     }
 
     //TODO: Draw candidates
+    //TODO: Fix solution showing up after validating
 
     public void getEmptyBoxIndexes() {
         for(int r = 0; r<9; r++) {

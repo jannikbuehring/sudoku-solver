@@ -8,7 +8,7 @@
     tools:context=".SolverActivity">
 
     <com.example.sudokusolverv2.SudokuBoard
-        android:id="@+id/SudokuBoard"
+        android:id="@+id/SudokuSolvingBoard"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         custom:boardColor="#000000"
@@ -18,7 +18,7 @@
         custom:cellFillColor="#6600DDFF"
         custom:cellsHighlightColor="#2600DDFF"
         custom:letterColor="@color/black"
-        custom:letterColorSolve="#DD003366">
+        custom:letterColorSolve="#DD006666">
     </com.example.sudokusolverv2.SudokuBoard>
 
     <LinearLayout
@@ -31,7 +31,7 @@
         android:layout_marginRight="50dp"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@+id/SudokuBoard">
+        custom:layout_constraintTop_toBottomOf="@+id/SudokuSolvingBoard">
 
         <Button
             android:id="@+id/button"
