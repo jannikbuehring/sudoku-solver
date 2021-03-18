@@ -39,7 +39,7 @@ public class Solver implements Serializable {
     }
 
     public Solver(int [][] sudokuBoard) {
-        this.board = sudokuBoard;
+        board = sudokuBoard;
     }
 
     //TODO: Draw candidates
@@ -183,7 +183,7 @@ public class Solver implements Serializable {
     }
 
     // give in a number and a position and check if that number is valid in this position
-    public boolean checkNumberinPosition(int row, int column, int number) {
+    public boolean checkNumberInPosition(int row, int column, int number) {
         if(this.board[row][column] == 0) {
             for(int i = 0; i<9; i++) {
 
@@ -226,18 +226,18 @@ public class Solver implements Serializable {
         return true;
     }
 
-    public boolean preCheckMoreThan2NumbersNotOccuring() {
+    public boolean preCheckMoreThan2NumbersNotOccurring() {
 
-        HashSet<Integer> occuringNumbers = new HashSet<>();
+        HashSet<Integer> occurringNumbers = new HashSet<>();
 
         for(int r = 0; r < 9; r++) {
             for(int c = 0; c < 9; c++) {
                 if(this.board[r][c] != 0) {
-                    occuringNumbers.add(this.board[r][c]);
+                    occurringNumbers.add(this.board[r][c]);
                 }
             }
         }
-        if(occuringNumbers.size() < 8) {
+        if(occurringNumbers.size() < 8) {
             return false;
         }
         else {
@@ -435,12 +435,10 @@ public class Solver implements Serializable {
             for(int c = 0; c < 9; c++) {
                 HashSet<Integer> candidates = getCandidates(r,c);
                 if(candidates != null && candidates.size() == 1) {
-                    for(int i : candidates) {
-                        int[] pos = new int[2];
-                        pos[0] = r;
-                        pos[1] = c;
-                        return pos;
-                    }
+                    int[] pos = new int[2];
+                    pos[0] = r;
+                    pos[1] = c;
+                    return pos;
                 }
             }
         }

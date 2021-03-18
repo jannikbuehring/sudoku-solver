@@ -154,7 +154,7 @@ public class SolverTest extends TestCase {
                 {0, 0, 8, 5, 0, 0, 0, 0, 0},
                 {0, 9, 0, 0, 0, 0, 4, 0, 0}
         };
-        assertFalse(solver.preCheckMoreThan2NumbersNotOccuring());
+        assertFalse(solver.preCheckMoreThan2NumbersNotOccurring());
 
         Solver solver2 = new Solver();
         solver2.board = new int[][]{
@@ -168,7 +168,7 @@ public class SolverTest extends TestCase {
                 {0, 0, 8, 5, 0, 0, 0, 1, 0},
                 {0, 9, 0, 0, 0, 0, 4, 0, 0}
         };
-        assertTrue(solver2.preCheckMoreThan2NumbersNotOccuring());
+        assertTrue(solver2.preCheckMoreThan2NumbersNotOccurring());
     }
 
     public void testValidateRow() {

@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
             return;
         }
-        else if(!gameBoardSolver.preCheckMoreThan2NumbersNotOccuring()) {
+        else if(!gameBoardSolver.preCheckMoreThan2NumbersNotOccurring()) {
             Context context = getApplicationContext();
             CharSequence text = "Too many solutions!";
             int duration = Toast.LENGTH_SHORT;
