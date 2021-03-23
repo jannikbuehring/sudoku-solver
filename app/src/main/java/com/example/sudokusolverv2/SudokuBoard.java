@@ -21,6 +21,7 @@ public class SudokuBoard extends View {
     private final int boardColor;
     private final int cellFillColor;
     private final int cellsHighlightColor;
+    private final int tipHighlightColor;
 
     private final int letterColor;
     private final int letterColorSolve;
@@ -29,6 +30,7 @@ public class SudokuBoard extends View {
     private final Paint boardColorPaint = new Paint();
     private final Paint cellFillColorPaint = new Paint();
     private final Paint cellsHighlightColorPaint = new Paint();
+    private final Paint tipHighlightColorPaint = new Paint();
 
     private final Paint letterPaint = new Paint();
     private final Rect letterPaintBounds = new Rect();
@@ -38,6 +40,7 @@ public class SudokuBoard extends View {
     private final Solver solver = new Solver();
     boolean showAllCandidates;
     boolean showPersonalCandidates;
+    String tipLocation;
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -49,6 +52,7 @@ public class SudokuBoard extends View {
             boardColor = a.getInteger(R.styleable.SudokuBoard_boardColor, 0);
             cellFillColor = a.getInteger(R.styleable.SudokuBoard_cellFillColor, 0);
             cellsHighlightColor = a.getInteger(R.styleable.SudokuBoard_cellsHighlightColor, 0);
+            tipHighlightColor = a.getInteger(R.styleable.SudokuBoard_tipHighlightColor, 0);
             letterColor = a.getInteger(R.styleable.SudokuBoard_letterColor, 0);
             letterColorSolve = a.getInteger(R.styleable.SudokuBoard_letterColorSolve, 0);
             candidateColor = a.getInteger(R.styleable.SudokuBoard_candidateColor, 0);
@@ -84,6 +88,10 @@ public class SudokuBoard extends View {
         cellsHighlightColorPaint.setColor(cellsHighlightColor);
         cellsHighlightColorPaint.setAntiAlias(true);
 
+        tipHighlightColorPaint.setStyle(Paint.Style.FILL);
+        tipHighlightColorPaint.setColor(tipHighlightColor);
+        tipHighlightColorPaint.setAntiAlias(true);
+
         letterPaint.setStyle(Paint.Style.FILL);
         letterPaint.setAntiAlias(true);
         letterPaint.setColor(letterColor);
@@ -94,6 +102,7 @@ public class SudokuBoard extends View {
         drawNumbers(canvas);
         drawCandidateNumbers(canvas);
         drawPersonalCandidateNumbers(canvas);
+        drawTip(canvas);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -434,6 +443,31 @@ public class SudokuBoard extends View {
         }
     }
 
+    public void drawTip(Canvas canvas) {
+        if(tipLocation == "Top horizontal") {
+            canvas.drawRect(0, 0, 9 * cellSize, 3 * cellSize, tipHighlightColorPaint);
+        }
+        else if(tipLocation == "Middle horizontal") {
+            canvas.drawRect(0, 3 * cellSize, 9 * cellSize, 6 * cellSize, tipHighlightColorPaint);
+        }
+        else if(tipLocation == "Bottom horizontal") {
+            canvas.drawRect(0, 6 * cellSize, 9 * cellSize, 9 * cellSize, tipHighlightColorPaint);
+        }
+        else if(tipLocation == "Left vertical") {
+            canvas.drawRect(0, 0, 3 * cellSize, 9 * cellSize, tipHighlightColorPaint);
+        }
+        else if(tipLocation == "Middle vertical") {
+            canvas.drawRect(3 * cellSize, 0, 6 * cellSize, 9 * cellSize, tipHighlightColorPaint);
+        }
+        else if(tipLocation == "Right vertical") {
+            canvas.drawRect(6 * cellSize, 0, 9 * cellSize, 9 * cellSize, tipHighlightColorPaint);
+        }
+        else {
+            canvas.drawRect(0,0,0,0,tipHighlightColorPaint);
+        }
+
+    }
+
     public void fixNumbers() {
         for(int r = 0; r < 9; r++) {
             for(int c = 0; c < 9; c++) {
@@ -522,5 +556,9 @@ public class SudokuBoard extends View {
 
     public void setShowPersonalCandidates(boolean bool) {
         showPersonalCandidates = bool;
+    }
+
+    public void setTipLocation(String location) {
+        tipLocation = location;
     }
 }

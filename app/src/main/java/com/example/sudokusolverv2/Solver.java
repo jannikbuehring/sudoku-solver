@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class Solver implements Serializable {
@@ -497,6 +498,83 @@ public class Solver implements Serializable {
         }
 
         this.emptyBoxIndex = new ArrayList<>();
+    }
+
+    public String calculateTipLocation(int row, int column) {
+        Random random = new Random();
+        int x = random.nextInt(2);
+        if(row < 3 && column < 3) {
+            if(x == 0) {
+                return "Top horizontal";
+            }
+            else {
+                return "Left vertical";
+            }
+        }
+        else if(row >= 3 && row < 6 && column < 3) {
+            if(x == 0) {
+                return "Middle horizontal";
+            }
+            else {
+                return "Left vertical";
+            }
+        }
+        else if(row >= 6 && column < 3) {
+            if(x == 0) {
+                return "Bottom horizontal";
+            }
+            else {
+                return "Left vertical";
+            }
+        }
+        else if(row < 3 && column < 6) {
+            if(x == 0) {
+                return "Top horizontal";
+            }
+            else {
+                return "Middle vertical";
+            }
+        }
+        else if(row >= 6 && column < 6) {
+            if(x == 0) {
+                return "Bottom horizontal";
+            }
+            else {
+                return "Middle vertical";
+            }
+        }
+        else if(row < 3) {
+            if(x == 0) {
+                return "Top horizontal";
+            }
+            else {
+                return "Right vertical";
+            }
+        }
+        else if(row < 6 && column >= 6) {
+            if(x == 0) {
+                return "Middle horizontal";
+            }
+            else {
+                return "Right vertical";
+            }
+        }
+        else if(row >= 6) {
+            if(x == 0) {
+                return "Bottom horizontal";
+            }
+            else {
+                return "Right vertical";
+            }
+        }
+        else {
+            if(x == 0) {
+                return "Middle horizontal";
+            }
+            else {
+                return "Middle vertical";
+            }
+        }
     }
 
     public int[][] getBoard() {

@@ -3,12 +3,17 @@ package com.example.sudokusolverv2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SolverActivity extends AppCompatActivity {
 
@@ -138,13 +143,7 @@ public class SolverActivity extends AppCompatActivity {
         }
     }
 
-    public void backButtonPress(View view) {
-
-    }
-
-    public void forwardButtonPress(View view) {
-
-    }
+    //TODO: Fix bug that causes crash when setting a number on a personal candidate
 
     public void editCandidatesButtonPress(View view) {
         Button editCandidatesButton = findViewById(R.id.editCandidatesButton);
@@ -164,7 +163,35 @@ public class SolverActivity extends AppCompatActivity {
     public void tipButtonPress(View view) {
         if(gameBoardSolver.NakedSingleTip() != null) {
             int[] pos = gameBoardSolver.NakedSingleTip();
-            //TODO: Function to give a tip based on position
+            int row = pos[0];
+            int column = pos[1];
+            String tipLocation = gameBoardSolver.calculateTipLocation(row, column);
+            gameBoard.setTipLocation(tipLocation);
+            gameBoard.invalidate();
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    gameBoard.setTipLocation(null);
+                    gameBoard.invalidate();
+                }
+            }, 3000);
+            Context context = getApplicationContext();
+            CharSequence text = "Probiere es hier mit der Naked Single Strategie";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.setGravity(Gravity.BOTTOM, 0, 200);
+            toast.show();
+        }
+        else {
+            gameBoard.setTipLocation(null);
+            gameBoard.invalidate();
+            Context context = getApplicationContext();
+            CharSequence text = "Kein Tipp verfügbar";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.setGravity(Gravity.BOTTOM, 0, 200);
+            toast.show();
         }
     }
 

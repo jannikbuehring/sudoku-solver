@@ -14,9 +14,9 @@
     <string name="Validate">Validate</string>
     <string name="Reset">Clear</string>
     <string name="Back">Back</string>
-    <string name="Tip">Tip</string>
-    <string name="Solution">Sol</string>
+    <string name="Tip">Show Tip</string>
+    <string name="Solution">Solution</string>
     <string name="Forward">Fwd</string>
-    <string name="EditCandidates">Cand</string>
-    <string name="ShowAllCandidates">EZ MODE</string>
+    <string name="EditCandidates">Edit Cand.</string>
+    <string name="ShowAllCandidates">Easy Mode</string>
 </resources>

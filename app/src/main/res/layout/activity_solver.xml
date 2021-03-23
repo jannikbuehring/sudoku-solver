@@ -17,6 +17,7 @@
         custom:layout_constraintTop_toTopOf="parent"
         custom:cellFillColor="#6600DDFF"
         custom:cellsHighlightColor="#2600DDFF"
+        custom:tipHighlightColor="#66FFC14D"
         custom:letterColor="@color/black"
         custom:letterColorSolve="#DD006666"
         custom:candidateColor="#99000000">
@@ -173,23 +174,9 @@
         custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3">
 
         <Button
-            android:id="@+id/backButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/default_btn_selector"
-            android:onClick="backButtonPress"
-            android:text="@string/Back"
-            android:textSize="18sp"
-            custom:layout_constraintEnd_toEndOf="parent"
-            custom:layout_constraintStart_toStartOf="parent"
-            custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
-
-        <Button
             android:id="@+id/editCandidatesButton"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:background="@drawable/selectable_btn_selector"
@@ -201,14 +188,14 @@
             custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
 
         <Button
-            android:id="@+id/forwardButton"
+            android:id="@+id/showAllCandidatesButton"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:background="@drawable/default_btn_selector"
-            android:onClick="forwardButtonPress"
-            android:text="@string/Forward"
+            android:background="@drawable/selectable_btn_selector"
+            android:onClick="showAllCandidatesButtonPress"
+            android:text="@string/ShowAllCandidates"
             android:textSize="18sp"
             custom:layout_constraintEnd_toEndOf="parent"
             custom:layout_constraintStart_toStartOf="parent"
@@ -228,10 +215,9 @@
         <Button
             android:id="@+id/tipButton"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-
             android:background="@drawable/default_btn_selector"
             android:onClick="tipButtonPress"
             android:text="@string/Tip"
@@ -241,23 +227,9 @@
             custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
 
         <Button
-            android:id="@+id/showAllCandidatesButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/selectable_btn_selector"
-            android:onClick="showAllCandidatesButtonPress"
-            android:text="@string/ShowAllCandidates"
-            android:textSize="18sp"
-            custom:layout_constraintEnd_toEndOf="parent"
-            custom:layout_constraintStart_toStartOf="parent"
-            custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
-
-        <Button
             android:id="@+id/solutionButton"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:background="@drawable/default_btn_selector"

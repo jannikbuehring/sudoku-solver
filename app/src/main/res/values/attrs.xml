@@ -7,5 +7,6 @@
         <attr name="letterColor" format="color" />
         <attr name="letterColorSolve" format="color" />
         <attr name="candidateColor" format="color"/>
+        <attr name="tipHighlightColor" format="color"/>
     </declare-styleable>
 </resources>

@@ -10,14 +10,6 @@ import java.util.Set;
 
 public class SolverTest extends TestCase {
 
-    public void testSet() {
-        HashSet<Integer> emptySet = new HashSet<>();
-        HashSet<Integer> newset = (HashSet<Integer>) emptySet.clone();
-        emptySet.add(1);
-        System.out.println(emptySet);
-        System.out.println(newset);
-    }
-
     public void testSolver() {
         int[][] sudokuBoard = new int[][]{
                 {8, 0, 0, 0, 0, 0, 0, 0, 0},
