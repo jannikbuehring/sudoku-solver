@@ -200,7 +200,10 @@ public class Solver implements Serializable {
                 HashSet<Integer> allCandidates = getCandidates(r,c);
                 HashSet<Integer> personalCandidateSet = (HashSet<Integer>) personalCandidates.get(r * 9 + c).clone();
                 for (int candidate : personalCandidateSet) {
-                    if(!allCandidates.contains(candidate)) {
+                    if(allCandidates == null) {
+                        personalCandidates.get(r * 9 + c).remove(candidate);
+                    }
+                    else if(!allCandidates.contains(candidate)) {
                         personalCandidates.get(r * 9 + c).remove(candidate);
                     }
                 }

@@ -143,8 +143,6 @@ public class SolverActivity extends AppCompatActivity {
         }
     }
 
-    //TODO: Fix bug that causes crash when setting a number on a personal candidate
-
     public void editCandidatesButtonPress(View view) {
         Button editCandidatesButton = findViewById(R.id.editCandidatesButton);
         if(editCandidatesButton.isSelected()) {
