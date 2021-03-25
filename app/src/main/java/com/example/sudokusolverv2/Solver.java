@@ -4,7 +4,6 @@ import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -26,12 +25,12 @@ public class Solver implements Serializable {
 
     private final HashSet<int[][]> solutions = new HashSet<>();
 
-    private int selected_row;
-    private int selected_column;
+    private int selectedRow;
+    private int selectedColumn;
 
     public Solver() {
-        selected_row = -1;
-        selected_column = -1;
+        selectedRow = -1;
+        selectedColumn = -1;
 
         board = new int[9][9];
         fixed = new boolean[9][9];
@@ -52,8 +51,8 @@ public class Solver implements Serializable {
     }
 
     public Solver(int[][] sudokuBoard) {
-        selected_row = -1;
-        selected_column = -1;
+        selectedRow = -1;
+        selectedColumn = -1;
 
         board = new int[9][9];
         fixed = new boolean[9][9];
@@ -93,26 +92,26 @@ public class Solver implements Serializable {
 
     // Set a number on the board
     public void setNumberPos(int number) {
-        if (this.selected_row != -1 && this.selected_column != -1) {
-            if (this.board[this.selected_row - 1][this.selected_column - 1] == number) {
-                this.board[this.selected_row - 1][this.selected_column - 1] = 0;
+        if (this.selectedRow != -1 && this.selectedColumn != -1) {
+            if (this.board[this.selectedRow - 1][this.selectedColumn - 1] == number) {
+                this.board[this.selectedRow - 1][this.selectedColumn - 1] = 0;
             } else {
-                this.board[this.selected_row - 1][this.selected_column - 1] = number;
+                this.board[this.selectedRow - 1][this.selectedColumn - 1] = number;
             }
         }
     }
 
     // Set a candidate on the board
     public void setCandidatePos(int number) {
-        if (this.selected_row != -1 && this.selected_column != -1) {
-            if (this.board[this.selected_row - 1][this.selected_column - 1] == 0) {
+        if (this.selectedRow != -1 && this.selectedColumn != -1) {
+            if (this.board[this.selectedRow - 1][this.selectedColumn - 1] == 0) {
                 // add number to list of personal candidates
-                if (personalCandidates.get(((this.selected_row - 1) * 9) + this.selected_column - 1)
+                if (personalCandidates.get(((this.selectedRow - 1) * 9) + this.selectedColumn - 1)
                         .contains(number)) {
-                    personalCandidates.get(((this.selected_row - 1) * 9) + this.selected_column - 1)
+                    personalCandidates.get(((this.selectedRow - 1) * 9) + this.selectedColumn - 1)
                             .remove(number);
                 } else {
-                    personalCandidates.get(((this.selected_row - 1) * 9) + this.selected_column - 1)
+                    personalCandidates.get(((this.selectedRow - 1) * 9) + this.selectedColumn - 1)
                             .add(number);
                 }
             }
@@ -407,14 +406,14 @@ public class Solver implements Serializable {
         if (this.board[row][col] != 0) {
             return null;
         }
-        HashSet<Integer> rowSet = getRowCandidates(row);
-        HashSet<Integer> colSet = getColCandidates(col);
-        HashSet<Integer> subsquareSet = getSubsquareCandidates(row, col);
+        HashSet<Integer> rowCandidates = getRowCandidates(row);
+        HashSet<Integer> colCandidates = getColCandidates(col);
+        HashSet<Integer> subsquareCandidates = getSubsquareCandidates(row, col);
 
         // only return numbers that are contained in all three sets
-        HashSet<Integer> candidateSet = new HashSet<>(rowSet);
-        candidateSet.retainAll(colSet);
-        candidateSet.retainAll(subsquareSet);
+        HashSet<Integer> candidateSet = new HashSet<>(rowCandidates);
+        candidateSet.retainAll(colCandidates);
+        candidateSet.retainAll(subsquareCandidates);
         return candidateSet;
     }
 
@@ -593,11 +592,11 @@ public class Solver implements Serializable {
     }
 
     public int getSelectedRow() {
-        return selected_row;
+        return selectedRow;
     }
 
     public int getSelectedColumn() {
-        return selected_column;
+        return selectedColumn;
     }
 
     public ArrayList<HashSet<Integer>> getPersonalCandidates() {
@@ -605,11 +604,11 @@ public class Solver implements Serializable {
     }
 
     public void setSelectedRow(int row) {
-        selected_row = row;
+        selectedRow = row;
     }
 
     public void setSelectedColumn(int column) {
-        selected_column = column;
+        selectedColumn = column;
     }
 
     public void setMaxRecursion(int recursion) {
