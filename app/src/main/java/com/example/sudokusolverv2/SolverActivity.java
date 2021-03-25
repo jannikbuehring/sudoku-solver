@@ -27,20 +27,19 @@ public class SolverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solver);
         Bundle b = getIntent().getExtras();
-        int[][] board = (int[][])b.getSerializable("Board");
+        int[][] board = (int[][]) b.getSerializable("Board");
         gameBoard = findViewById(R.id.SudokuSolvingBoard);
         gameBoardSolver = gameBoard.getSolver();
         gameBoardSolver.board = board;
         gameBoard.invalidate();
-        gameBoard.fixNumbers();
+        gameBoardSolver.fixNumbers();
     }
 
     public void BTNOnePress(View view) {
-        if(this.editCandidatesButtonSelected) {
+        if (this.editCandidatesButtonSelected) {
             gameBoardSolver.setCandidatePos(1);
             gameBoard.invalidate();
-        }
-        else {
+        } else {
             gameBoardSolver.setNumberPos(1);
             gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
@@ -48,11 +47,10 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void BTNTwoPress(View view) {
-        if(this.editCandidatesButtonSelected) {
+        if (this.editCandidatesButtonSelected) {
             gameBoardSolver.setCandidatePos(2);
             gameBoard.invalidate();
-        }
-        else {
+        } else {
             gameBoardSolver.setNumberPos(2);
             gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
@@ -60,11 +58,10 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void BTNThreePress(View view) {
-        if(this.editCandidatesButtonSelected) {
+        if (this.editCandidatesButtonSelected) {
             gameBoardSolver.setCandidatePos(3);
             gameBoard.invalidate();
-        }
-        else {
+        } else {
             gameBoardSolver.setNumberPos(3);
             gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
@@ -72,11 +69,10 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void BTNFourPress(View view) {
-        if(this.editCandidatesButtonSelected) {
+        if (this.editCandidatesButtonSelected) {
             gameBoardSolver.setCandidatePos(4);
             gameBoard.invalidate();
-        }
-        else {
+        } else {
             gameBoardSolver.setNumberPos(4);
             gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
@@ -84,11 +80,10 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void BTNFivePress(View view) {
-        if(this.editCandidatesButtonSelected) {
+        if (this.editCandidatesButtonSelected) {
             gameBoardSolver.setCandidatePos(5);
             gameBoard.invalidate();
-        }
-        else {
+        } else {
             gameBoardSolver.setNumberPos(5);
             gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
@@ -96,11 +91,10 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void BTNSixPress(View view) {
-        if(this.editCandidatesButtonSelected) {
+        if (this.editCandidatesButtonSelected) {
             gameBoardSolver.setCandidatePos(6);
             gameBoard.invalidate();
-        }
-        else {
+        } else {
             gameBoardSolver.setNumberPos(6);
             gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
@@ -108,11 +102,10 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void BTNSevenPress(View view) {
-        if(this.editCandidatesButtonSelected) {
+        if (this.editCandidatesButtonSelected) {
             gameBoardSolver.setCandidatePos(7);
             gameBoard.invalidate();
-        }
-        else {
+        } else {
             gameBoardSolver.setNumberPos(7);
             gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
@@ -120,11 +113,10 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void BTNEightPress(View view) {
-        if(this.editCandidatesButtonSelected) {
+        if (this.editCandidatesButtonSelected) {
             gameBoardSolver.setCandidatePos(8);
             gameBoard.invalidate();
-        }
-        else {
+        } else {
             gameBoardSolver.setNumberPos(8);
             gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
@@ -132,11 +124,10 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void BTNNinePress(View view) {
-        if(this.editCandidatesButtonSelected) {
+        if (this.editCandidatesButtonSelected) {
             gameBoardSolver.setCandidatePos(9);
             gameBoard.invalidate();
-        }
-        else {
+        } else {
             gameBoardSolver.setNumberPos(9);
             gameBoardSolver.updatePersonalCandidates();
             gameBoard.invalidate();
@@ -145,12 +136,11 @@ public class SolverActivity extends AppCompatActivity {
 
     public void editCandidatesButtonPress(View view) {
         Button editCandidatesButton = findViewById(R.id.editCandidatesButton);
-        if(editCandidatesButton.isSelected()) {
+        if (editCandidatesButton.isSelected()) {
             editCandidatesButton.setSelected(false);
 
             this.editCandidatesButtonSelected = false;
-        }
-        else {
+        } else {
             editCandidatesButton.setSelected(true);
 
             this.editCandidatesButtonSelected = true;
@@ -159,7 +149,7 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void tipButtonPress(View view) {
-        if(gameBoardSolver.NakedSingleTip() != null) {
+        if (gameBoardSolver.NakedSingleTip() != null) {
             int[] pos = gameBoardSolver.NakedSingleTip();
             int row = pos[0];
             int column = pos[1];
@@ -180,8 +170,7 @@ public class SolverActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(context, text, duration);
             toast.setGravity(Gravity.BOTTOM, 0, 200);
             toast.show();
-        }
-        else {
+        } else {
             gameBoard.setTipLocation(null);
             gameBoard.invalidate();
             Context context = getApplicationContext();
@@ -198,15 +187,14 @@ public class SolverActivity extends AppCompatActivity {
         if (showAllCandidatesButton.isSelected()) {
             showAllCandidatesButton.setSelected(false);
             gameBoard.setShowAllCandidates(false);
-        }
-        else {
+        } else {
             showAllCandidatesButton.setSelected(true);
             gameBoard.setShowAllCandidates(true);
         }
     }
 
     public void solutionButtonPress(View view) {
-        if(gameBoardSolver.NakedSingle()) {
+        if (gameBoardSolver.NakedSingle()) {
             return;
         }
     }

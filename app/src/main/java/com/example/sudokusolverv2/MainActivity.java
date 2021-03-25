@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         Solver gameBoardSolverUnsolved;
         gameBoardSolverUnsolved = (Solver) SerializationUtils.clone(gameBoardSolver);
 
-        if(!gameBoardSolver.validateBoard()) {
+        if (!gameBoardSolver.validateBoard()) {
             Context context = getApplicationContext();
             CharSequence text = "Rule violations found!";
             int duration = Toast.LENGTH_SHORT;
@@ -100,8 +100,7 @@ public class MainActivity extends AppCompatActivity {
             toast.setGravity(Gravity.TOP, 0, 0);
             toast.show();
             return;
-        }
-        else if(!gameBoardSolver.preCheckLessThan17Cells()) {
+        } else if (!gameBoardSolver.preCheckLessThan17Cells()) {
             Context context = getApplicationContext();
             CharSequence text = "Too many solutions!";
             int duration = Toast.LENGTH_SHORT;
@@ -109,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
             toast.setGravity(Gravity.TOP, 0, 0);
             toast.show();
             return;
-        }
-        else if(!gameBoardSolver.preCheckMoreThan2NumbersNotOccurring()) {
+        } else if (!gameBoardSolver.preCheckMoreThan2NumbersNotOccurring()) {
             Context context = getApplicationContext();
             CharSequence text = "Too many solutions!";
             int duration = Toast.LENGTH_SHORT;
@@ -123,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
         //SolveBoardThread solveBoardThread = new SolveBoardThread();
 
         //new Thread(solveBoardThread).start();
-        gameBoardSolver.maxRecursion = 0;
+        gameBoardSolver.setMaxRecursion(0);
 
-        if(gameBoardSolver.checkIfSudokuHasTooManySolutions(gameBoardSolverUnsolved.board)) {
+        if (gameBoardSolver.checkIfSudokuHasTooManySolutions(gameBoardSolverUnsolved.board)) {
             Context context = getApplicationContext();
             CharSequence text = "Too many solutions!";
             int duration = Toast.LENGTH_SHORT;
@@ -135,17 +133,16 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        gameBoardSolver.maxRecursion = 0;
+        gameBoardSolver.setMaxRecursion(0);
 
-        if (!gameBoardSolver.checkIfSudokuHasOneSolution()){
+        if (!gameBoardSolver.checkIfSudokuHasOneSolution()) {
             Context context = getApplicationContext();
             CharSequence text = "No solution found!";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, text, duration);
             toast.setGravity(Gravity.TOP, 0, 0);
             toast.show();
-        }
-        else {
+        } else {
             // Starting the next activity and giving over the game state
 
             // Set board back to unsolved state
