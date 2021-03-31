@@ -2,10 +2,6 @@ package com.example.sudokusolverv2;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.lang3.SerializationUtils;
-
-import java.util.HashSet;
-
 public class NakedSingleTest extends TestCase {
 
 
@@ -24,6 +20,8 @@ public class NakedSingleTest extends TestCase {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        assertTrue(nakedSingle.EnterNakedSingle());
+        int pos[] = nakedSingle.getNakedSingleLocation();
+        assertEquals(pos[0], 0);
+        assertEquals(pos[1], 8);
     }
 }

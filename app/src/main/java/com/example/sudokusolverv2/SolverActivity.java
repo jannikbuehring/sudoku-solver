@@ -2,7 +2,6 @@ package com.example.sudokusolverv2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -10,10 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.sudokusolverv2.solutionStrategies.HiddenSingle;
 import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,7 +19,8 @@ public class SolverActivity extends AppCompatActivity {
 
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
-    private NakedSingle nakedSingle = new NakedSingle();
+    private final NakedSingle nakedSingle = new NakedSingle();
+    private final HiddenSingle hiddenSingle = new HiddenSingle();
 
     private boolean editCandidatesButtonSelected = false;
 
@@ -37,6 +36,7 @@ public class SolverActivity extends AppCompatActivity {
         gameBoard.invalidate();
         gameBoardSolver.fixNumbers();
         nakedSingle.setSolver(gameBoardSolver);
+        hiddenSingle.setSolver(gameBoardSolver);
     }
 
     public void BTNOnePress(View view) {
@@ -153,8 +153,8 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void tipButtonPress(View view) {
-        if (nakedSingle.GetNakedSingleLocation() != null) {
-            int[] pos = nakedSingle.GetNakedSingleLocation();
+        if (nakedSingle.getNakedSingleLocation() != null) {
+            int[] pos = nakedSingle.getNakedSingleLocation();
             int row = pos[0];
             int column = pos[1];
             BlockLocation tipLocationBlock = gameBoardSolver.calculateTipLocationBlock(row, column);
@@ -168,21 +168,13 @@ public class SolverActivity extends AppCompatActivity {
                     gameBoard.invalidate();
                 }
             }, 3000);
-            Context context = getApplicationContext();
-            CharSequence text = "Probiere es hier mit der Naked Single Strategie";
-            int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.setGravity(Gravity.BOTTOM, 0, 200);
-            toast.show();
+
+            showTooltip("Probiere es hier mit der Naked Single Strategie", 5000);
         } else {
             gameBoard.setTipLocation(null);
             gameBoard.invalidate();
-            Context context = getApplicationContext();
-            CharSequence text = "Kein Tipp verfügbar";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.setGravity(Gravity.BOTTOM, 0, 200);
-            toast.show();
+
+            showTooltip("Kein Tipp verfügbar", 3000);
         }
     }
 
@@ -198,23 +190,25 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void solutionButtonPress(View view) {
-        if (nakedSingle.GetNakedSingleLocation() != null) {
-            nakedSingle.EnterNakedSingle();
-            Context context = getApplicationContext();
-            CharSequence text = "Auf dieses Feld konnte die Naked Single Strategie angewendet " +
-                    "werden";
-            int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.setGravity(Gravity.BOTTOM, 0, 200);
-            toast.show();
+        if (nakedSingle.getNakedSingleLocation() != null) {
+            nakedSingle.enterNakedSingle();
+
+            showTooltip("Auf dieses Feld konnte die Naked Single Strategie angewendet werden", 5000);
+        }
+        else if (hiddenSingle.getHiddenSingleLocation() != null) {
+            hiddenSingle.enterHiddenSingle();
+
+            showTooltip("Auf dieses Feld konnte die Hidden Single Strategie angewendet werden", 5000);
         }
         else {
-            Context context = getApplicationContext();
-            CharSequence text = "Aktuell keine Lösungsstrategie verfügbar";
-            int duration = Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.setGravity(Gravity.BOTTOM, 0, 200);
-            toast.show();
+            showTooltip("Aktuell keine Lösungsstrategie verfügbar", 5000);
         }
+    }
+
+    private void showTooltip(String message, int duration) {
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, message, duration);
+        toast.setGravity(Gravity.BOTTOM, 0, 200);
+        toast.show();
     }
 }

@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 public class HiddenSingleTest extends TestCase {
 
-    public void testEnterHiddenSingleRow() {
+    public void testGetHiddenSingleRowLocation() {
         Solver solver = new Solver();
         HiddenSingle hiddenSingle = new HiddenSingle();
         hiddenSingle.setSolver(solver);
@@ -21,6 +21,8 @@ public class HiddenSingleTest extends TestCase {
                 {0, 0, 0, 9, 0, 0, 8, 1, 0},
                 {0, 0, 9, 0, 0, 0, 0, 0, 0}
         };
-        assertTrue(hiddenSingle.EnterHiddenSingleRow(2));
+        int[] pos = hiddenSingle.getHiddenSingleRowLocation(2);
+        assertEquals(pos[0], 2);
+        assertEquals(pos[1], 0);
     }
 }
