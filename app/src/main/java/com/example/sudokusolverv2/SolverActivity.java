@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -19,6 +21,7 @@ public class SolverActivity extends AppCompatActivity {
 
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
+    private NakedSingle nakedSingle = new NakedSingle();
 
     private boolean editCandidatesButtonSelected = false;
 
@@ -33,6 +36,7 @@ public class SolverActivity extends AppCompatActivity {
         gameBoardSolver.board = board;
         gameBoard.invalidate();
         gameBoardSolver.fixNumbers();
+        nakedSingle.setSolver(gameBoardSolver);
     }
 
     public void BTNOnePress(View view) {
@@ -149,8 +153,8 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void tipButtonPress(View view) {
-        if (gameBoardSolver.NakedSingleTip() != null) {
-            int[] pos = gameBoardSolver.NakedSingleTip();
+        if (nakedSingle.GetNakedSingleLocation() != null) {
+            int[] pos = nakedSingle.GetNakedSingleLocation();
             int row = pos[0];
             int column = pos[1];
             BlockLocation tipLocationBlock = gameBoardSolver.calculateTipLocationBlock(row, column);
@@ -194,8 +198,8 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void solutionButtonPress(View view) {
-        if (gameBoardSolver.NakedSingleTip() != null) {
-            gameBoardSolver.NakedSingle();
+        if (nakedSingle.GetNakedSingleLocation() != null) {
+            nakedSingle.EnterNakedSingle();
             Context context = getApplicationContext();
             CharSequence text = "Auf dieses Feld konnte die Naked Single Strategie angewendet " +
                     "werden";
@@ -206,7 +210,7 @@ public class SolverActivity extends AppCompatActivity {
         }
         else {
             Context context = getApplicationContext();
-            CharSequence text = "Keine Lösungsstrategie aktuell verfügbar";
+            CharSequence text = "Aktuell keine Lösungsstrategie verfügbar";
             int duration = Toast.LENGTH_LONG;
             Toast toast = Toast.makeText(context, text, duration);
             toast.setGravity(Gravity.BOTTOM, 0, 200);

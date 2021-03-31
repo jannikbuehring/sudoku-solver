@@ -315,22 +315,6 @@ public class SolverTest extends TestCase {
         assertTrue(solver2.checkIfSudokuHasOneSolution());
     }
 
-    public void testNakedSingle() {
-        Solver solver = new Solver();
-        solver.board = new int[][]{
-                {1, 2, 3, 4, 5, 6, 7, 8, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0}
-        };
-        assertTrue(solver.NakedSingle());
-    }
-
     public void testResetBoard() {
         Solver solver = new Solver();
         solver.board = new int[][]{

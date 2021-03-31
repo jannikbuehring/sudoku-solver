@@ -575,40 +575,6 @@ public class Solver implements Serializable {
         }
     }
 
-    public int[] NakedSingleTip() {
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
-                HashSet<Integer> candidates = getCandidates(r, c);
-                if (candidates != null && candidates.size() == 1) {
-                    int[] pos = new int[2];
-                    pos[0] = r;
-                    pos[1] = c;
-                    return pos;
-                }
-            }
-        }
-        return null;
-    }
-
-    //-------------------------------SOLUTION STRATEGIES--------------------------------------------
-
-    public boolean NakedSingle() {
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
-                HashSet<Integer> candidates = getCandidates(r, c);
-                if (candidates != null && candidates.size() == 1) {
-                    for (int i : candidates) {
-                        this.board[r][c] = i;
-                    }
-                    setSelectedRow(r + 1);
-                    setSelectedColumn(c + 1);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     //--------------------------------GETTERS AND SETTERS-------------------------------------------
 
     public int[][] getBoard() {
