@@ -493,7 +493,7 @@ public class Solver implements Serializable {
 
     //-------------------------------------TIP FUNCTIONALITY----------------------------------------
 
-    public String calculateTipLocation(int row, int column) {
+    public String calculateTipLocationBlocks(int row, int column) {
         Random random = new Random();
         int x = random.nextInt(2);
         if (row < 3 && column < 3) {
@@ -553,6 +553,28 @@ public class Solver implements Serializable {
         }
     }
 
+    public BlockLocation calculateTipLocationBlock(int row, int column) {
+        if (row < 3 && column < 3) {
+            return BlockLocation.TOP_LEFT;
+        } else if (row >= 3 && row < 6 && column < 3) {
+            return BlockLocation.LEFT;
+        } else if (row >= 6 && column < 3) {
+            return BlockLocation.BOTTOM_LEFT;
+        } else if (row < 3 && column < 6) {
+            return BlockLocation.TOP;
+        } else if (row >= 6 && column < 6) {
+            return BlockLocation.BOTTOM;
+        } else if (row < 3) {
+            return BlockLocation.TOP_RIGHT;
+        } else if (row < 6 && column >= 6) {
+            return BlockLocation.RIGHT;
+        } else if (row >= 6) {
+            return BlockLocation.BOTTOM_RIGHT;
+        } else {
+            return BlockLocation.CENTER;
+        }
+    }
+
     public int[] NakedSingleTip() {
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
@@ -577,8 +599,10 @@ public class Solver implements Serializable {
                 if (candidates != null && candidates.size() == 1) {
                     for (int i : candidates) {
                         this.board[r][c] = i;
-                        return true;
                     }
+                    setSelectedRow(r + 1);
+                    setSelectedColumn(c + 1);
+                    return true;
                 }
             }
         }

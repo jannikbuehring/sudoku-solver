@@ -153,8 +153,8 @@ public class SolverActivity extends AppCompatActivity {
             int[] pos = gameBoardSolver.NakedSingleTip();
             int row = pos[0];
             int column = pos[1];
-            String tipLocation = gameBoardSolver.calculateTipLocation(row, column);
-            gameBoard.setTipLocation(tipLocation);
+            BlockLocation tipLocationBlock = gameBoardSolver.calculateTipLocationBlock(row, column);
+            gameBoard.setTipLocation(tipLocationBlock);
             gameBoard.invalidate();
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -166,7 +166,7 @@ public class SolverActivity extends AppCompatActivity {
             }, 3000);
             Context context = getApplicationContext();
             CharSequence text = "Probiere es hier mit der Naked Single Strategie";
-            int duration = Toast.LENGTH_SHORT;
+            int duration = Toast.LENGTH_LONG;
             Toast toast = Toast.makeText(context, text, duration);
             toast.setGravity(Gravity.BOTTOM, 0, 200);
             toast.show();
@@ -194,8 +194,23 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void solutionButtonPress(View view) {
-        if (gameBoardSolver.NakedSingle()) {
-            return;
+        if (gameBoardSolver.NakedSingleTip() != null) {
+            gameBoardSolver.NakedSingle();
+            Context context = getApplicationContext();
+            CharSequence text = "Auf dieses Feld konnte die Naked Single Strategie angewendet " +
+                    "werden";
+            int duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.setGravity(Gravity.BOTTOM, 0, 200);
+            toast.show();
+        }
+        else {
+            Context context = getApplicationContext();
+            CharSequence text = "Keine Lösungsstrategie aktuell verfügbar";
+            int duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.setGravity(Gravity.BOTTOM, 0, 200);
+            toast.show();
         }
     }
 }

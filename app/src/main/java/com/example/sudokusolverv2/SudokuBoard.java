@@ -39,7 +39,8 @@ public class SudokuBoard extends View {
 
     private final Solver solver = new Solver();
     private boolean showAllCandidates;
-    private String tipLocation;
+
+    private BlockLocation tipLocationBlock;
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -101,7 +102,8 @@ public class SudokuBoard extends View {
         drawNumbers(canvas);
         drawCandidateNumbers(canvas);
         drawPersonalCandidateNumbers(canvas);
-        drawTip(canvas);
+        //drawTip(canvas);
+        drawBlockTip(canvas);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -429,26 +431,61 @@ public class SudokuBoard extends View {
     }
 
     //------------------------------------------TIP DRAWING-----------------------------------------
-
+    /*
     private void drawTip(Canvas canvas) {
-        if (tipLocation == "Top horizontal") {
+        if (tipLocationBlock == "Top horizontal") {
             canvas.drawRect(0, 0, 9 * cellSize, 3 * cellSize,
                     tipHighlightColorPaint);
-        } else if (tipLocation == "Middle horizontal") {
+        } else if (tipLocationBlock == "Middle horizontal") {
             canvas.drawRect(0, 3 * cellSize, 9 * cellSize, 6 * cellSize,
                     tipHighlightColorPaint);
-        } else if (tipLocation == "Bottom horizontal") {
+        } else if (tipLocationBlock == "Bottom horizontal") {
             canvas.drawRect(0, 6 * cellSize, 9 * cellSize, 9 * cellSize,
                     tipHighlightColorPaint);
-        } else if (tipLocation == "Left vertical") {
+        } else if (tipLocationBlock == "Left vertical") {
             canvas.drawRect(0, 0, 3 * cellSize, 9 * cellSize,
                     tipHighlightColorPaint);
-        } else if (tipLocation == "Middle vertical") {
+        } else if (tipLocationBlock == "Middle vertical") {
             canvas.drawRect(3 * cellSize, 0, 6 * cellSize, 9 * cellSize,
                     tipHighlightColorPaint);
-        } else if (tipLocation == "Right vertical") {
+        } else if (tipLocationBlock == "Right vertical") {
             canvas.drawRect(6 * cellSize, 0, 9 * cellSize, 9 * cellSize,
                     tipHighlightColorPaint);
+        } else {
+            canvas.drawRect(0, 0, 0, 0, tipHighlightColorPaint);
+        }
+    }
+
+
+     */
+    private void drawBlockTip(Canvas canvas) {
+        if (tipLocationBlock == BlockLocation.TOP_LEFT) {
+            canvas.drawRect(0, 0, 3 * cellSize, 3 * cellSize,
+                    tipHighlightColorPaint);
+        } else if (tipLocationBlock == BlockLocation.TOP) {
+            canvas.drawRect(3 * cellSize, 0, 6 * cellSize, 3 * cellSize,
+                    tipHighlightColorPaint);
+        } else if (tipLocationBlock == BlockLocation.TOP_RIGHT) {
+            canvas.drawRect(6 * cellSize, 0, 9 * cellSize, 3 * cellSize,
+                    tipHighlightColorPaint);
+        } else if (tipLocationBlock == BlockLocation.LEFT) {
+            canvas.drawRect(0, 3 * cellSize, 3 * cellSize, 6 * cellSize,
+                    tipHighlightColorPaint);
+        } else if (tipLocationBlock == BlockLocation.CENTER) {
+            canvas.drawRect(3 * cellSize, 3 * cellSize, 6 * cellSize,
+                    6 * cellSize, tipHighlightColorPaint);
+        } else if (tipLocationBlock == BlockLocation.RIGHT) {
+            canvas.drawRect(6 * cellSize, 3 * cellSize, 9 * cellSize,
+                    6 * cellSize, tipHighlightColorPaint);
+        } else if (tipLocationBlock == BlockLocation.BOTTOM_LEFT) {
+            canvas.drawRect(0, 6 * cellSize, 3 * cellSize, 9 * cellSize,
+                    tipHighlightColorPaint);
+        } else if (tipLocationBlock == BlockLocation.BOTTOM) {
+            canvas.drawRect(3 * cellSize, 6 * cellSize, 6 * cellSize,
+                    9 * cellSize, tipHighlightColorPaint);
+        } else if (tipLocationBlock == BlockLocation.BOTTOM_RIGHT) {
+            canvas.drawRect(6 * cellSize, 6 * cellSize, 9 * cellSize,
+                    9 * cellSize, tipHighlightColorPaint);
         } else {
             canvas.drawRect(0, 0, 0, 0, tipHighlightColorPaint);
         }
@@ -533,7 +570,7 @@ public class SudokuBoard extends View {
         showAllCandidates = bool;
     }
 
-    public void setTipLocation(String location) {
-        tipLocation = location;
+    public void setTipLocation(BlockLocation location) {
+        tipLocationBlock = location;
     }
 }
