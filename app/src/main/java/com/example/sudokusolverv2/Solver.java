@@ -34,9 +34,10 @@ public class Solver implements Serializable {
         }
 
         for (int i = 0; i < 81; i++) {
-            HashSet<Integer> emptySet = new HashSet<>();
-            personalCandidates.add(emptySet);
-            calculatedCandidates.add(emptySet);
+            HashSet<Integer> emptyPersonalCandidateSet = new HashSet<>();
+            HashSet<Integer> emptyCalculatedCandidateSet = new HashSet<>();
+            personalCandidates.add(emptyPersonalCandidateSet);
+            calculatedCandidates.add(emptyCalculatedCandidateSet);
         }
     }
 
@@ -107,6 +108,16 @@ public class Solver implements Serializable {
     }
 
     //----------------------------------CANDIDATE SYSTEM--------------------------------------------
+
+    public void updateCandidates() {
+        updateCalculatedCandidates();
+        updatePersonalCandidates();
+
+        // if a number got removed, recalculate candidates for complete candidate list
+        if (this.board[this.selectedRow - 1][this.selectedColumn - 1] == 0) {
+            calculateInitialCandidates();
+        }
+    }
 
     public HashSet<Integer> getRowCandidates(int row) {
         this.rowCandidates = updateRowCandidates();
@@ -196,18 +207,61 @@ public class Solver implements Serializable {
         return this.subsquareCandidates;
     }
 
+    public void calculateInitialCandidates() {
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                HashSet<Integer> candidates = getCandidates(r, c);
+                if (candidates != null) {
+                    for (int candidate : candidates) {
+                        calculatedCandidates.get(r * 9 + c).add(candidate);
+                    }
+                }
+            }
+        }
+    }
+
+    public void updateCalculatedCandidates() {
+        int row = this.selectedRow - 1;
+        int col = this.selectedColumn - 1;
+
+        // clear candidates of selected field
+        calculatedCandidates.get(row * 9 + col).clear();
+
+        int number = this.board[row][col];
+
+        // remove from row
+        for (int c = 0; c < 9; c++) {
+            calculatedCandidates.get(row * 9 + c).remove(number);
+        }
+
+        // remove from col
+        for (int r = 0; r < 9; r++) {
+            calculatedCandidates.get(r * 9 + col).remove(number);
+        }
+
+        // remove from block
+        int boxRow = row / 3;
+        int boxCol = col / 3;
+        for (int r = boxRow * 3; r < boxRow * 3 + 3; r++) {
+            for (int c = boxCol * 3; c < boxCol * 3 + 3; c++) {
+                calculatedCandidates.get(r * 9 + c).remove(number);
+            }
+        }
+    }
+
     // Update the list of user added candidates when a new number gets added
     // If a number of the personal candidate set is no longer in the set of all candidates, remove it
     public void updatePersonalCandidates() {
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
-                HashSet<Integer> allCandidates = getCandidates(r, c);
+                HashSet<Integer> calculatedCandidateSet = (HashSet<Integer>) calculatedCandidates
+                        .get(r * 9 + c).clone();
                 HashSet<Integer> personalCandidateSet = (HashSet<Integer>) personalCandidates
                         .get(r * 9 + c).clone();
                 for (int candidate : personalCandidateSet) {
-                    if (allCandidates == null) {
+                    if (calculatedCandidateSet == null) {
                         personalCandidates.get(r * 9 + c).remove(candidate);
-                    } else if (!allCandidates.contains(candidate)) {
+                    } else if (!calculatedCandidateSet.contains(candidate)) {
                         personalCandidates.get(r * 9 + c).remove(candidate);
                     }
                 }

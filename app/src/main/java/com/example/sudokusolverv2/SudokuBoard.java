@@ -102,7 +102,6 @@ public class SudokuBoard extends View {
         drawNumbers(canvas);
         drawCandidateNumbers(canvas);
         drawPersonalCandidateNumbers(canvas);
-        //drawTip(canvas);
         drawBlockTip(canvas);
         drawRowTip(canvas);
         drawColTip(canvas);
@@ -172,7 +171,7 @@ public class SudokuBoard extends View {
     //---------------------------------------CANDIDATE DRAWING--------------------------------------
 
     private void updateSudokuBoardCandidates(Canvas canvas, int r, int c) {
-        HashSet<Integer> candidates = solver.getCandidates(r, c);
+        HashSet<Integer> candidates = solver.calculatedCandidates.get(r * 9 + c);
         for (int candidate : candidates) {
             if (candidate == 1) {
                 String text = Integer.toString(candidate);
