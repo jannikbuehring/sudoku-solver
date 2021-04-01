@@ -457,9 +457,8 @@ public class SudokuBoard extends View {
             canvas.drawRect(0, 0, 0, 0, tipHighlightColorPaint);
         }
     }
-
-
      */
+
     private void drawBlockTip(Canvas canvas) {
         if (tipLocationBlock == BlockLocation.TOP_LEFT) {
             canvas.drawRect(0, 0, 3 * cellSize, 3 * cellSize,

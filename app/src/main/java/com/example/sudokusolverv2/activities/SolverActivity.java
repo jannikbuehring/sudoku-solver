@@ -1,4 +1,4 @@
-package com.example.sudokusolverv2;
+package com.example.sudokusolverv2.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.sudokusolverv2.BlockLocation;
+import com.example.sudokusolverv2.R;
+import com.example.sudokusolverv2.Solver;
+import com.example.sudokusolverv2.SudokuBoard;
 import com.example.sudokusolverv2.solutionStrategies.HiddenSingle;
 import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
 
@@ -170,8 +174,7 @@ public class SolverActivity extends AppCompatActivity {
             }, 3000);
 
             showTooltip("Probiere es hier mit der Naked Single Strategie", 5000);
-        }
-        else if (hiddenSingle.getHiddenSingleLocation() != null) {
+        } else if (hiddenSingle.getHiddenSingleLocation() != null) {
             int[] pos = new int[3];
             for (int r = 0; r < 9; r++) {
                 if (hiddenSingle.getHiddenSingleRowLocation(r) != null) {
@@ -234,8 +237,7 @@ public class SolverActivity extends AppCompatActivity {
                 showTooltip("In diesem Block befindet sich ein Hidden Single",
                         5000);
             }
-        }
-        else {
+        } else {
             gameBoard.setTipLocationBlock(null);
             gameBoard.invalidate();
 
@@ -259,13 +261,11 @@ public class SolverActivity extends AppCompatActivity {
             nakedSingle.enterNakedSingle();
 
             showTooltip("Auf dieses Feld konnte die Naked Single Strategie angewendet werden", 5000);
-        }
-        else if (hiddenSingle.getHiddenSingleLocation() != null) {
+        } else if (hiddenSingle.getHiddenSingleLocation() != null) {
             hiddenSingle.enterHiddenSingle();
 
             showTooltip("Auf dieses Feld konnte die Hidden Single Strategie angewendet werden", 5000);
-        }
-        else {
+        } else {
             showTooltip("Aktuell keine Lösungsstrategie verfügbar", 5000);
         }
     }

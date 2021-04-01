@@ -1,4 +1,4 @@
-package com.example.sudokusolverv2;
+package com.example.sudokusolverv2.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.sudokusolverv2.R;
+import com.example.sudokusolverv2.Solver;
+import com.example.sudokusolverv2.SudokuBoard;
+import com.example.sudokusolverv2.sudokuValidation.Validator;
 
 import org.apache.commons.lang3.SerializationUtils;
 
@@ -16,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
+    private Validator validator = new Validator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 {0, 0, 8, 5, 0, 0, 0, 1, 0},
                 {0, 9, 0, 0, 0, 0, 4, 0, 0}
         };
+        validator.setSolver(gameBoardSolver);
     }
 
     public void BTNOnePress(View view) {
@@ -92,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         Solver gameBoardSolverUnsolved;
         gameBoardSolverUnsolved = (Solver) SerializationUtils.clone(gameBoardSolver);
 
-        if (!gameBoardSolver.validateBoard()) {
+        if (!validator.validateBoard()) {
             Context context = getApplicationContext();
             CharSequence text = "Rule violations found!";
             int duration = Toast.LENGTH_SHORT;
@@ -100,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             toast.setGravity(Gravity.TOP, 0, 0);
             toast.show();
             return;
-        } else if (!gameBoardSolver.preCheckLessThan17Cells()) {
+        } else if (!validator.preCheckLessThan17Cells()) {
             Context context = getApplicationContext();
             CharSequence text = "Too many solutions!";
             int duration = Toast.LENGTH_SHORT;
@@ -108,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             toast.setGravity(Gravity.TOP, 0, 0);
             toast.show();
             return;
-        } else if (!gameBoardSolver.preCheckMoreThan2NumbersNotOccurring()) {
+        } else if (!validator.preCheckMoreThan2NumbersNotOccurring()) {
             Context context = getApplicationContext();
             CharSequence text = "Too many solutions!";
             int duration = Toast.LENGTH_SHORT;
@@ -121,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
         //SolveBoardThread solveBoardThread = new SolveBoardThread();
 
         //new Thread(solveBoardThread).start();
-        gameBoardSolver.setMaxRecursion(0);
+        validator.setRecursionSteps(0);
 
-        if (gameBoardSolver.checkIfSudokuHasTooManySolutions(gameBoardSolverUnsolved.board)) {
+        if (validator.checkIfSudokuHasTooManySolutions(gameBoardSolverUnsolved.board)) {
             Context context = getApplicationContext();
             CharSequence text = "Too many solutions!";
             int duration = Toast.LENGTH_SHORT;
@@ -133,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        gameBoardSolver.setMaxRecursion(0);
+        validator.setRecursionSteps(0);
 
-        if (!gameBoardSolver.checkIfSudokuHasOneSolution()) {
+        if (!validator.checkIfSudokuHasOneSolution()) {
             Context context = getApplicationContext();
             CharSequence text = "No solution found!";
             int duration = Toast.LENGTH_SHORT;
