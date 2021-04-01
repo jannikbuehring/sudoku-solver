@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -40,6 +38,8 @@ public class SudokuBoard extends View {
     private final Solver solver = new Solver();
     private boolean showAllCandidates;
 
+    private Integer tipLocationRow;
+    private Integer tipLocationCol;
     private BlockLocation tipLocationBlock;
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
@@ -104,6 +104,8 @@ public class SudokuBoard extends View {
         drawPersonalCandidateNumbers(canvas);
         //drawTip(canvas);
         drawBlockTip(canvas);
+        drawRowTip(canvas);
+        drawColTip(canvas);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -492,6 +494,25 @@ public class SudokuBoard extends View {
 
     }
 
+    private void drawRowTip(Canvas canvas) {
+        if (tipLocationRow != null) {
+            canvas.drawRect(0, tipLocationRow * cellSize, 9 * cellSize,
+                    (tipLocationRow + 1) * cellSize, tipHighlightColorPaint);
+        } else {
+            canvas.drawRect(0, 0, 0, 0, tipHighlightColorPaint);
+        }
+    }
+
+    private void drawColTip(Canvas canvas) {
+        if (tipLocationCol != null) {
+            canvas.drawRect(tipLocationCol * cellSize, 0,
+                    (tipLocationCol + 1) * cellSize,
+                    9 * cellSize, tipHighlightColorPaint);
+        } else {
+            canvas.drawRect(0, 0, 0, 0, tipHighlightColorPaint);
+        }
+    }
+
     private void colorCell(Canvas canvas, int row, int column) {
         if (solver.getSelectedColumn() != -1 && solver.getSelectedRow() != -1) {
             //define rectangle for column
@@ -570,7 +591,15 @@ public class SudokuBoard extends View {
         showAllCandidates = bool;
     }
 
-    public void setTipLocation(BlockLocation location) {
+    public void setTipLocationBlock(BlockLocation location) {
         tipLocationBlock = location;
+    }
+
+    public void setTipLocationRow(Integer row) {
+        tipLocationRow = row;
+    }
+
+    public void setTipLocationCol(Integer col) {
+        tipLocationCol = col;
     }
 }

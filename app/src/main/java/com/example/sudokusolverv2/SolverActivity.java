@@ -158,20 +158,85 @@ public class SolverActivity extends AppCompatActivity {
             int row = pos[0];
             int column = pos[1];
             BlockLocation tipLocationBlock = gameBoardSolver.calculateTipLocationBlock(row, column);
-            gameBoard.setTipLocation(tipLocationBlock);
+            gameBoard.setTipLocationBlock(tipLocationBlock);
             gameBoard.invalidate();
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    gameBoard.setTipLocation(null);
+                    gameBoard.setTipLocationBlock(null);
                     gameBoard.invalidate();
                 }
             }, 3000);
 
             showTooltip("Probiere es hier mit der Naked Single Strategie", 5000);
-        } else {
-            gameBoard.setTipLocation(null);
+        }
+        else if (hiddenSingle.getHiddenSingleLocation() != null) {
+            int[] pos = new int[3];
+            for (int r = 0; r < 9; r++) {
+                if (hiddenSingle.getHiddenSingleRowLocation(r) != null) {
+                    pos = hiddenSingle.getHiddenSingleRowLocation(r);
+                    int row = pos[0];
+                    gameBoard.setTipLocationRow(row);
+                    gameBoard.invalidate();
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            gameBoard.setTipLocationRow(null);
+                            gameBoard.invalidate();
+                        }
+                    }, 3000);
+
+                    showTooltip("In dieser Reihe befindet sich ein Hidden Single",
+                            5000);
+                    return;
+                }
+            }
+
+            for (int c = 0; c < 9; c++) {
+                if (hiddenSingle.getHiddenSingleColLocation(c) != null) {
+                    pos = hiddenSingle.getHiddenSingleColLocation(c);
+                    int col = pos[1];
+                    gameBoard.setTipLocationCol(col);
+                    gameBoard.invalidate();
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            gameBoard.setTipLocationCol(null);
+                            gameBoard.invalidate();
+                        }
+                    }, 3000);
+
+                    showTooltip("In dieser Spalte befindet sich ein Hidden Single",
+                            5000);
+                    return;
+                }
+            }
+
+            if (hiddenSingle.getHiddenSingleBlockLocation() != null) {
+                pos = hiddenSingle.getHiddenSingleBlockLocation();
+                int row = pos[0];
+                int col = pos[1];
+                BlockLocation tipLocationBlock = gameBoardSolver.calculateTipLocationBlock(row, col);
+                gameBoard.setTipLocationBlock(tipLocationBlock);
+                gameBoard.invalidate();
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        gameBoard.setTipLocationBlock(null);
+                        gameBoard.invalidate();
+                    }
+                }, 3000);
+
+                showTooltip("In diesem Block befindet sich ein Hidden Single",
+                        5000);
+            }
+        }
+        else {
+            gameBoard.setTipLocationBlock(null);
             gameBoard.invalidate();
 
             showTooltip("Kein Tipp verfügbar", 3000);

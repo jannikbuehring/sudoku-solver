@@ -39,6 +39,13 @@ public class HiddenSingle {
                 return pos;
             }
         }
+
+        // Check for hidden singles in blocks
+        if (getHiddenSingleBlockLocation() != null) {
+            pos = getHiddenSingleBlockLocation();
+            return pos;
+        }
+
         return null;
     }
 
@@ -161,6 +168,61 @@ public class HiddenSingle {
                                 pos[1] = col;
                                 pos[2] = hiddenSingle;
                                 return pos;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    // Return the location (row, column) of a hidden single in a block
+    public int[] getHiddenSingleBlockLocation() {
+        for (int row = 0; row < 9; row = row + 3) {
+            for (int col = 0; col < 9; col = col + 3) {
+
+                ArrayList<ArrayList<Integer>> list = new ArrayList<>(9);
+                for (int cap = 0; cap < 9; cap++) {
+                    list.add(new ArrayList<>());
+                }
+
+                for (int r = row; r < row + 3; r++) {
+                    for (int c = col; c < col + 3; c++) {
+                        if (solver.board[r][c] == 0) {
+                            HashSet<Integer> candidates = solver.getCandidates(r, c);
+                            if (candidates != null) {
+                                for (int i : candidates) {
+                                    list.get(i - 1).add(i);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                int hiddenSingle = 0;
+                for (int i = 0; i < 9; i++) {
+                    if (list.get(i).size() == 1) {
+                        hiddenSingle = list.get(i).get(0);
+                        break;
+                    }
+                }
+                if (hiddenSingle > 0) {
+                    for (int r = row; r < row + 3; r++) {
+                        for (int c = col; c < col + 3; c++) {
+                            if (solver.board[r][c] == 0) {
+                                HashSet<Integer> candidates = solver.getCandidates(r, col);
+                                if (candidates != null) {
+                                    for (int i : candidates) {
+                                        if (i == hiddenSingle) {
+                                            int[] pos = new int[3];
+                                            pos[0] = r;
+                                            pos[1] = col;
+                                            pos[2] = hiddenSingle;
+                                            return pos;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
