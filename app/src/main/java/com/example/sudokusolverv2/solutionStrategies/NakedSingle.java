@@ -4,7 +4,7 @@ import com.example.sudokusolverv2.Solver;
 
 import java.util.HashSet;
 
-public class NakedSingle extends Solver {
+public class NakedSingle {
 
     private Solver solver;
 
@@ -16,12 +16,13 @@ public class NakedSingle extends Solver {
         solver.setSelectedRow(row + 1);
         solver.setSelectedColumn(column + 1);
         solver.setNumberPos(solution);
+        solver.updateCandidates();
     }
 
     public int[] getNakedSingleLocation() {
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {
-                HashSet<Integer> candidates = solver.getCandidates(r, c);
+                HashSet<Integer> candidates = solver.calculatedCandidates.get(r * 9 + c);
                 if (candidates != null && candidates.size() == 1) {
                     int[] pos = new int[3];
                     pos[0] = r;
