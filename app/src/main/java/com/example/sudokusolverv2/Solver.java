@@ -1,12 +1,8 @@
 package com.example.sudokusolverv2;
 
-import org.apache.commons.lang3.SerializationUtils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
 
 public class Solver implements Serializable {
 
@@ -109,10 +105,6 @@ public class Solver implements Serializable {
             }
         }
     }
-
-    //--------------------------------------VALIDATION----------------------------------------------
-
-
 
     //----------------------------------CANDIDATE SYSTEM--------------------------------------------
 
@@ -225,6 +217,7 @@ public class Solver implements Serializable {
 
     //-------------------------------------TIP FUNCTIONALITY----------------------------------------
 
+    /* NOT IN USE ATM
     public String calculateTipLocationBlocks(int row, int column) {
         Random random = new Random();
         int x = random.nextInt(2);
@@ -284,6 +277,8 @@ public class Solver implements Serializable {
             }
         }
     }
+
+     */
 
     public BlockLocation calculateTipLocationBlock(int row, int column) {
         if (row < 3 && column < 3) {
