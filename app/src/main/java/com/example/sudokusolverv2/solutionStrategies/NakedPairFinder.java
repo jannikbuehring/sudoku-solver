@@ -115,9 +115,7 @@ public class NakedPairFinder {
             ArrayList<FieldCandidates> completeRow = new ArrayList<>();
             for (int c = 0; c < 9; c++) {
                 if (solver.board[r][c] == 0) {
-                    FieldCandidates candidateSet = new FieldCandidates(solver.calculatedCandidates.get(r * 9 + c));
-                    candidateSet.row = r;
-                    candidateSet.column = c;
+                    FieldCandidates candidateSet = new FieldCandidates(r, c, solver.calculatedCandidates.get(r * 9 + c));
                     completeRow.add(candidateSet);
                 }
             }
@@ -145,9 +143,7 @@ public class NakedPairFinder {
             ArrayList<FieldCandidates> completeCol = new ArrayList<>();
             for (int r = 0; r < 9; r++) {
                 if (solver.board[r][c] == 0) {
-                    FieldCandidates candidateSet = new FieldCandidates(solver.calculatedCandidates.get(r * 9 + c));
-                    candidateSet.row = r;
-                    candidateSet.column = c;
+                    FieldCandidates candidateSet = new FieldCandidates(r, c, solver.calculatedCandidates.get(r * 9 + c));
                     completeCol.add(candidateSet);
                 }
             }
@@ -178,9 +174,7 @@ public class NakedPairFinder {
                     for (int c = col; c < col + 3; c++) {
                         if (solver.board[r][c] == 0) {
                             FieldCandidates candidateSet = new
-                                    FieldCandidates(solver.calculatedCandidates.get(r * 9 + c));
-                            candidateSet.row = r;
-                            candidateSet.column = c;
+                                    FieldCandidates(r, c, solver.calculatedCandidates.get(r * 9 + c));
                             completeBlock.add(candidateSet);
                         }
                     }

@@ -1,5 +1,6 @@
 package com.example.sudokusolverv2;
 
+import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
 import com.example.sudokusolverv2.solutionStrategies.NakedSingleFinder;
 
 import junit.framework.TestCase;
@@ -23,8 +24,8 @@ public class NakedSingleFinderTest extends TestCase {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
         solver.calculateInitialCandidates();
-        int[] pos = nakedSingleFinder.getNakedSingle();
-        assertEquals(pos[0], 0);
-        assertEquals(pos[1], 8);
+        NakedSingle nakedSingle = nakedSingleFinder.getNakedSingle();
+        assertEquals(nakedSingle.row, 0);
+        assertEquals(nakedSingle.col, 8);
     }
 }

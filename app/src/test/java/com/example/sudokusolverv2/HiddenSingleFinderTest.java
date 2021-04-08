@@ -1,6 +1,8 @@
 package com.example.sudokusolverv2;
 
+import com.example.sudokusolverv2.solutionStrategies.HiddenSingle;
 import com.example.sudokusolverv2.solutionStrategies.HiddenSingleFinder;
+import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
 
 import junit.framework.TestCase;
 
@@ -22,8 +24,8 @@ public class HiddenSingleFinderTest extends TestCase {
                 {0, 0, 9, 0, 0, 0, 0, 0, 0}
         };
         solver.calculateInitialCandidates();
-        int[] pos = hiddenSingleFinder.getHiddenSingleInRow();
-        assertEquals(pos[0], 2);
-        assertEquals(pos[1], 0);
+        HiddenSingle hiddenSingle = hiddenSingleFinder.getHiddenSingleInRow();
+        assertEquals(hiddenSingle.row, 2);
+        assertEquals(hiddenSingle.col, 0);
     }
 }

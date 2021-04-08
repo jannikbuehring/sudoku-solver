@@ -219,7 +219,8 @@ public class ValidatorTest extends TestCase {
         assertFalse(validator.checkIfSudokuHasOneSolution());
 
         Solver solver2 = new Solver();
-        validator.setSolver(solver2);
+        Validator validator2 = new Validator();
+        validator2.setSolver(solver2);
         solver2.board = new int[][]{
                 {8, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 3, 6, 0, 0, 0, 0, 0},
