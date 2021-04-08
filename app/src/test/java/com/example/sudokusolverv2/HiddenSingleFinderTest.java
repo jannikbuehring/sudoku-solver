@@ -1,15 +1,15 @@
 package com.example.sudokusolverv2;
 
-import com.example.sudokusolverv2.solutionStrategies.HiddenSingle;
+import com.example.sudokusolverv2.solutionStrategies.HiddenSingleFinder;
 
 import junit.framework.TestCase;
 
-public class HiddenSingleTest extends TestCase {
+public class HiddenSingleFinderTest extends TestCase {
 
     public void testGetHiddenSingleRowLocation() {
         Solver solver = new Solver();
-        HiddenSingle hiddenSingle = new HiddenSingle();
-        hiddenSingle.setSolver(solver);
+        HiddenSingleFinder hiddenSingleFinder = new HiddenSingleFinder();
+        hiddenSingleFinder.setSolver(solver);
         solver.board = new int[][]{
                 {0, 0, 0, 0, 0, 0, 2, 0, 0},
                 {0, 5, 8, 0, 0, 6, 0, 0, 0},
@@ -22,7 +22,7 @@ public class HiddenSingleTest extends TestCase {
                 {0, 0, 9, 0, 0, 0, 0, 0, 0}
         };
         solver.calculateInitialCandidates();
-        int[] pos = hiddenSingle.getHiddenSingleRowLocation();
+        int[] pos = hiddenSingleFinder.getHiddenSingleInRow();
         assertEquals(pos[0], 2);
         assertEquals(pos[1], 0);
     }

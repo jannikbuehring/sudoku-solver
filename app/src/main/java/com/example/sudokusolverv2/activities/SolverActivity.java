@@ -14,6 +14,7 @@ import com.example.sudokusolverv2.R;
 import com.example.sudokusolverv2.Solver;
 import com.example.sudokusolverv2.SudokuBoard;
 import com.example.sudokusolverv2.solutionStrategies.HiddenSingle;
+import com.example.sudokusolverv2.solutionStrategies.HiddenSingleFinder;
 import com.example.sudokusolverv2.solutionStrategies.NakedPair;
 import com.example.sudokusolverv2.solutionStrategies.NakedPairFinder;
 import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
@@ -27,7 +28,7 @@ public class SolverActivity extends AppCompatActivity {
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
     private final NakedSingleFinder nakedSingleFinder = new NakedSingleFinder();
-    private final HiddenSingle hiddenSingle = new HiddenSingle();
+    private final HiddenSingleFinder hiddenSingleFinder = new HiddenSingleFinder();
     private final NakedPairFinder nakedPairFinder = new NakedPairFinder();
 
     private boolean editCandidatesButtonSelected = false;
@@ -45,7 +46,7 @@ public class SolverActivity extends AppCompatActivity {
         gameBoardSolver.fixNumbers();
         gameBoardSolver.calculateInitialCandidates();
         nakedSingleFinder.setSolver(gameBoardSolver);
-        hiddenSingle.setSolver(gameBoardSolver);
+        hiddenSingleFinder.setSolver(gameBoardSolver);
         nakedPairFinder.setSolver(gameBoardSolver);
     }
 
@@ -158,25 +159,18 @@ public class SolverActivity extends AppCompatActivity {
             NakedSingle nakedSingle = nakedSingleFinder.getNakedSingle();
             highlightBlock(nakedSingle.row, nakedSingle.col);
             showTooltip("Probiere es hier mit der Naked Single Strategie", 5000);
-        } else if (hiddenSingle.getHiddenSingleRowLocation() != null) {
-            int[] pos;
-            pos = hiddenSingle.getHiddenSingleRowLocation();
-            int row = pos[0];
-            highlightRow(row);
+        } else if (hiddenSingleFinder.getHiddenSingleInRow() != null) {
+            HiddenSingle hiddenSingle = hiddenSingleFinder.getHiddenSingleInRow();
+            highlightRow(hiddenSingle.row);
             showTooltip("In dieser Reihe befindet sich ein Hidden Single",
                     5000);
-        } else if (hiddenSingle.getHiddenSingleColLocation() != null) {
-            int[] pos;
-            pos = hiddenSingle.getHiddenSingleColLocation();
-            int col = pos[1];
-            highlightColumn(col);
+        } else if (hiddenSingleFinder.getHiddenSingleInCol() != null) {
+            HiddenSingle hiddenSingle = hiddenSingleFinder.getHiddenSingleInCol();
+            highlightColumn(hiddenSingle.col);
             showTooltip("In dieser Spalte befindet sich ein Hidden Single", 5000);
-        } else if (hiddenSingle.getHiddenSingleBlockLocation() != null) {
-            int[] pos;
-            pos = hiddenSingle.getHiddenSingleBlockLocation();
-            int row = pos[0];
-            int col = pos[1];
-            highlightBlock(row, col);
+        } else if (hiddenSingleFinder.getHiddenSingleBlockLocation() != null) {
+            HiddenSingle hiddenSingle = hiddenSingleFinder.getHiddenSingleBlockLocation();
+            highlightBlock(hiddenSingle.row, hiddenSingle.col);
             showTooltip("In diesem Block befindet sich ein Hidden Single",
                     5000);
         } else if (nakedPairFinder.getNakedPairInRow() != null) {
@@ -214,8 +208,8 @@ public class SolverActivity extends AppCompatActivity {
         if (nakedSingleFinder.getNakedSingle() != null) {
             nakedSingleFinder.enterNakedSingle();
             showTooltip("Auf dieses Feld konnte die Naked Single Strategie angewendet werden", 5000);
-        } else if (hiddenSingle.getHiddenSingleLocation() != null) {
-            hiddenSingle.enterHiddenSingle();
+        } else if (hiddenSingleFinder.getHiddenSingle() != null) {
+            hiddenSingleFinder.enterHiddenSingle();
             showTooltip("Auf dieses Feld konnte die Hidden Single Strategie angewendet werden", 5000);
         } else if (nakedPairFinder.getNakedPairInRow() != null) {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInRow();
