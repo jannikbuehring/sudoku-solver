@@ -1,8 +1,10 @@
-package com.example.sudokusolverv2;
+package com.example.sudokusolverv2.candidateSystem;
+
+import com.example.sudokusolverv2.Solver;
 
 import java.util.HashSet;
 
-public class FieldCandidates {
+public class FieldCandidates extends Solver {
 
     public HashSet<Integer> candidateSet;
     public int row = -1;

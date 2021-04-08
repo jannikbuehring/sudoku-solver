@@ -10,12 +10,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.sudokusolverv2.BlockLocation;
-import com.example.sudokusolverv2.FieldCandidates;
 import com.example.sudokusolverv2.R;
 import com.example.sudokusolverv2.Solver;
 import com.example.sudokusolverv2.SudokuBoard;
 import com.example.sudokusolverv2.solutionStrategies.HiddenSingle;
 import com.example.sudokusolverv2.solutionStrategies.NakedPair;
+import com.example.sudokusolverv2.solutionStrategies.NakedPairFinder;
 import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
 
 import java.util.Timer;
@@ -27,7 +27,7 @@ public class SolverActivity extends AppCompatActivity {
     private Solver gameBoardSolver;
     private final NakedSingle nakedSingle = new NakedSingle();
     private final HiddenSingle hiddenSingle = new HiddenSingle();
-    private final NakedPair nakedPair = new NakedPair();
+    private final NakedPairFinder nakedPairFinder = new NakedPairFinder();
 
     private boolean editCandidatesButtonSelected = false;
 
@@ -45,7 +45,7 @@ public class SolverActivity extends AppCompatActivity {
         gameBoardSolver.calculateInitialCandidates();
         nakedSingle.setSolver(gameBoardSolver);
         hiddenSingle.setSolver(gameBoardSolver);
-        nakedPair.setSolver(gameBoardSolver);
+        nakedPairFinder.setSolver(gameBoardSolver);
     }
 
     public void BTNOnePress(View view) {
@@ -171,8 +171,7 @@ public class SolverActivity extends AppCompatActivity {
             pos = hiddenSingle.getHiddenSingleColLocation();
             int col = pos[1];
             highlightColumn(col);
-            showTooltip("In dieser Spalte befindet sich ein Hidden Single",
-                    5000);
+            showTooltip("In dieser Spalte befindet sich ein Hidden Single", 5000);
         } else if (hiddenSingle.getHiddenSingleBlockLocation() != null) {
             int[] pos;
             pos = hiddenSingle.getHiddenSingleBlockLocation();
@@ -181,12 +180,14 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlock(row, col);
             showTooltip("In diesem Block befindet sich ein Hidden Single",
                     5000);
-        } else if (nakedPair.getNakedPairInRow() != null) {
-            // TODO: Problem: Naked Pair steht danach immer noch da -> Tip erscheint auch nach lösung
-            FieldCandidates[] nakedPairSolution = nakedPair.getNakedPairInRow();
-            highlightRow(nakedPairSolution[0].row);
-            showTooltip("In dieser Reihe befindet sich ein Naked Pair",
-                    5000);
+        } else if (nakedPairFinder.getNakedPairInRow() != null) {
+            NakedPair nakedPair = nakedPairFinder.getNakedPairInRow();
+            highlightRow(nakedPair.field1.row);
+            showTooltip("In dieser Reihe befindet sich ein Naked Pair", 5000);
+        } else if (nakedPairFinder.getNakedPairInColumn() != null) {
+            NakedPair nakedPair = nakedPairFinder.getNakedPairInColumn();
+            highlightColumn(nakedPair.field1.column);
+            showTooltip("In dieser Spalte befindet sich ein Naked Pair", 5000);
         }
 
         else {
@@ -211,14 +212,20 @@ public class SolverActivity extends AppCompatActivity {
     public void solutionButtonPress(View view) {
         if (nakedSingle.getNakedSingleLocation() != null) {
             nakedSingle.enterNakedSingle();
-
             showTooltip("Auf dieses Feld konnte die Naked Single Strategie angewendet werden", 5000);
         } else if (hiddenSingle.getHiddenSingleLocation() != null) {
             hiddenSingle.enterHiddenSingle();
-
             showTooltip("Auf dieses Feld konnte die Hidden Single Strategie angewendet werden", 5000);
-        } else if(nakedPair.applyNakedPairToCandidates()) {
-            showTooltip("Mit dem Naked Pair konnten hier Kandidaten entfernt werden", 5000);
+        } else if(nakedPairFinder.getNakedPairInRow() != null) {
+            NakedPair nakedPair = nakedPairFinder.getNakedPairInRow();
+            highlightRow(nakedPair.field1.row);
+            nakedPairFinder.applyNakedPairToRow();
+            showTooltip("Mit dem Naked Pair konnten in dieser Reihe Kandidaten entfernt werden", 5000);
+        } else if(nakedPairFinder.getNakedPairInColumn() != null) {
+            NakedPair nakedPair = nakedPairFinder.getNakedPairInColumn();
+            highlightColumn(nakedPair.field1.column);
+            nakedPairFinder.applyNakedPairToColumn();
+            showTooltip("Mit dem Naked Pair konnten in dieser Spalte Kandidaten entfernt werden", 5000);
         } else {
             showTooltip("Aktuell keine Lösungsstrategie verfügbar", 5000);
         }

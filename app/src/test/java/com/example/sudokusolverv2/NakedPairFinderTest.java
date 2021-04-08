@@ -1,15 +1,17 @@
 package com.example.sudokusolverv2;
 
+import com.example.sudokusolverv2.candidateSystem.FieldCandidates;
 import com.example.sudokusolverv2.solutionStrategies.NakedPair;
+import com.example.sudokusolverv2.solutionStrategies.NakedPairFinder;
 
 import junit.framework.TestCase;
 
-public class NakedPairTest extends TestCase {
+public class NakedPairFinderTest extends TestCase {
 
     public void testGetNakedPairInRow() {
         Solver solver = new Solver();
-        NakedPair nakedPair = new NakedPair();
-        nakedPair.setSolver(solver);
+        NakedPairFinder nakedPairFinder = new NakedPairFinder();
+        nakedPairFinder.setSolver(solver);
         solver.board = new int[][]{
                 {0, 0, 0, 1, 3, 7, 0, 0, 0},
                 {7, 0, 0, 5, 9, 6, 1, 3, 0},
@@ -22,7 +24,7 @@ public class NakedPairTest extends TestCase {
                 {0, 6, 5, 3, 4, 8, 0, 0, 0}
         };
         solver.calculateInitialCandidates();
-        FieldCandidates[] nakedPairSolution = nakedPair.getNakedPairInRow();
+        FieldCandidates[] nakedPairSolution = nakedPairFinder.getNakedPairInRow();
 
         //Naked pair is in row 2
         assertEquals(nakedPairSolution[0].row, 2);
@@ -35,8 +37,8 @@ public class NakedPairTest extends TestCase {
 
     public void testGetNakedPairInColumn() {
         Solver solver = new Solver();
-        NakedPair nakedPair = new NakedPair();
-        nakedPair.setSolver(solver);
+        NakedPairFinder nakedPairFinder = new NakedPairFinder();
+        nakedPairFinder.setSolver(solver);
         solver.board = new int[][]{
                 {0, 0, 1, 4, 9, 0, 7, 0, 0},
                 {0, 0, 4, 0, 0, 6, 9, 3, 0},
@@ -49,7 +51,7 @@ public class NakedPairTest extends TestCase {
                 {0, 0, 2, 0, 0, 9, 8, 0, 0}
         };
         solver.calculateInitialCandidates();
-        FieldCandidates[] nakedPairSolution = nakedPair.getNakedPairInColumn();
+        FieldCandidates[] nakedPairSolution = nakedPairFinder.getNakedPairInColumn();
 
         //Naked pair is in col 4
         assertEquals(nakedPairSolution[0].column, 2);
@@ -60,10 +62,20 @@ public class NakedPairTest extends TestCase {
         assertEquals(nakedPairSolution[1].row, 5);
     }
 
+    public void testNakedPair() {
+        NakedPair nakedPair1 = new NakedPair();
+        nakedPair1.type = Unit.ROW;
+        NakedPair nakedPair2 = new NakedPair();
+        nakedPair2.type = Unit.ROW;
+        int res = nakedPair1.compareTo(nakedPair2);
+        System.out.println(res);
+        //assertEquals(nakedPair1, nakedPair2);
+    }
+
     public void testApplyNakedPairToCandidates() {
         Solver solver = new Solver();
-        NakedPair nakedPair = new NakedPair();
-        nakedPair.setSolver(solver);
+        NakedPairFinder nakedPairFinder = new NakedPairFinder();
+        nakedPairFinder.setSolver(solver);
         solver.board = new int[][]{
                 {0, 0, 0, 1, 3, 7, 0, 0, 0},
                 {7, 0, 0, 5, 9, 6, 1, 3, 0},
@@ -76,7 +88,7 @@ public class NakedPairTest extends TestCase {
                 {0, 6, 5, 3, 4, 8, 0, 0, 0}
         };
         solver.calculateInitialCandidates();
-        nakedPair.applyNakedPairToCandidates();
+        nakedPairFinder.applyNakedPairToRow();
         assertEquals(solver.calculatedCandidates.get(18).size(), 2);
     }
 }
