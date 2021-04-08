@@ -17,6 +17,7 @@ import com.example.sudokusolverv2.solutionStrategies.HiddenSingle;
 import com.example.sudokusolverv2.solutionStrategies.NakedPair;
 import com.example.sudokusolverv2.solutionStrategies.NakedPairFinder;
 import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
+import com.example.sudokusolverv2.solutionStrategies.NakedSingleFinder;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,7 +26,7 @@ public class SolverActivity extends AppCompatActivity {
 
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
-    private final NakedSingle nakedSingle = new NakedSingle();
+    private final NakedSingleFinder nakedSingleFinder = new NakedSingleFinder();
     private final HiddenSingle hiddenSingle = new HiddenSingle();
     private final NakedPairFinder nakedPairFinder = new NakedPairFinder();
 
@@ -43,7 +44,7 @@ public class SolverActivity extends AppCompatActivity {
         gameBoard.invalidate();
         gameBoardSolver.fixNumbers();
         gameBoardSolver.calculateInitialCandidates();
-        nakedSingle.setSolver(gameBoardSolver);
+        nakedSingleFinder.setSolver(gameBoardSolver);
         hiddenSingle.setSolver(gameBoardSolver);
         nakedPairFinder.setSolver(gameBoardSolver);
     }
@@ -153,11 +154,9 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void tipButtonPress(View view) {
-        if (nakedSingle.getNakedSingleLocation() != null) {
-            int[] pos = nakedSingle.getNakedSingleLocation();
-            int row = pos[0];
-            int col = pos[1];
-            highlightBlock(row, col);
+        if (nakedSingleFinder.getNakedSingle() != null) {
+            NakedSingle nakedSingle = nakedSingleFinder.getNakedSingle();
+            highlightBlock(nakedSingle.row, nakedSingle.col);
             showTooltip("Probiere es hier mit der Naked Single Strategie", 5000);
         } else if (hiddenSingle.getHiddenSingleRowLocation() != null) {
             int[] pos;
@@ -212,8 +211,8 @@ public class SolverActivity extends AppCompatActivity {
     }
 
     public void solutionButtonPress(View view) {
-        if (nakedSingle.getNakedSingleLocation() != null) {
-            nakedSingle.enterNakedSingle();
+        if (nakedSingleFinder.getNakedSingle() != null) {
+            nakedSingleFinder.enterNakedSingle();
             showTooltip("Auf dieses Feld konnte die Naked Single Strategie angewendet werden", 5000);
         } else if (hiddenSingle.getHiddenSingleLocation() != null) {
             hiddenSingle.enterHiddenSingle();
