@@ -188,9 +188,11 @@ public class SolverActivity extends AppCompatActivity {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInColumn();
             highlightColumn(nakedPair.field1.column);
             showTooltip("In dieser Spalte befindet sich ein Naked Pair", 5000);
-        }
-
-        else {
+        } else if (nakedPairFinder.getNakedPairInBlock() != null) {
+            NakedPair nakedPair = nakedPairFinder.getNakedPairInBlock();
+            highlightBlock(nakedPair.field1.row, nakedPair.field1.column);
+            showTooltip("In diesem Block befindet sich ein Naked Pair", 5000);
+        } else {
             gameBoard.setTipLocationBlock(null);
             gameBoard.invalidate();
 
@@ -216,17 +218,24 @@ public class SolverActivity extends AppCompatActivity {
         } else if (hiddenSingle.getHiddenSingleLocation() != null) {
             hiddenSingle.enterHiddenSingle();
             showTooltip("Auf dieses Feld konnte die Hidden Single Strategie angewendet werden", 5000);
-        } else if(nakedPairFinder.getNakedPairInRow() != null) {
+        } else if (nakedPairFinder.getNakedPairInRow() != null) {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInRow();
             highlightRow(nakedPair.field1.row);
             nakedPairFinder.applyNakedPairToRow();
             showTooltip("Mit dem Naked Pair konnten in dieser Reihe Kandidaten entfernt werden", 5000);
-        } else if(nakedPairFinder.getNakedPairInColumn() != null) {
+        } else if (nakedPairFinder.getNakedPairInColumn() != null) {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInColumn();
             highlightColumn(nakedPair.field1.column);
             nakedPairFinder.applyNakedPairToColumn();
             showTooltip("Mit dem Naked Pair konnten in dieser Spalte Kandidaten entfernt werden", 5000);
-        } else {
+        } else if (nakedPairFinder.getNakedPairInBlock() != null) {
+            NakedPair nakedPair = nakedPairFinder.getNakedPairInBlock();
+            highlightBlock(nakedPair.field1.row, nakedPair.field1.column);
+            nakedPairFinder.applyNakedPairToBlock();
+            showTooltip("Mit dem Naked Pair konnten in diesem Block Kandidaten entfernt werden", 5000);
+        }
+
+        else{
             showTooltip("Aktuell keine Lösungsstrategie verfügbar", 5000);
         }
     }

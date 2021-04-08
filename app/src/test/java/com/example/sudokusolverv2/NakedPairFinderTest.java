@@ -24,15 +24,15 @@ public class NakedPairFinderTest extends TestCase {
                 {0, 6, 5, 3, 4, 8, 0, 0, 0}
         };
         solver.calculateInitialCandidates();
-        FieldCandidates[] nakedPairSolution = nakedPairFinder.getNakedPairInRow();
+        NakedPair nakedPair = nakedPairFinder.getNakedPairInRow();
 
         //Naked pair is in row 2
-        assertEquals(nakedPairSolution[0].row, 2);
-        assertEquals(nakedPairSolution[1].row, 2);
+        assertEquals(nakedPair.field1.row, 2);
+        assertEquals(nakedPair.field2.row, 2);
 
         //And in columns 3 and 5
-        assertEquals(nakedPairSolution[0].column, 3);
-        assertEquals(nakedPairSolution[1].column, 5);
+        assertEquals(nakedPair.field1.column, 3);
+        assertEquals(nakedPair.field2.column, 5);
     }
 
     public void testGetNakedPairInColumn() {
@@ -41,7 +41,7 @@ public class NakedPairFinderTest extends TestCase {
         nakedPairFinder.setSolver(solver);
         solver.board = new int[][]{
                 {0, 0, 1, 4, 9, 0, 7, 0, 0},
-                {0, 0, 4, 0, 0, 6, 9, 3, 0},
+                {0, 0, 4, 0, 0, 6, 9, 0, 0},
                 {8, 0, 9, 0, 1, 7, 5, 4, 0},
                 {2, 8, 0, 0, 7, 0, 0, 5, 9},
                 {4, 1, 7, 9, 0, 0, 2, 6, 8},
@@ -51,25 +51,42 @@ public class NakedPairFinderTest extends TestCase {
                 {0, 0, 2, 0, 0, 9, 8, 0, 0}
         };
         solver.calculateInitialCandidates();
-        FieldCandidates[] nakedPairSolution = nakedPairFinder.getNakedPairInColumn();
+        NakedPair nakedPair = nakedPairFinder.getNakedPairInColumn();
 
         //Naked pair is in col 4
-        assertEquals(nakedPairSolution[0].column, 2);
-        assertEquals(nakedPairSolution[1].column, 2);
+        assertEquals(nakedPair.field1.column, 4);
+        assertEquals(nakedPair.field2.column, 4);
 
         //And in rows 1 and 4
-        assertEquals(nakedPairSolution[0].row, 3);
-        assertEquals(nakedPairSolution[1].row, 5);
+        assertEquals(nakedPair.field1.row, 1);
+        assertEquals(nakedPair.field2.row, 4);
     }
 
-    public void testNakedPair() {
-        NakedPair nakedPair1 = new NakedPair();
-        nakedPair1.type = Unit.ROW;
-        NakedPair nakedPair2 = new NakedPair();
-        nakedPair2.type = Unit.ROW;
-        int res = nakedPair1.compareTo(nakedPair2);
-        System.out.println(res);
-        //assertEquals(nakedPair1, nakedPair2);
+    public void testGetNakedPairInBlock() {
+        Solver solver = new Solver();
+        NakedPairFinder nakedPairFinder = new NakedPairFinder();
+        nakedPairFinder.setSolver(solver);
+        solver.board = new int[][]{
+                {0, 0, 1, 4, 9, 0, 7, 0, 0},
+                {0, 0, 4, 0, 0, 6, 9, 0, 0},
+                {8, 0, 9, 0, 1, 7, 5, 4, 0},
+                {2, 8, 0, 0, 7, 0, 0, 5, 9},
+                {4, 1, 7, 9, 0, 0, 2, 6, 8},
+                {5, 9, 0, 0, 2, 0, 0, 0, 0},
+                {0, 4, 5, 0, 8, 0, 0, 0, 3},
+                {0, 0, 8, 7, 0, 0, 0, 0, 0},
+                {0, 0, 2, 0, 0, 9, 8, 0, 0}
+        };
+        solver.calculateInitialCandidates();
+        NakedPair nakedPair = nakedPairFinder.getNakedPairInBlock();
+
+        //Naked pair is in col 4
+        assertEquals(nakedPair.field1.column, 8);
+        assertEquals(nakedPair.field2.column, 8);
+
+        //And in rows 1 and 4
+        assertEquals(nakedPair.field1.row, 0);
+        assertEquals(nakedPair.field2.row, 2);
     }
 
     public void testApplyNakedPairToCandidates() {
