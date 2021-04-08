@@ -21,7 +21,8 @@ public class HiddenSingleTest extends TestCase {
                 {0, 0, 0, 9, 0, 0, 8, 1, 0},
                 {0, 0, 9, 0, 0, 0, 0, 0, 0}
         };
-        int[] pos = hiddenSingle.getHiddenSingleRowLocation(2);
+        solver.calculateInitialCandidates();
+        int[] pos = hiddenSingle.getHiddenSingleRowLocation();
         assertEquals(pos[0], 2);
         assertEquals(pos[1], 0);
     }

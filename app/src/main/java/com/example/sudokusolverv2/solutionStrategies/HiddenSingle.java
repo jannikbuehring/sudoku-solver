@@ -50,6 +50,17 @@ public class HiddenSingle {
         return null;
     }
 
+    public int[] getHiddenSingleRowLocation() {
+        int[] pos;
+        for (int r = 0; r < 9; r++) {
+            if (getHiddenSingleRowLocation(r) != null) {
+                pos = getHiddenSingleRowLocation(r);
+                return pos;
+            }
+        }
+        return null;
+    }
+
     // Return the location (row, column) of a hidden single in the row
     public int[] getHiddenSingleRowLocation(int row) {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>(9);
@@ -89,6 +100,17 @@ public class HiddenSingle {
                         }
                     }
                 }
+            }
+        }
+        return null;
+    }
+
+    public int[] getHiddenSingleColLocation() {
+        int[] pos;
+        for (int c = 0; c < 9; c++) {
+            if (getHiddenSingleRowLocation(c) != null) {
+                pos = getHiddenSingleRowLocation(c);
+                return pos;
             }
         }
         return null;

@@ -10,10 +10,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.sudokusolverv2.BlockLocation;
+import com.example.sudokusolverv2.FieldCandidates;
 import com.example.sudokusolverv2.R;
 import com.example.sudokusolverv2.Solver;
 import com.example.sudokusolverv2.SudokuBoard;
 import com.example.sudokusolverv2.solutionStrategies.HiddenSingle;
+import com.example.sudokusolverv2.solutionStrategies.NakedPair;
 import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
 
 import java.util.Timer;
@@ -25,6 +27,7 @@ public class SolverActivity extends AppCompatActivity {
     private Solver gameBoardSolver;
     private final NakedSingle nakedSingle = new NakedSingle();
     private final HiddenSingle hiddenSingle = new HiddenSingle();
+    private final NakedPair nakedPair = new NakedPair();
 
     private boolean editCandidatesButtonSelected = false;
 
@@ -42,6 +45,7 @@ public class SolverActivity extends AppCompatActivity {
         gameBoardSolver.calculateInitialCandidates();
         nakedSingle.setSolver(gameBoardSolver);
         hiddenSingle.setSolver(gameBoardSolver);
+        nakedPair.setSolver(gameBoardSolver);
     }
 
     public void BTNOnePress(View view) {
@@ -152,84 +156,40 @@ public class SolverActivity extends AppCompatActivity {
         if (nakedSingle.getNakedSingleLocation() != null) {
             int[] pos = nakedSingle.getNakedSingleLocation();
             int row = pos[0];
-            int column = pos[1];
-            BlockLocation tipLocationBlock = gameBoardSolver.calculateTipLocationBlock(row, column);
-            gameBoard.setTipLocationBlock(tipLocationBlock);
-            gameBoard.invalidate();
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    gameBoard.setTipLocationBlock(null);
-                    gameBoard.invalidate();
-                }
-            }, 3000);
-
+            int col = pos[1];
+            highlightBlock(row, col);
             showTooltip("Probiere es hier mit der Naked Single Strategie", 5000);
-        } else if (hiddenSingle.getHiddenSingleLocation() != null) {
-            int[] pos = new int[3];
-            for (int r = 0; r < 9; r++) {
-                if (hiddenSingle.getHiddenSingleRowLocation(r) != null) {
-                    pos = hiddenSingle.getHiddenSingleRowLocation(r);
-                    int row = pos[0];
-                    gameBoard.setTipLocationRow(row);
-                    gameBoard.invalidate();
-                    Timer timer = new Timer();
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            gameBoard.setTipLocationRow(null);
-                            gameBoard.invalidate();
-                        }
-                    }, 3000);
+        } else if (hiddenSingle.getHiddenSingleRowLocation() != null) {
+            int[] pos;
+            pos = hiddenSingle.getHiddenSingleRowLocation();
+            int row = pos[0];
+            highlightRow(row);
+            showTooltip("In dieser Reihe befindet sich ein Hidden Single",
+                    5000);
+        } else if (hiddenSingle.getHiddenSingleColLocation() != null) {
+            int[] pos;
+            pos = hiddenSingle.getHiddenSingleColLocation();
+            int col = pos[1];
+            highlightColumn(col);
+            showTooltip("In dieser Spalte befindet sich ein Hidden Single",
+                    5000);
+        } else if (hiddenSingle.getHiddenSingleBlockLocation() != null) {
+            int[] pos;
+            pos = hiddenSingle.getHiddenSingleBlockLocation();
+            int row = pos[0];
+            int col = pos[1];
+            highlightBlock(row, col);
+            showTooltip("In diesem Block befindet sich ein Hidden Single",
+                    5000);
+        } else if (nakedPair.getNakedPairInRow() != null) {
+            // TODO: Problem: Naked Pair steht danach immer noch da -> Tip erscheint auch nach lösung
+            FieldCandidates[] nakedPairSolution = nakedPair.getNakedPairInRow();
+            highlightRow(nakedPairSolution[0].row);
+            showTooltip("In dieser Reihe befindet sich ein Naked Pair",
+                    5000);
+        }
 
-                    showTooltip("In dieser Reihe befindet sich ein Hidden Single",
-                            5000);
-                    return;
-                }
-            }
-
-            for (int c = 0; c < 9; c++) {
-                if (hiddenSingle.getHiddenSingleColLocation(c) != null) {
-                    pos = hiddenSingle.getHiddenSingleColLocation(c);
-                    int col = pos[1];
-                    gameBoard.setTipLocationCol(col);
-                    gameBoard.invalidate();
-                    Timer timer = new Timer();
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            gameBoard.setTipLocationCol(null);
-                            gameBoard.invalidate();
-                        }
-                    }, 3000);
-
-                    showTooltip("In dieser Spalte befindet sich ein Hidden Single",
-                            5000);
-                    return;
-                }
-            }
-
-            if (hiddenSingle.getHiddenSingleBlockLocation() != null) {
-                pos = hiddenSingle.getHiddenSingleBlockLocation();
-                int row = pos[0];
-                int col = pos[1];
-                BlockLocation tipLocationBlock = gameBoardSolver.calculateTipLocationBlock(row, col);
-                gameBoard.setTipLocationBlock(tipLocationBlock);
-                gameBoard.invalidate();
-                Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        gameBoard.setTipLocationBlock(null);
-                        gameBoard.invalidate();
-                    }
-                }, 3000);
-
-                showTooltip("In diesem Block befindet sich ein Hidden Single",
-                        5000);
-            }
-        } else {
+        else {
             gameBoard.setTipLocationBlock(null);
             gameBoard.invalidate();
 
@@ -257,6 +217,8 @@ public class SolverActivity extends AppCompatActivity {
             hiddenSingle.enterHiddenSingle();
 
             showTooltip("Auf dieses Feld konnte die Hidden Single Strategie angewendet werden", 5000);
+        } else if(nakedPair.applyNakedPairToCandidates()) {
+            showTooltip("Mit dem Naked Pair konnten hier Kandidaten entfernt werden", 5000);
         } else {
             showTooltip("Aktuell keine Lösungsstrategie verfügbar", 5000);
         }
@@ -267,5 +229,45 @@ public class SolverActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, message, duration);
         toast.setGravity(Gravity.BOTTOM, 0, 200);
         toast.show();
+    }
+
+    private void highlightRow(int row) {
+        gameBoard.setTipLocationRow(row);
+        gameBoard.invalidate();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                gameBoard.setTipLocationRow(null);
+                gameBoard.invalidate();
+            }
+        }, 3000);
+    }
+
+    private void highlightColumn(int column) {
+        gameBoard.setTipLocationCol(column);
+        gameBoard.invalidate();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                gameBoard.setTipLocationCol(null);
+                gameBoard.invalidate();
+            }
+        }, 3000);
+    }
+
+    private void highlightBlock(int row, int column) {
+        BlockLocation tipLocationBlock = gameBoardSolver.calculateTipLocationBlock(row, column);
+        gameBoard.setTipLocationBlock(tipLocationBlock);
+        gameBoard.invalidate();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                gameBoard.setTipLocationBlock(null);
+                gameBoard.invalidate();
+            }
+        }, 3000);
     }
 }
