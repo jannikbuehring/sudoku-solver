@@ -1,4 +1,4 @@
-package com.example.sudokusolverv2.solutionStrategies;
+package com.example.sudokusolverv2.solutionStrategies.hiddenSubset;
 
 import com.example.sudokusolverv2.candidateSystem.Candidate;
 import com.example.sudokusolverv2.candidateSystem.FieldCandidates;

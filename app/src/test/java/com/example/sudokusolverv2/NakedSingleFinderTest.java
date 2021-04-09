@@ -1,7 +1,7 @@
 package com.example.sudokusolverv2;
 
-import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
-import com.example.sudokusolverv2.solutionStrategies.NakedSingleFinder;
+import com.example.sudokusolverv2.solutionStrategies.singles.NakedSingle;
+import com.example.sudokusolverv2.solutionStrategies.singles.NakedSingleFinder;
 
 import junit.framework.TestCase;
 

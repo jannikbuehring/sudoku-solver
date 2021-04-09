@@ -1,6 +1,6 @@
 package com.example.sudokusolverv2;
 
-import com.example.sudokusolverv2.solutionStrategies.HiddenPairFinder;
+import com.example.sudokusolverv2.solutionStrategies.hiddenSubset.HiddenPairFinder;
 
 import junit.framework.TestCase;
 

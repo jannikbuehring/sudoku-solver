@@ -1,6 +1,7 @@
-package com.example.sudokusolverv2.solutionStrategies;
+package com.example.sudokusolverv2.solutionStrategies.singles;
 
 import com.example.sudokusolverv2.Solver;
+import com.example.sudokusolverv2.solutionStrategies.singles.NakedSingle;
 
 import java.util.HashSet;
 

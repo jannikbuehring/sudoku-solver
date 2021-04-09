@@ -1,4 +1,4 @@
-package com.example.sudokusolverv2.solutionStrategies;
+package com.example.sudokusolverv2.solutionStrategies.nakedSubset;
 
 import com.example.sudokusolverv2.Solver;
 import com.example.sudokusolverv2.candidateSystem.FieldCandidates;
@@ -107,9 +107,10 @@ public class NakedTripleFinder {
         int boxCol = nakedTriple.field1.column / 3;
         for (int r = boxRow * 3; r < boxRow * 3 + 3; r++) {
             for (int c = boxCol * 3; c < boxCol * 3 + 3; c++) {
-                //skip the actual naked triple
-                if (r == nakedTriple.field1.column || r == nakedTriple.field2.column
-                        || r == nakedTriple.field3.column) {
+                // skip the actual naked triple
+                if (r == nakedTriple.field1.row && c == nakedTriple.field1.column
+                        || r == nakedTriple.field2.row && c == nakedTriple.field2.column
+                        || r == nakedTriple.field3.row && c == nakedTriple.field3.column) {
                     continue;
                 }
                 solver.calculatedCandidates.get(r * 9 + c).removeAll(nakedTriple.candidateUnion);

@@ -1,4 +1,4 @@
-package com.example.sudokusolverv2.solutionStrategies;
+package com.example.sudokusolverv2.solutionStrategies.nakedSubset;
 
 import com.example.sudokusolverv2.candidateSystem.FieldCandidates;
 

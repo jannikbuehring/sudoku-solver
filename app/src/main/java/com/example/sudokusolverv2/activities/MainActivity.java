@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
-    private Validator validator = new Validator();
+    private final Validator validator = new Validator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

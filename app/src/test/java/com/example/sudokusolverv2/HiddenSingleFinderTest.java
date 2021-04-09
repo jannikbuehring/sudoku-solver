@@ -1,8 +1,7 @@
 package com.example.sudokusolverv2;
 
-import com.example.sudokusolverv2.solutionStrategies.HiddenSingle;
-import com.example.sudokusolverv2.solutionStrategies.HiddenSingleFinder;
-import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
+import com.example.sudokusolverv2.solutionStrategies.singles.HiddenSingle;
+import com.example.sudokusolverv2.solutionStrategies.singles.HiddenSingleFinder;
 
 import junit.framework.TestCase;
 

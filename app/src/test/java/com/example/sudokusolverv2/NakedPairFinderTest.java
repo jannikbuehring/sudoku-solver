@@ -1,8 +1,7 @@
 package com.example.sudokusolverv2;
 
-import com.example.sudokusolverv2.candidateSystem.FieldCandidates;
-import com.example.sudokusolverv2.solutionStrategies.NakedPair;
-import com.example.sudokusolverv2.solutionStrategies.NakedPairFinder;
+import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedPair;
+import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedPairFinder;
 
 import junit.framework.TestCase;
 

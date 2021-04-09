@@ -8,7 +8,6 @@ import org.apache.commons.lang3.SerializationUtils;
 
 public class ValidatorTest extends TestCase {
 
-    //TODO: Add new testing class for validator
     public void testPreCheckLessThan17Cells() {
         Solver solver = new Solver();
         Validator validator = new Validator();
