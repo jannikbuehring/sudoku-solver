@@ -125,7 +125,8 @@ public class NakedQuadFinder {
             ArrayList<FieldCandidates> completeRow = new ArrayList<>();
             for (int c = 0; c < 9; c++) {
                 if (solver.board[r][c] == 0) {
-                    FieldCandidates candidateSet = new FieldCandidates(r, c, solver.calculatedCandidates.get(r * 9 + c));
+                    FieldCandidates candidateSet = new FieldCandidates
+                            (r, c, solver.calculatedCandidates.get(r * 9 + c));
                     completeRow.add(candidateSet);
                 }
             }

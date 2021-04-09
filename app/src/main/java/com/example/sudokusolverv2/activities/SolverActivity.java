@@ -13,6 +13,8 @@ import com.example.sudokusolverv2.BlockLocation;
 import com.example.sudokusolverv2.R;
 import com.example.sudokusolverv2.Solver;
 import com.example.sudokusolverv2.SudokuBoard;
+import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedQuad;
+import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedQuadFinder;
 import com.example.sudokusolverv2.solutionStrategies.singles.HiddenSingle;
 import com.example.sudokusolverv2.solutionStrategies.singles.HiddenSingleFinder;
 import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedPair;
@@ -33,6 +35,7 @@ public class SolverActivity extends AppCompatActivity {
     private final HiddenSingleFinder hiddenSingleFinder = new HiddenSingleFinder();
     private final NakedPairFinder nakedPairFinder = new NakedPairFinder();
     private final NakedTripleFinder nakedTripleFinder = new NakedTripleFinder();
+    private final NakedQuadFinder nakedQuadFinder = new NakedQuadFinder();
 
     private boolean editCandidatesButtonSelected = false;
 
@@ -52,6 +55,7 @@ public class SolverActivity extends AppCompatActivity {
         hiddenSingleFinder.setSolver(gameBoardSolver);
         nakedPairFinder.setSolver(gameBoardSolver);
         nakedTripleFinder.setSolver(gameBoardSolver);
+        nakedQuadFinder.setSolver(gameBoardSolver);
     }
 
     public void BTNOnePress(View view) {
@@ -201,7 +205,21 @@ public class SolverActivity extends AppCompatActivity {
             NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInBlock();
             highlightBlock(nakedTriple.field1.row, nakedTriple.field1.column);
             showTooltip("In diesem Block befindet sich ein Naked Triple", 5000);
-        } else {
+        } else if (nakedQuadFinder.getNakedQuadInRow() != null) {
+            NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInRow();
+            highlightRow(nakedQuad.field1.row);
+            showTooltip("In dieser Reihe befindet sich ein Naked Quad", 5000);
+        } else if (nakedQuadFinder.getNakedQuadInColumn() != null) {
+            NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInColumn();
+            highlightColumn(nakedQuad.field1.column);
+            showTooltip("In dieser Spalte befindet sich ein Naked Quad", 5000);
+        } else if (nakedQuadFinder.getNakedQuadInBlock() != null) {
+            NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInBlock();
+            highlightBlock(nakedQuad.field1.row, nakedQuad.field1.column);
+            showTooltip("In diesem Block befindet sich ein Naked Quad", 5000);
+        }
+
+        else {
             gameBoard.setTipLocationBlock(null);
             gameBoard.invalidate();
 
@@ -257,6 +275,21 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlock(nakedTriple.field1.row, nakedTriple.field1.column);
             nakedTripleFinder.applyNakedTripleToBlock();
             showTooltip("Mit dem Naked Triple konnten in dieser Reihe Kandidaten entfernt werden", 5000);
+        } else if (nakedQuadFinder.getNakedQuadInRow() != null) {
+            NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInRow();
+            highlightRow(nakedQuad.field1.row);
+            nakedQuadFinder.applyNakedQuadToRow();
+            showTooltip("Mit dem Naked Quad konnten in dieser Reihe Kandidaten entfernt werden", 5000);
+        } else if (nakedQuadFinder.getNakedQuadInColumn() != null) {
+            NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInColumn();
+            highlightColumn(nakedQuad.field1.column);
+            nakedQuadFinder.getNakedQuadInColumn();
+            showTooltip("Mit dem Naked Quad konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+        } else if (nakedQuadFinder.getNakedQuadInBlock() != null) {
+            NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInBlock();
+            highlightBlock(nakedQuad.field1.row, nakedQuad.field1.column);
+            nakedQuadFinder.applyNakedQuadToBlock();
+            showTooltip("Mit dem Naked Quad konnten in diesem Block Kandidaten entfernt werden", 5000);
         }
 
         else{
