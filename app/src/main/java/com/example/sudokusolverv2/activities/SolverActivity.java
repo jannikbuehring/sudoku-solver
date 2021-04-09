@@ -19,6 +19,8 @@ import com.example.sudokusolverv2.solutionStrategies.NakedPair;
 import com.example.sudokusolverv2.solutionStrategies.NakedPairFinder;
 import com.example.sudokusolverv2.solutionStrategies.NakedSingle;
 import com.example.sudokusolverv2.solutionStrategies.NakedSingleFinder;
+import com.example.sudokusolverv2.solutionStrategies.NakedTriple;
+import com.example.sudokusolverv2.solutionStrategies.NakedTripleFinder;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +32,7 @@ public class SolverActivity extends AppCompatActivity {
     private final NakedSingleFinder nakedSingleFinder = new NakedSingleFinder();
     private final HiddenSingleFinder hiddenSingleFinder = new HiddenSingleFinder();
     private final NakedPairFinder nakedPairFinder = new NakedPairFinder();
+    private final NakedTripleFinder nakedTripleFinder = new NakedTripleFinder();
 
     private boolean editCandidatesButtonSelected = false;
 
@@ -48,6 +51,7 @@ public class SolverActivity extends AppCompatActivity {
         nakedSingleFinder.setSolver(gameBoardSolver);
         hiddenSingleFinder.setSolver(gameBoardSolver);
         nakedPairFinder.setSolver(gameBoardSolver);
+        nakedTripleFinder.setSolver(gameBoardSolver);
     }
 
     public void BTNOnePress(View view) {
@@ -185,6 +189,18 @@ public class SolverActivity extends AppCompatActivity {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInBlock();
             highlightBlock(nakedPair.field1.row, nakedPair.field1.column);
             showTooltip("In diesem Block befindet sich ein Naked Pair", 5000);
+        } else if (nakedTripleFinder.getNakedTripleInRow() != null) {
+            NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInRow();
+            highlightRow(nakedTriple.field1.row);
+            showTooltip("In diese Reihe befindet sich ein Naked Triple", 5000);
+        } else if (nakedTripleFinder.getNakedTripleInColumn() != null) {
+            NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInColumn();
+            highlightColumn(nakedTriple.field1.column);
+            showTooltip("In diese Spalte befindet sich ein Naked Triple", 5000);
+        } else if (nakedTripleFinder.getNakedTripleInBlock() != null) {
+            NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInBlock();
+            highlightBlock(nakedTriple.field1.row, nakedTriple.field1.column);
+            showTooltip("In diesem Block befindet sich ein Naked Triple", 5000);
         } else {
             gameBoard.setTipLocationBlock(null);
             gameBoard.invalidate();
@@ -226,6 +242,21 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlock(nakedPair.field1.row, nakedPair.field1.column);
             nakedPairFinder.applyNakedPairToBlock();
             showTooltip("Mit dem Naked Pair konnten in diesem Block Kandidaten entfernt werden", 5000);
+        } else if (nakedTripleFinder.getNakedTripleInRow() != null) {
+            NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInRow();
+            highlightRow(nakedTriple.field1.row);
+            nakedTripleFinder.applyNakedTripleToRow();
+            showTooltip("Mit dem Naked Triple konnten in dieser Reihe Kandidaten entfernt werden", 5000);
+        } else if (nakedTripleFinder.getNakedTripleInColumn() != null) {
+            NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInColumn();
+            highlightColumn(nakedTriple.field1.column);
+            nakedTripleFinder.applyNakedTripleToColumn();
+            showTooltip("Mit dem Naked Triple konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+        } else if (nakedTripleFinder.getNakedTripleInBlock() != null) {
+            NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInBlock();
+            highlightBlock(nakedTriple.field1.row, nakedTriple.field1.column);
+            nakedTripleFinder.applyNakedTripleToBlock();
+            showTooltip("Mit dem Naked Triple konnten in dieser Reihe Kandidaten entfernt werden", 5000);
         }
 
         else{
