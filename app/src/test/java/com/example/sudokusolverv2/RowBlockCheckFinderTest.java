@@ -24,7 +24,7 @@ public class RowBlockCheckFinderTest extends TestCase {
                 {0, 0, 0, 0, 4, 3, 0, 7, 0}
         };
         solver.calculateInitialCandidates();
-        RowBlockCheck rowBlockCheck = rowBlockCheckFinder.rowBlockCheck();
+        RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
 
         assertEquals(rowBlockCheck.candidate1.row, 3);
         assertEquals(rowBlockCheck.candidate1.column, 4);
@@ -73,7 +73,7 @@ public class RowBlockCheckFinderTest extends TestCase {
                 {0, 0, 0, 0, 4, 3, 0, 7, 0}
         };
         solver.calculateInitialCandidates();
-        RowBlockCheck rowBlockCheck = rowBlockCheckFinder.columnBlockCheck();
+        RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInColumn();
 
         assertEquals(rowBlockCheck.candidate1.row, 6);
         assertEquals(rowBlockCheck.candidate1.column, 1);

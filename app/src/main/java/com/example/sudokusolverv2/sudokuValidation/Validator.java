@@ -233,7 +233,7 @@ public class Validator {
 
     public boolean checkIfSudokuHasOneSolution() {
         recursionSteps++;
-        if (recursionSteps > 1000000) {
+        if (recursionSteps > 5000000) {
             return false;
         }
 

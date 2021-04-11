@@ -31,7 +31,7 @@ public class RowBlockCheckFinder {
     }
 
     public void applyRowBlockCheckToBlock() {
-        RowBlockCheck rowBlockCheck = rowBlockCheck();
+        RowBlockCheck rowBlockCheck = getRowBlockCheckInRow();
         if (rowBlockCheck == null) {
             return;
         }
@@ -51,7 +51,7 @@ public class RowBlockCheckFinder {
     }
 
     public void applyColumnBlockCheckToBlock() {
-        RowBlockCheck rowBlockCheck = columnBlockCheck();
+        RowBlockCheck rowBlockCheck = getRowBlockCheckInColumn();
         if (rowBlockCheck == null) {
             return;
         }
@@ -70,7 +70,7 @@ public class RowBlockCheckFinder {
         }
     }
 
-    public RowBlockCheck rowBlockCheck() {
+    public RowBlockCheck getRowBlockCheckInRow() {
         for (int r = 0; r < 9; r++) {
             HashSet<Integer> rowSet = new HashSet<>();
             HashSet<Integer> rowSetRemoved = new HashSet<>();
@@ -134,7 +134,7 @@ public class RowBlockCheckFinder {
         return null;
     }
 
-    public RowBlockCheck columnBlockCheck() {
+    public RowBlockCheck getRowBlockCheckInColumn() {
         for (int c = 0; c < 9; c++) {
             HashSet<Integer> colSet = new HashSet<>();
             HashSet<Integer> colSetRemoved = new HashSet<>();
