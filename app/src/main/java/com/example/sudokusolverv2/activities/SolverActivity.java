@@ -15,6 +15,8 @@ import com.example.sudokusolverv2.Solver;
 import com.example.sudokusolverv2.SudokuBoard;
 import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedQuad;
 import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedQuadFinder;
+import com.example.sudokusolverv2.solutionStrategies.rowBlockCheck.RowBlockCheck;
+import com.example.sudokusolverv2.solutionStrategies.rowBlockCheck.RowBlockCheckFinder;
 import com.example.sudokusolverv2.solutionStrategies.singles.HiddenSingle;
 import com.example.sudokusolverv2.solutionStrategies.singles.HiddenSingleFinder;
 import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedPair;
@@ -36,6 +38,7 @@ public class SolverActivity extends AppCompatActivity {
     private final NakedPairFinder nakedPairFinder = new NakedPairFinder();
     private final NakedTripleFinder nakedTripleFinder = new NakedTripleFinder();
     private final NakedQuadFinder nakedQuadFinder = new NakedQuadFinder();
+    private final RowBlockCheckFinder rowBlockCheckFinder = new RowBlockCheckFinder();
 
     private boolean editCandidatesButtonSelected = false;
 
@@ -56,6 +59,7 @@ public class SolverActivity extends AppCompatActivity {
         nakedPairFinder.setSolver(gameBoardSolver);
         nakedTripleFinder.setSolver(gameBoardSolver);
         nakedQuadFinder.setSolver(gameBoardSolver);
+        rowBlockCheckFinder.setSolver(gameBoardSolver);
     }
 
     public void BTNOnePress(View view) {
@@ -217,6 +221,14 @@ public class SolverActivity extends AppCompatActivity {
             NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInBlock();
             highlightBlock(nakedQuad.field1.row, nakedQuad.field1.column);
             showTooltip("In diesem Block befindet sich ein Naked Quad", 5000);
+        } else if (rowBlockCheckFinder.rowBlockCheck() != null) {
+            RowBlockCheck rowBlockCheck = rowBlockCheckFinder.rowBlockCheck();
+            highlightRow(rowBlockCheck.candidate1.row);
+            showTooltip("In dieser Zeile kann ein Reihe-Block-Check angewendet werden", 5000);
+        } else if (rowBlockCheckFinder.columnBlockCheck() != null) {
+            RowBlockCheck rowBlockCheck = rowBlockCheckFinder.columnBlockCheck();
+            highlightColumn(rowBlockCheck.candidate1.column);
+            showTooltip("In dieser Spalte kann ein Reihe-Block-Check angewendet werden", 5000);
         }
 
         else {
@@ -290,6 +302,16 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlock(nakedQuad.field1.row, nakedQuad.field1.column);
             nakedQuadFinder.applyNakedQuadToBlock();
             showTooltip("Mit dem Naked Quad konnten in diesem Block Kandidaten entfernt werden", 5000);
+        } else if (rowBlockCheckFinder.rowBlockCheck() != null) {
+            RowBlockCheck rowBlockCheck = rowBlockCheckFinder.rowBlockCheck();
+            highlightBlock(rowBlockCheck.candidate1.row, rowBlockCheck.candidate1.column);
+            rowBlockCheckFinder.applyRowBlockCheckToBlock();
+            showTooltip("Mit dem Reihe-Block-Check konnten in diesem Block Kandidaten entfernt werden", 5000);
+        } else if (rowBlockCheckFinder.columnBlockCheck() != null) {
+            RowBlockCheck rowBlockCheck = rowBlockCheckFinder.columnBlockCheck();
+            highlightBlock(rowBlockCheck.candidate1.row, rowBlockCheck.candidate1.column);
+            rowBlockCheckFinder.applyColumnBlockCheckToBlock();
+            showTooltip("Mit dem Reihe-Block-Check konnten in diesem Block Kandidaten entfernt werden", 5000);
         }
 
         else{
