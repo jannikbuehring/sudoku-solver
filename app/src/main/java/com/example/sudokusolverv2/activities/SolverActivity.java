@@ -35,6 +35,8 @@ public class SolverActivity extends AppCompatActivity {
 
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
+    Runnable savedToolTip;
+    Runnable savedHighlight;
     private final NakedSingleFinder nakedSingleFinder = new NakedSingleFinder();
     private final HiddenSingleFinder hiddenSingleFinder = new HiddenSingleFinder();
     private final NakedPairFinder nakedPairFinder = new NakedPairFinder();
@@ -341,11 +343,22 @@ public class SolverActivity extends AppCompatActivity {
         }
     }
 
+    public void lastSolutionButtonPress(View view) {
+        if (savedToolTip != null && savedHighlight != null) {
+            savedToolTip.run();
+            savedHighlight.run();
+        }
+        else {
+            showTooltip("Keine letzte Lösung verfügbar", 5000);
+        }
+    }
+
     private void showTooltip(String message, int duration) {
         Context context = getApplicationContext();
         Toast toast = Toast.makeText(context, message, duration);
         toast.setGravity(Gravity.BOTTOM, 0, 200);
         toast.show();
+        savedToolTip = () -> showTooltip(message, duration);
     }
 
     private void highlightRow(int row) {
@@ -359,6 +372,7 @@ public class SolverActivity extends AppCompatActivity {
                 gameBoard.invalidate();
             }
         }, 3000);
+        savedHighlight = () -> highlightRow(row);
     }
 
     private void highlightColumn(int column) {
@@ -372,6 +386,7 @@ public class SolverActivity extends AppCompatActivity {
                 gameBoard.invalidate();
             }
         }, 3000);
+        savedHighlight = () -> highlightColumn(column);
     }
 
     private void highlightBlock(int row, int column) {
@@ -386,5 +401,6 @@ public class SolverActivity extends AppCompatActivity {
                 gameBoard.invalidate();
             }
         }, 3000);
+        savedHighlight = () -> highlightBlock(row, column);
     }
 }

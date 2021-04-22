@@ -16,6 +16,7 @@
     <string name="Back">Back</string>
     <string name="Tip">Show Tip</string>
     <string name="Solution">Solution</string>
+    <string name="LastSolution">Last Sol.</string>
     <string name="Forward">Fwd</string>
     <string name="EditCandidates">Edit Cand.</string>
     <string name="ShowAllCandidates">Easy Mode</string>
