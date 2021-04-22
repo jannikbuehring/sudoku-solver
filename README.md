@@ -1,7 +1,7 @@
 # SudokuSolver
 A sudoku solver and helper for my student research project at DHBW Stuttgart
 
-# Functionalities
+# Functionalities:
 - input sudoku validation (are there any rule violations, can sudoku be solved, does it only have one solution?)
 - toggleable candidate system to help the user solving the sudoku ("easy mode")
 - tip system (which solution strategy can be used where?)
@@ -17,4 +17,7 @@ A sudoku solver and helper for my student research project at DHBW Stuttgart
 - Row-Block-Check
 - Block-Row-Check
 
-Development environment: Android Studio
+# Planned features:
+- new Solving strategies (Hidden Pair, Hidden Triple, Hidden Quad)
+
+## Development environment: Android Studio
