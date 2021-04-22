@@ -46,6 +46,7 @@ public class RowBlockCheckFinder {
                     continue;
                 }
                 solver.calculatedCandidates.get(r * 9 + c).remove(rowBlockCheck.candidate1.value);
+                solver.personalCandidates.get(r * 9 + c).remove(rowBlockCheck.candidate1.value);
             }
         }
     }
@@ -66,6 +67,7 @@ public class RowBlockCheckFinder {
                     continue;
                 }
                 solver.calculatedCandidates.get(r * 9 + c).remove(rowBlockCheck.candidate1.value);
+                solver.personalCandidates.get(r * 9 + c).remove(rowBlockCheck.candidate1.value);
             }
         }
     }

@@ -79,6 +79,8 @@ public class NakedTripleFinder {
             }
             solver.calculatedCandidates.get(nakedTriple.field1.row * 9 + c)
                     .removeAll(nakedTriple.candidateUnion);
+            solver.personalCandidates.get(nakedTriple.field1.row * 9 + c)
+                    .removeAll(nakedTriple.candidateUnion);
         }
     }
 
@@ -94,6 +96,8 @@ public class NakedTripleFinder {
                 continue;
             }
             solver.calculatedCandidates.get(r * 9 + nakedTriple.field1.column)
+                    .removeAll(nakedTriple.candidateUnion);
+            solver.personalCandidates.get(r * 9 + nakedTriple.field1.column)
                     .removeAll(nakedTriple.candidateUnion);
         }
     }
@@ -114,6 +118,7 @@ public class NakedTripleFinder {
                     continue;
                 }
                 solver.calculatedCandidates.get(r * 9 + c).removeAll(nakedTriple.candidateUnion);
+                solver.personalCandidates.get(r * 9 + c).removeAll(nakedTriple.candidateUnion);
             }
         }
     }

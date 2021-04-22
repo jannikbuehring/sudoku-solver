@@ -80,6 +80,8 @@ public class NakedQuadFinder {
             }
             solver.calculatedCandidates.get(nakedQuad.field1.row * 9 + c)
                     .removeAll(nakedQuad.candidateUnion);
+            solver.personalCandidates.get(nakedQuad.field1.row * 9 + c)
+                    .removeAll(nakedQuad.candidateUnion);
         }
     }
 
@@ -95,6 +97,8 @@ public class NakedQuadFinder {
                 continue;
             }
             solver.calculatedCandidates.get(r * 9 + nakedQuad.field1.column)
+                    .removeAll(nakedQuad.candidateUnion);
+            solver.personalCandidates.get(r * 9 + nakedQuad.field1.column)
                     .removeAll(nakedQuad.candidateUnion);
         }
     }
@@ -116,6 +120,7 @@ public class NakedQuadFinder {
                     continue;
                 }
                 solver.calculatedCandidates.get(r * 9 + c).removeAll(nakedQuad.candidateUnion);
+                solver.personalCandidates.get(r * 9 + c).removeAll(nakedQuad.candidateUnion);
             }
         }
     }

@@ -37,6 +37,8 @@ public class HiddenPairFinder {
             if (c == hiddenPair.field1.column || c == hiddenPair.field2.column) {
                 solver.calculatedCandidates.get(hiddenPair.field1.row * 9 + c)
                         .removeAll(hiddenPair.pairCandidates);
+                solver.personalCandidates.get(hiddenPair.field1.row * 9 + c)
+                        .removeAll(hiddenPair.pairCandidates);
             }
         }
     }

@@ -14,7 +14,7 @@ public class Solver implements Serializable {
     ArrayList<HashSet<Integer>> subsquareCandidates = new ArrayList<>();
 
     public ArrayList<HashSet<Integer>> calculatedCandidates = new ArrayList<>(81);
-    ArrayList<HashSet<Integer>> personalCandidates = new ArrayList<>(81);
+    public ArrayList<HashSet<Integer>> personalCandidates = new ArrayList<>(81);
 
     private int selectedRow;
     private int selectedColumn;

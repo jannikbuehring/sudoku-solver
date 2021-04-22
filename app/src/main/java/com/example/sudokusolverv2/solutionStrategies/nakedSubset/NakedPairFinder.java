@@ -74,6 +74,8 @@ public class NakedPairFinder {
             }
             solver.calculatedCandidates.get(nakedPair.field1.row * 9 + c)
                     .removeAll(nakedPair.field1.candidateSet);
+            solver.personalCandidates.get(nakedPair.field1.row * 9 + c)
+                    .removeAll(nakedPair.field1.candidateSet);
         }
     }
 
@@ -88,6 +90,8 @@ public class NakedPairFinder {
                 continue;
             }
             solver.calculatedCandidates.get(r * 9 + nakedPair.field1.column)
+                    .removeAll(nakedPair.field1.candidateSet);
+            solver.personalCandidates.get(r * 9 + nakedPair.field1.column)
                     .removeAll(nakedPair.field1.candidateSet);
         }
     }
@@ -107,6 +111,7 @@ public class NakedPairFinder {
                     continue;
                 }
                 solver.calculatedCandidates.get(r * 9 + c).removeAll(nakedPair.field1.candidateSet);
+                solver.personalCandidates.get(r * 9 + c).removeAll(nakedPair.field1.candidateSet);
             }
         }
     }

@@ -57,6 +57,8 @@ public class BlockRowCheckFinder {
             }
             solver.calculatedCandidates.get(blockRowCheck.candidate1.row * 9 + c)
                     .remove(blockRowCheck.candidate1.value);
+            solver.personalCandidates.get(blockRowCheck.candidate1.row * 9 + c)
+                    .remove(blockRowCheck.candidate1.value);
         }
     }
 
@@ -73,6 +75,8 @@ public class BlockRowCheckFinder {
                 continue;
             }
             solver.calculatedCandidates.get(r * 9 + blockRowCheck.candidate1.column)
+                    .remove(blockRowCheck.candidate1.value);
+            solver.personalCandidates.get(r * 9 + blockRowCheck.candidate1.column)
                     .remove(blockRowCheck.candidate1.value);
         }
     }
