@@ -1,5 +1,5 @@
 # SudokuSolver
-A sudoku solver and helper for my student research project at DHBW Stuttgart
+A sudoku solver and helper android app for my student research project at DHBW Stuttgart
 
 # Functionalities:
 - input sudoku validation (are there any rule violations, can sudoku be solved, does it only have one solution?)
