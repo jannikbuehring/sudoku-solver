@@ -27,10 +27,12 @@ public class HiddenPairFinderTest extends TestCase {
         HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInRow();
         assertEquals(hiddenPair.field1.row, 3);
         assertEquals(hiddenPair.field2.row, 3);
+
         assertEquals(hiddenPair.field1.column, 4);
         assertEquals(hiddenPair.field2.column, 5);
-        assertEquals(hiddenPair.pairCandidates.contains(5), true);
-        assertEquals(hiddenPair.pairCandidates.contains(6), true);
+
+        assertTrue(hiddenPair.pairCandidates.contains(5));
+        assertTrue(hiddenPair.pairCandidates.contains(6));
 
     }
 
@@ -54,10 +56,12 @@ public class HiddenPairFinderTest extends TestCase {
         HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInColumn();
         assertEquals(hiddenPair.field1.row, 4);
         assertEquals(hiddenPair.field2.row, 6);
+
         assertEquals(hiddenPair.field1.column, 8);
         assertEquals(hiddenPair.field2.column, 8);
-        assertEquals(hiddenPair.pairCandidates.contains(1), true);
-        assertEquals(hiddenPair.pairCandidates.contains(9), true);
+
+        assertTrue(hiddenPair.pairCandidates.contains(1));
+        assertTrue(hiddenPair.pairCandidates.contains(9));
 
     }
 
@@ -81,10 +85,12 @@ public class HiddenPairFinderTest extends TestCase {
         HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInBlock();
         assertEquals(hiddenPair.field1.row, 0);
         assertEquals(hiddenPair.field2.row, 0);
+
         assertEquals(hiddenPair.field1.column, 0);
         assertEquals(hiddenPair.field2.column, 1);
-        assertEquals(hiddenPair.pairCandidates.contains(4), true);
-        assertEquals(hiddenPair.pairCandidates.contains(7), true);
+
+        assertTrue(hiddenPair.pairCandidates.contains(4));
+        assertTrue(hiddenPair.pairCandidates.contains(7));
 
     }
 }

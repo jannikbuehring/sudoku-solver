@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 
 public class HiddenQuadFinderTest extends TestCase {
 
+    // TODO: adapt tests
     public void testGetHiddenQuadInRow() {
         Solver solver = new Solver();
         HiddenQuadFinder hiddenQuadFinder = new HiddenQuadFinder();
