@@ -29,6 +29,44 @@ public class HiddenTripleFinder {
         return false;
     }
 
+    private boolean checkIfHiddenTripleCanRemoveCandidatesFromColumn(HiddenTriple hiddenTriple) {
+        for (int r = 0; r < 9; r++) {
+            // only look at the fields of the hidden triple
+            if (r == hiddenTriple.field1.row || r == hiddenTriple.field2.row
+                    || r == hiddenTriple.field3.row) {
+                // if the field contains other candidates which are not in the
+                // hidden triple, return true
+                for (Integer candidate : hiddenTriple.candidates) {
+                    if (solver.calculatedCandidates.get(r * 9 + hiddenTriple.field1.column).contains(candidate)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean checkIfHiddenTripleCanRemoveCandidatesFromBlock(HiddenTriple hiddenTriple) {
+        int boxRow = hiddenTriple.field1.row / 3;
+        int boxCol = hiddenTriple.field1.column / 3;
+        for (int r = boxRow * 3; r < boxRow * 3 + 3; r++) {
+            for (int c = boxCol * 3; c < boxCol * 3 + 3; c++) {
+                // only look at the fields of the hidden pair
+                if (r == hiddenTriple.field1.row && c == hiddenTriple.field1.column
+                        || r == hiddenTriple.field2.row && c == hiddenTriple.field2.column
+                        || r == hiddenTriple.field3.row && c == hiddenTriple.field3.column) {
+                    for (Integer candidate : hiddenTriple.candidates) {
+                        if (solver.calculatedCandidates.get(r * 9 + c).contains(candidate)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void applyHiddenTripleToRow() {
         HiddenTriple hiddenTriple = getHiddenTripleInRow();
         if (hiddenTriple == null) {
@@ -44,6 +82,47 @@ public class HiddenTripleFinder {
                         .removeAll(hiddenTriple.candidates);
                 solver.personalCandidates.get(hiddenTriple.field1.row * 9 + c)
                         .removeAll(hiddenTriple.candidates);
+            }
+        }
+    }
+
+    public void applyHiddenTripleToColumn() {
+        HiddenTriple hiddenTriple = getHiddenTripleInColumn();
+        if (hiddenTriple == null) {
+            return;
+        }
+        for (int r = 0; r < 9; r++) {
+            // only look at the fields of the hidden triple
+            if (r == hiddenTriple.field1.row || r == hiddenTriple.field2.row
+                    || r == hiddenTriple.field3.row) {
+                // if the field contains other candidates which are not in the
+                // hidden triple, remove them
+                solver.calculatedCandidates.get(r * 9 + hiddenTriple.field1.column)
+                        .removeAll(hiddenTriple.candidates);
+                solver.personalCandidates.get(r * 9 + hiddenTriple.field1.column)
+                        .removeAll(hiddenTriple.candidates);
+            }
+        }
+    }
+
+    public void applyHiddenTripleToBlock() {
+        HiddenTriple hiddenTriple = getHiddenTripleInBlock();
+        if (hiddenTriple == null) {
+            return;
+        }
+        int boxRow = hiddenTriple.field1.row / 3;
+        int boxCol = hiddenTriple.field1.column / 3;
+        for (int r = boxRow * 3; r < boxRow * 3 + 3; r++) {
+            for (int c = boxCol * 3; c < boxCol * 3 + 3; c++) {
+                // only look at the fields of the hidden pair
+                if (r == hiddenTriple.field1.row && c == hiddenTriple.field1.column
+                        || r == hiddenTriple.field2.row && c == hiddenTriple.field2.column
+                        || r == hiddenTriple.field3.row && c == hiddenTriple.field3.column) {
+                    solver.calculatedCandidates.get(r * 9 + c)
+                            .removeAll(hiddenTriple.candidates);
+                    solver.personalCandidates.get(r * 9 + c)
+                            .removeAll(hiddenTriple.candidates);
+                }
             }
         }
     }
@@ -106,7 +185,7 @@ public class HiddenTripleFinder {
         return null;
     }
 
-        public void setSolver (Solver solver){
-            this.solver = solver;
-        }
+    public void setSolver(Solver solver) {
+        this.solver = solver;
     }
+}
