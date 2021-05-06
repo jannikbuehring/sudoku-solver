@@ -60,4 +60,31 @@ public class HiddenPairFinderTest extends TestCase {
         assertEquals(hiddenPair.pairCandidates.contains(9), true);
 
     }
+
+    public void testGetHiddenPairInBlock() {
+        Solver solver = new Solver();
+        HiddenPairFinder hiddenPairFinder = new HiddenPairFinder();
+        hiddenPairFinder.setSolver(solver);
+        // http://hodoku.sourceforge.net/en/tech_hidden.php
+        solver.board = new int[][]{
+                {0, 0, 0, 0, 6, 0, 0, 0, 0},
+                {0, 0, 0, 0, 4, 2, 7, 3, 6},
+                {0, 0, 6, 7, 3, 0, 0, 4, 0},
+                {0, 9, 4, 0, 0, 0, 0, 6, 8},
+                {0, 0, 0, 0, 9, 6, 4, 0, 7},
+                {6, 0, 7, 0, 5, 0, 9, 2, 3},
+                {1, 0, 0, 0, 0, 0, 0, 8, 5},
+                {0, 6, 0, 0, 8, 0, 2, 7, 1},
+                {0, 0, 5, 0, 1, 0, 0, 9, 4}
+        };
+        solver.calculateInitialCandidates();
+        HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInBlock();
+        assertEquals(hiddenPair.field1.row, 0);
+        assertEquals(hiddenPair.field2.row, 0);
+        assertEquals(hiddenPair.field1.column, 0);
+        assertEquals(hiddenPair.field2.column, 1);
+        assertEquals(hiddenPair.pairCandidates.contains(4), true);
+        assertEquals(hiddenPair.pairCandidates.contains(7), true);
+
+    }
 }

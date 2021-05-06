@@ -239,11 +239,11 @@ public class SolverActivity extends AppCompatActivity {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInColumn();
             highlightColumn(hiddenPair.field1.column);
             showTooltip("In dieser Spalte befindet sich ein Hidden Pair", 5000);
-        } /* else if (hiddenPairFinder.getHiddenPairInBlock() != null) {
+        } else if (hiddenPairFinder.getHiddenPairInBlock() != null) {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInBlock();
             highlightBlock(hiddenPair.field1.row, hiddenPair.field1.column);
             showTooltip("In diesem Block befindet sich ein Hidden Pair", 5000);
-        } */
+        }
         else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
             highlightRow(rowBlockCheck.candidate1.row);
@@ -343,9 +343,12 @@ public class SolverActivity extends AppCompatActivity {
             highlightColumn(hiddenPair.field1.column);
             hiddenPairFinder.applyHiddenPairToColumn();
             showTooltip("Mit dem Hidden Pair konnten in dieser Spalte Kandidaten entfernt werden", 5000);
-        } /* else if (hiddenPairFinder.getHiddenPairInBlock()) {
-
-        } */
+        } else if (hiddenPairFinder.getHiddenPairInBlock() != null) {
+            HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInBlock();
+            highlightBlock(hiddenPair.field1.row, hiddenPair.field1.column);
+            hiddenPairFinder.applyHiddenPairToBlock();
+            showTooltip("Mit dem Hidden Pair konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+        }
         else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
             highlightBlock(rowBlockCheck.candidate1.row, rowBlockCheck.candidate1.column);
