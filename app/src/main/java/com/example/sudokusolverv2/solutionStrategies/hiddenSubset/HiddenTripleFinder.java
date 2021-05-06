@@ -185,6 +185,14 @@ public class HiddenTripleFinder {
         return null;
     }
 
+    public HiddenTriple getHiddenTripleInColumn() {
+        return null;
+    }
+
+    public HiddenTriple getHiddenTripleInBlock() {
+        return null;
+    }
+
     public void setSolver(Solver solver) {
         this.solver = solver;
     }

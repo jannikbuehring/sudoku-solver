@@ -17,6 +17,10 @@ import com.example.sudokusolverv2.solutionStrategies.blockRowCheck.BlockRowCheck
 import com.example.sudokusolverv2.solutionStrategies.blockRowCheck.BlockRowCheckFinder;
 import com.example.sudokusolverv2.solutionStrategies.hiddenSubset.HiddenPair;
 import com.example.sudokusolverv2.solutionStrategies.hiddenSubset.HiddenPairFinder;
+import com.example.sudokusolverv2.solutionStrategies.hiddenSubset.HiddenQuad;
+import com.example.sudokusolverv2.solutionStrategies.hiddenSubset.HiddenQuadFinder;
+import com.example.sudokusolverv2.solutionStrategies.hiddenSubset.HiddenTriple;
+import com.example.sudokusolverv2.solutionStrategies.hiddenSubset.HiddenTripleFinder;
 import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedQuad;
 import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedQuadFinder;
 import com.example.sudokusolverv2.solutionStrategies.rowBlockCheck.RowBlockCheck;
@@ -45,6 +49,8 @@ public class SolverActivity extends AppCompatActivity {
     private final NakedTripleFinder nakedTripleFinder = new NakedTripleFinder();
     private final NakedQuadFinder nakedQuadFinder = new NakedQuadFinder();
     private final HiddenPairFinder hiddenPairFinder = new HiddenPairFinder();
+    private final HiddenTripleFinder hiddenTripleFinder = new HiddenTripleFinder();
+    private final HiddenQuadFinder hiddenQuadFinder = new HiddenQuadFinder();
     private final RowBlockCheckFinder rowBlockCheckFinder = new RowBlockCheckFinder();
     private final BlockRowCheckFinder blockRowCheckFinder = new BlockRowCheckFinder();
 
@@ -68,6 +74,8 @@ public class SolverActivity extends AppCompatActivity {
         nakedTripleFinder.setSolver(gameBoardSolver);
         nakedQuadFinder.setSolver(gameBoardSolver);
         hiddenPairFinder.setSolver(gameBoardSolver);
+        hiddenTripleFinder.setSolver(gameBoardSolver);
+        hiddenQuadFinder.setSolver(gameBoardSolver);
         rowBlockCheckFinder.setSolver(gameBoardSolver);
         blockRowCheckFinder.setSolver(gameBoardSolver);
     }
@@ -243,8 +251,31 @@ public class SolverActivity extends AppCompatActivity {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInBlock();
             highlightBlock(hiddenPair.field1.row, hiddenPair.field1.column);
             showTooltip("In diesem Block befindet sich ein Hidden Pair", 5000);
-        }
-        else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
+        } else if (hiddenTripleFinder.getHiddenTripleInRow() != null) {
+            HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInRow();
+            highlightRow(hiddenTriple.field1.row);
+            showTooltip("In dieser Zeile befindet sich ein Hidden Triple", 5000);
+        } else if (hiddenTripleFinder.getHiddenTripleInColumn() != null) {
+            HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInColumn();
+            highlightColumn(hiddenTriple.field1.column);
+            showTooltip("In dieser Spalte befindet sich ein Hidden Triple", 5000);
+        } else if (hiddenTripleFinder.getHiddenTripleInBlock() != null) {
+            HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInBlock();
+            highlightBlock(hiddenTriple.field1.row, hiddenTriple.field1.column);
+            showTooltip("In diesem Block befindet sich ein Hidden Triple", 5000);
+        } else if (hiddenQuadFinder.getHiddenQuadInRow() != null) {
+            HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInRow();
+            highlightRow(hiddenQuad.field1.row);
+            showTooltip("In dieser Zeile befindet sich ein Hidden Quad", 5000);
+        } else if (hiddenQuadFinder.getHiddenQuadInColumn() != null) {
+            HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInColumn();
+            highlightColumn(hiddenQuad.field1.column);
+            showTooltip("In dieser Spalte befindet sich ein Hidden Quad", 5000);
+        } else if (hiddenQuadFinder.getHiddenQuadInBlock() != null) {
+            HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInBlock();
+            highlightBlock(hiddenQuad.field1.row, hiddenQuad.field1.column);
+            showTooltip("In diesem Block befindet sich ein Hidden Quad", 5000);
+        } else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
             highlightRow(rowBlockCheck.candidate1.row);
             showTooltip("In dieser Zeile kann ein Reihe-Block-Check angewendet werden", 5000);
@@ -347,9 +378,38 @@ public class SolverActivity extends AppCompatActivity {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInBlock();
             highlightBlock(hiddenPair.field1.row, hiddenPair.field1.column);
             hiddenPairFinder.applyHiddenPairToBlock();
-            showTooltip("Mit dem Hidden Pair konnten in dieser Spalte Kandidaten entfernt werden", 5000);
-        }
-        else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
+            showTooltip("Mit dem Hidden Pair konnten in diesem Block Kandidaten entfernt werden", 5000);
+        } else if (hiddenTripleFinder.getHiddenTripleInRow() != null) {
+            HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInRow();
+            highlightRow(hiddenTriple.field1.row);
+            hiddenTripleFinder.applyHiddenTripleToRow();
+            showTooltip("Mit dem Hidden Triple konnten in dieser Zeile Kandidaten entfernt werden", 5000);
+        } else if (hiddenTripleFinder.getHiddenTripleInColumn() != null) {
+            HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInColumn();
+            highlightColumn(hiddenTriple.field1.column);
+            hiddenTripleFinder.getHiddenTripleInColumn();
+            showTooltip("Mit dem Hidden Triple konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+        } else if (hiddenTripleFinder.getHiddenTripleInBlock() != null) {
+            HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInBlock();
+            highlightBlock(hiddenTriple.field1.row, hiddenTriple.field1.column);
+            hiddenTripleFinder.getHiddenTripleInBlock();
+            showTooltip("Mit dem Hidden Triple konnten in diesem Block Kandidaten entfernt werden", 5000);
+        } else if (hiddenQuadFinder.getHiddenQuadInRow() != null) {
+            HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInRow();
+            highlightRow(hiddenQuad.field1.row);
+            hiddenQuadFinder.applyHiddenQuadToRow();
+            showTooltip("Mit dem Hidden Quad konnten in dieser Zeile Kandidaten entfernt werden", 5000);
+        } else if (hiddenQuadFinder.getHiddenQuadInColumn() != null) {
+            HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInColumn();
+            highlightColumn(hiddenQuad.field1.column);
+            hiddenQuadFinder.applyHiddenQuadToColumn();
+            showTooltip("Mit dem Hidden Quad konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+        } else if (hiddenQuadFinder.getHiddenQuadInBlock() != null) {
+            HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInBlock();
+            highlightBlock(hiddenQuad.field1.row, hiddenQuad.field1.column);
+            hiddenQuadFinder.applyHiddenQuadToBlock();
+            showTooltip("Mit dem Hidden Quad konnten in diesem Block Kandidaten entfernt werden", 5000);
+        } else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
             highlightBlock(rowBlockCheck.candidate1.row, rowBlockCheck.candidate1.column);
             rowBlockCheckFinder.applyRowBlockCheckToBlock();
