@@ -192,8 +192,7 @@ public class SolverActivity extends AppCompatActivity {
         } else if (hiddenSingleFinder.getHiddenSingleInRow() != null) {
             HiddenSingle hiddenSingle = hiddenSingleFinder.getHiddenSingleInRow();
             highlightRow(hiddenSingle.row);
-            showTooltip("In dieser Reihe befindet sich ein Hidden Single",
-                    5000);
+            showTooltip("In dieser Reihe befindet sich ein Hidden Single", 5000);
         } else if (hiddenSingleFinder.getHiddenSingleInCol() != null) {
             HiddenSingle hiddenSingle = hiddenSingleFinder.getHiddenSingleInCol();
             highlightColumn(hiddenSingle.col);
@@ -201,8 +200,7 @@ public class SolverActivity extends AppCompatActivity {
         } else if (hiddenSingleFinder.getHiddenSingleBlockLocation() != null) {
             HiddenSingle hiddenSingle = hiddenSingleFinder.getHiddenSingleBlockLocation();
             highlightBlock(hiddenSingle.row, hiddenSingle.col);
-            showTooltip("In diesem Block befindet sich ein Hidden Single",
-                    5000);
+            showTooltip("In diesem Block befindet sich ein Hidden Single", 5000);
         } else if (nakedPairFinder.getNakedPairInRow() != null) {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInRow();
             highlightRow(nakedPair.field1.row);
@@ -387,12 +385,12 @@ public class SolverActivity extends AppCompatActivity {
         } else if (hiddenTripleFinder.getHiddenTripleInColumn() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInColumn();
             highlightColumn(hiddenTriple.field1.column);
-            hiddenTripleFinder.getHiddenTripleInColumn();
+            hiddenTripleFinder.applyHiddenTripleToColumn();
             showTooltip("Mit dem Hidden Triple konnten in dieser Spalte Kandidaten entfernt werden", 5000);
         } else if (hiddenTripleFinder.getHiddenTripleInBlock() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInBlock();
             highlightBlock(hiddenTriple.field1.row, hiddenTriple.field1.column);
-            hiddenTripleFinder.getHiddenTripleInBlock();
+            hiddenTripleFinder.applyHiddenTripleToBlock();
             showTooltip("Mit dem Hidden Triple konnten in diesem Block Kandidaten entfernt werden", 5000);
         } else if (hiddenQuadFinder.getHiddenQuadInRow() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInRow();
