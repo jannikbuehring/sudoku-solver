@@ -31,8 +31,8 @@ public class HiddenPairFinderTest extends TestCase {
         assertEquals(hiddenPair.field1.column, 4);
         assertEquals(hiddenPair.field2.column, 5);
 
-        assertTrue(hiddenPair.pairCandidates.contains(5));
-        assertTrue(hiddenPair.pairCandidates.contains(6));
+        assertTrue(hiddenPair.candidates.contains(5));
+        assertTrue(hiddenPair.candidates.contains(6));
 
     }
 
@@ -60,8 +60,8 @@ public class HiddenPairFinderTest extends TestCase {
         assertEquals(hiddenPair.field1.column, 8);
         assertEquals(hiddenPair.field2.column, 8);
 
-        assertTrue(hiddenPair.pairCandidates.contains(1));
-        assertTrue(hiddenPair.pairCandidates.contains(9));
+        assertTrue(hiddenPair.candidates.contains(1));
+        assertTrue(hiddenPair.candidates.contains(9));
 
     }
 
@@ -89,8 +89,8 @@ public class HiddenPairFinderTest extends TestCase {
         assertEquals(hiddenPair.field1.column, 0);
         assertEquals(hiddenPair.field2.column, 1);
 
-        assertTrue(hiddenPair.pairCandidates.contains(4));
-        assertTrue(hiddenPair.pairCandidates.contains(7));
+        assertTrue(hiddenPair.candidates.contains(4));
+        assertTrue(hiddenPair.candidates.contains(7));
 
     }
 }

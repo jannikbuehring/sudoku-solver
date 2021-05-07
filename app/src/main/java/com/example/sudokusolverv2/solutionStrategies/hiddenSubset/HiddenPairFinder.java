@@ -12,11 +12,16 @@ public class HiddenPairFinder {
     private Solver solver;
 
     private boolean checkIfHiddenPairCanRemoveCandidatesFromRow(HiddenPair hiddenPair) {
+        HashSet<Integer> otherCandidates = new HashSet<>();
+        for (int i = 1; i < 10; i++) {
+            otherCandidates.add(i);
+        }
+        otherCandidates.removeAll(hiddenPair.candidates);
         for (int c = 0; c < 9; c++) {
             // only look at the fields of the hidden pair
             if (c == hiddenPair.field1.column || c == hiddenPair.field2.column) {
                 // if other candidates of the row contain a number of the hidden pair, return true
-                for (Integer candidate : hiddenPair.pairCandidates) {
+                for (Integer candidate : otherCandidates) {
                     if (solver.calculatedCandidates.get(hiddenPair.field1.row * 9 + c).contains(candidate)) {
                         return true;
                     }
@@ -27,11 +32,16 @@ public class HiddenPairFinder {
     }
 
     private boolean checkIfHiddenPairCanRemoveCandidatesFromColumn(HiddenPair hiddenPair) {
+        HashSet<Integer> otherCandidates = new HashSet<>();
+        for (int i = 1; i < 10; i++) {
+            otherCandidates.add(i);
+        }
+        otherCandidates.removeAll(hiddenPair.candidates);
         for (int r = 0; r < 9; r++) {
             // only look at the fields of the hidden pair
             if (r == hiddenPair.field1.row || r == hiddenPair.field2.row) {
                 // if other candidates of the row contain a number of the hidden pair, return true
-                for (Integer candidate : hiddenPair.pairCandidates) {
+                for (Integer candidate : otherCandidates) {
                     if (solver.calculatedCandidates.get(r * 9 + hiddenPair.field1.column).contains(candidate)) {
                         return true;
                     }
@@ -42,6 +52,11 @@ public class HiddenPairFinder {
     }
 
     private boolean checkIfHiddenPairCanRemoveCandidatesFromBlock(HiddenPair hiddenPair) {
+        HashSet<Integer> otherCandidates = new HashSet<>();
+        for (int i = 1; i < 10; i++) {
+            otherCandidates.add(i);
+        }
+        otherCandidates.removeAll(hiddenPair.candidates);
         int boxRow = hiddenPair.field1.row / 3;
         int boxCol = hiddenPair.field1.column / 3;
         for (int r = boxRow * 3; r < boxRow * 3 + 3; r++) {
@@ -49,7 +64,7 @@ public class HiddenPairFinder {
                 // only look at the fields of the hidden pair
                 if (r == hiddenPair.field1.row && c == hiddenPair.field1.column
                         || r == hiddenPair.field2.row && c == hiddenPair.field2.column) {
-                    for (Integer candidate : hiddenPair.pairCandidates) {
+                    for (Integer candidate : otherCandidates) {
                         if (solver.calculatedCandidates.get(r * 9 + c).contains(candidate)) {
                             return true;
                         }
@@ -65,13 +80,18 @@ public class HiddenPairFinder {
         if (hiddenPair == null) {
             return;
         }
+        HashSet<Integer> otherCandidates = new HashSet<>();
+        for (int i = 1; i < 10; i++) {
+            otherCandidates.add(i);
+        }
+        otherCandidates.removeAll(hiddenPair.candidates);
         for (int c = 0; c < 9; c++) {
             // remove other candidates of the hidden pair
             if (c == hiddenPair.field1.column || c == hiddenPair.field2.column) {
                 solver.calculatedCandidates.get(hiddenPair.field1.row * 9 + c)
-                        .removeAll(hiddenPair.pairCandidates);
+                        .removeAll(otherCandidates);
                 solver.personalCandidates.get(hiddenPair.field1.row * 9 + c)
-                        .removeAll(hiddenPair.pairCandidates);
+                        .removeAll(otherCandidates);
             }
         }
     }
@@ -81,13 +101,18 @@ public class HiddenPairFinder {
         if (hiddenPair == null) {
             return;
         }
+        HashSet<Integer> otherCandidates = new HashSet<>();
+        for (int i = 1; i < 10; i++) {
+            otherCandidates.add(i);
+        }
+        otherCandidates.removeAll(hiddenPair.candidates);
         for (int r = 0; r < 9; r++) {
             // remove other candidates of the hidden pair
             if (r == hiddenPair.field1.row || r == hiddenPair.field2.row) {
                 solver.calculatedCandidates.get(r * 9 + hiddenPair.field1.column)
-                        .removeAll(hiddenPair.pairCandidates);
+                        .removeAll(otherCandidates);
                 solver.personalCandidates.get(r * 9 + hiddenPair.field1.column)
-                        .removeAll(hiddenPair.pairCandidates);
+                        .removeAll(otherCandidates);
             }
         }
     }
@@ -97,6 +122,11 @@ public class HiddenPairFinder {
         if (hiddenPair == null) {
             return;
         }
+        HashSet<Integer> otherCandidates = new HashSet<>();
+        for (int i = 1; i < 10; i++) {
+            otherCandidates.add(i);
+        }
+        otherCandidates.removeAll(hiddenPair.candidates);
         int boxRow = hiddenPair.field1.row / 3;
         int boxCol = hiddenPair.field1.column / 3;
         for (int r = boxRow * 3; r < boxRow * 3 + 3; r++) {
@@ -105,9 +135,9 @@ public class HiddenPairFinder {
                 if (r == hiddenPair.field1.row && c == hiddenPair.field1.column
                         || r == hiddenPair.field2.row && c == hiddenPair.field2.column) {
                     solver.calculatedCandidates.get(r * 9 + c)
-                            .removeAll(hiddenPair.pairCandidates);
+                            .removeAll(otherCandidates);
                     solver.personalCandidates.get(r * 9 + c)
-                            .removeAll(hiddenPair.pairCandidates);
+                            .removeAll(otherCandidates);
                 }
             }
         }

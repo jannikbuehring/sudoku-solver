@@ -27,6 +27,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
+        Zeigen:
+        new int[][]{
+                {0, 0, 0, 7, 4, 0, 0, 0, 8},
+                {4, 9, 6, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 2, 0, 0, 4, 0},
+                {0, 0, 0, 0, 5, 7, 6, 0, 0},
+                {8, 0, 0, 0, 0, 0, 0, 2, 1},
+                {0, 0, 3, 4, 0, 0, 0, 0, 0},
+                {0, 0, 0, 3, 0, 0, 0, 0, 0},
+                {1, 2, 4, 0, 7, 0, 0, 5, 0},
+                {0, 0, 0, 0, 0, 0, 7, 0, 0}
+        };
+         */
+
         gameBoard = findViewById(R.id.SudokuBoard);
         gameBoardSolver = gameBoard.getSolver();
         gameBoardSolver.board = new int[][]{
