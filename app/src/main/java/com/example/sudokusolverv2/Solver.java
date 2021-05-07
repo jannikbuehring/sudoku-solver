@@ -1,5 +1,7 @@
 package com.example.sudokusolverv2;
 
+import com.example.sudokusolverv2.candidateSystem.FieldCandidates;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -267,6 +269,50 @@ public class Solver implements Serializable {
                 }
             }
         }
+    }
+
+    public int countCandidateOccurrencesInRow(int row, int candidate) {
+        int occurrences = 0;
+        for (int c = 0; c < 9; c++) {
+            HashSet<Integer> candidates = calculatedCandidates.get(row * 9 + c);
+            if(candidates.contains(candidate)) {
+                occurrences++;
+            }
+        }
+        return occurrences;
+    }
+
+    public ArrayList<FieldCandidates> findCandidateOccurrencesInRow(int row, int candidate) {
+        ArrayList<FieldCandidates> occurrencesList = new ArrayList<>();
+        for (int c = 0; c < 9; c++) {
+            HashSet<Integer> candidates = calculatedCandidates.get(row * 9 + c);
+            if (candidates.contains(candidate)) {
+                occurrencesList.add(new FieldCandidates(row, c, candidates));
+            }
+        }
+        return occurrencesList;
+    }
+
+    public int countCandidateOccurrencesInColumn(int column, int candidate) {
+        int occurrences = 0;
+        for (int r = 0; r < 9; r++) {
+            HashSet<Integer> candidates = calculatedCandidates.get(r * 9 + column);
+            if(candidates.contains(candidate)) {
+                occurrences++;
+            }
+        }
+        return occurrences;
+    }
+
+    public ArrayList<FieldCandidates> findCandidateOccurrencesInColumn(int column, int candidate) {
+        ArrayList<FieldCandidates> occurrencesList = new ArrayList<>();
+        for (int r = 0; r < 9; r++) {
+            HashSet<Integer> candidates = calculatedCandidates.get(r * 9 + column);
+            if (candidates.contains(candidate)) {
+                occurrencesList.add(new FieldCandidates(r, column, candidates));
+            }
+        }
+        return occurrencesList;
     }
 
     //-------------------------------------TIP FUNCTIONALITY----------------------------------------

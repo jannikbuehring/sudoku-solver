@@ -106,8 +106,8 @@ public class HiddenSingleFinder {
     public HiddenSingle getHiddenSingleInCol() {
         HiddenSingle hiddenSingle;
         for (int c = 0; c < 9; c++) {
-            if (getHiddenSingleInRow(c) != null) {
-                hiddenSingle = getHiddenSingleInRow(c);
+            if (getHiddenSingleInCol(c) != null) {
+                hiddenSingle = getHiddenSingleInCol(c);
                 return hiddenSingle;
             }
         }

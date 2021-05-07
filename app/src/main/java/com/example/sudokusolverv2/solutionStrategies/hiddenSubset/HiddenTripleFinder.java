@@ -163,6 +163,7 @@ public class HiddenTripleFinder implements Serializable {
 
     // https://www.youtube.com/watch?v=VEmdzUaBpBQ
     public HiddenTriple getHiddenTripleInRow() {
+        /*
         for (int r = 0; r < 9; r++) {
 
             // get a list of all current candidates for this row
@@ -246,12 +247,13 @@ public class HiddenTripleFinder implements Serializable {
                     }
                 }
             }
-        }
+        }*/
 
         return null;
     }
 
     public HiddenTriple getHiddenTripleInColumn() {
+        /*
         for (int c = 0; c < 9; c++) {
 
             // get a list of all current candidates for this column
@@ -334,12 +336,13 @@ public class HiddenTripleFinder implements Serializable {
                     }
                 }
             }
-        }
+        }*/
 
         return null;
     }
 
     public HiddenTriple getHiddenTripleInBlock() {
+        /*
         for (int row = 0; row < 9; row = row + 3) {
             for (int col = 0; col < 9; col = col + 3) {
                 // get a list of all current candidates for this block
@@ -425,7 +428,7 @@ public class HiddenTripleFinder implements Serializable {
                     }
                 }
             }
-        }
+        }*/
         return null;
     }
 

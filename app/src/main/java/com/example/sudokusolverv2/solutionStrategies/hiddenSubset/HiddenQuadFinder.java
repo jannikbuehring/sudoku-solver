@@ -159,7 +159,9 @@ public class HiddenQuadFinder {
         }
     }
 
+    // TODO: this does not find all possible hidden quads yet
     public HiddenQuad getHiddenQuadInRow() {
+        /*
         for (int r = 0; r < 9; r++) {
 
             // get a list of all current candidates for this row
@@ -247,11 +249,12 @@ public class HiddenQuadFinder {
                     }
                 }
             }
-        }
+        }*/
         return null;
     }
 
     public HiddenQuad getHiddenQuadInColumn() {
+        /*
         for (int c = 0; c < 9; c++) {
 
             // get a list of all current candidates for this row
@@ -339,11 +342,12 @@ public class HiddenQuadFinder {
                     }
                 }
             }
-        }
+        }*/
         return null;
     }
 
     public HiddenQuad getHiddenQuadInBlock() {
+        /*
         for (int row = 0; row < 9; row = row + 3) {
             for (int col = 0; col < 9; col = col + 3) {
                 // get a list of all current candidates for this row
@@ -434,7 +438,7 @@ public class HiddenQuadFinder {
                     }
                 }
             }
-        }
+        }*/
         return null;
     }
 
