@@ -15,7 +15,6 @@ public class HiddenTripleFinder implements Serializable {
 
     private Solver solver;
 
-    // TODO: fix these functions
     private boolean checkIfHiddenTripleCanRemoveCandidatesFromRow(HiddenTriple hiddenTriple) {
         HashSet<Integer> otherCandidates = new HashSet<>();
         for (int i = 1; i < 10; i++) {
@@ -72,7 +71,7 @@ public class HiddenTripleFinder implements Serializable {
         int boxCol = hiddenTriple.field1.column / 3;
         for (int r = boxRow * 3; r < boxRow * 3 + 3; r++) {
             for (int c = boxCol * 3; c < boxCol * 3 + 3; c++) {
-                // only look at the fields of the hidden pair
+                // only look at the fields of the hidden triple
                 if (r == hiddenTriple.field1.row && c == hiddenTriple.field1.column
                         || r == hiddenTriple.field2.row && c == hiddenTriple.field2.column
                         || r == hiddenTriple.field3.row && c == hiddenTriple.field3.column) {
@@ -149,7 +148,7 @@ public class HiddenTripleFinder implements Serializable {
         int boxCol = hiddenTriple.field1.column / 3;
         for (int r = boxRow * 3; r < boxRow * 3 + 3; r++) {
             for (int c = boxCol * 3; c < boxCol * 3 + 3; c++) {
-                // only look at the fields of the hidden pair
+                // only look at the fields of the hidden triple
                 if (r == hiddenTriple.field1.row && c == hiddenTriple.field1.column
                         || r == hiddenTriple.field2.row && c == hiddenTriple.field2.column
                         || r == hiddenTriple.field3.row && c == hiddenTriple.field3.column) {
