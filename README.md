@@ -7,7 +7,7 @@ A sudoku solver and helper android app for my student research project at DHBW S
 - toggleable system to show all current candidates to help the user solving the sudoku ("easy mode")
 - tip system (which solution strategy can be used where?)
 - use solution strategy to solve next step of sudoku 
-- solution strategies (currently 8) to help solving the sudoku in an understandable way
+- solution strategies (currently 9) to help solving the sudoku in an understandable way
 
 # Currently implemented solution strategies:
 - Naked single
@@ -16,10 +16,11 @@ A sudoku solver and helper android app for my student research project at DHBW S
 - Naked Triple
 - Naked Quad
 - Hidden Pair
+- Hidden Triple
 - Row-Block-Check
 - Block-Row-Check
 
 # Planned features:
-- new Solving strategies (Hidden Triple, Hidden Quad, X-Wing)
+- new Solving strategies (Hidden Quad, X-Wing)
 
 ## Development environment: Android Studio
