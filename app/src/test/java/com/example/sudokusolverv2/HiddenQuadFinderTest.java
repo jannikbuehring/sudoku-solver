@@ -43,6 +43,7 @@ public class HiddenQuadFinderTest extends TestCase {
         Solver solver = new Solver();
         HiddenQuadFinder hiddenQuadFinder = new HiddenQuadFinder();
         hiddenQuadFinder.setSolver(solver);
+        // example has another hidden quad
         // http://hodoku.sourceforge.net/de/tech_hidden.php
         solver.board = new int[][]{
                 {0, 3, 0, 0, 0, 0, 0, 1, 0},
