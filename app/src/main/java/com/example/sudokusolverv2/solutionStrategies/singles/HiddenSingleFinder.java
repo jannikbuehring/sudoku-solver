@@ -193,7 +193,7 @@ public class HiddenSingleFinder {
                                 if (candidates != null) {
                                     for (int i : candidates) {
                                         if (i == hiddenSingleValue) {
-                                            HiddenSingle hiddenSingle = new HiddenSingle(r, col, hiddenSingleValue);
+                                            HiddenSingle hiddenSingle = new HiddenSingle(r, c, hiddenSingleValue);
                                             return hiddenSingle;
                                         }
                                     }
