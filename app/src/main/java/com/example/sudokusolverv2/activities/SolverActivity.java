@@ -38,6 +38,8 @@ import com.example.sudokusolverv2.solutionStrategies.singles.NakedSingleFinder;
 import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedTriple;
 import com.example.sudokusolverv2.solutionStrategies.nakedSubset.NakedTripleFinder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -199,11 +201,11 @@ public class SolverActivity extends AppCompatActivity {
             showTooltip("Probiere es hier mit der Naked Single Strategie", 5000);
         } else if (hiddenSingleFinder.getHiddenSingleInRow() != null) {
             HiddenSingle hiddenSingle = hiddenSingleFinder.getHiddenSingleInRow();
-            highlightRow(hiddenSingle.row);
+            highlightRow(new ArrayList<>(Arrays.asList(hiddenSingle.row)));
             showTooltip("In dieser Reihe befindet sich ein Hidden Single", 5000);
         } else if (hiddenSingleFinder.getHiddenSingleInCol() != null) {
             HiddenSingle hiddenSingle = hiddenSingleFinder.getHiddenSingleInCol();
-            highlightColumn(hiddenSingle.col);
+            highlightColumn(new ArrayList<>(Arrays.asList(hiddenSingle.col)));
             showTooltip("In dieser Spalte befindet sich ein Hidden Single", 5000);
         } else if (hiddenSingleFinder.getHiddenSingleBlockLocation() != null) {
             HiddenSingle hiddenSingle = hiddenSingleFinder.getHiddenSingleBlockLocation();
@@ -211,11 +213,11 @@ public class SolverActivity extends AppCompatActivity {
             showTooltip("In diesem Block befindet sich ein Hidden Single", 5000);
         } else if (nakedPairFinder.getNakedPairInRow() != null) {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInRow();
-            highlightRow(nakedPair.field1.row);
+            highlightRow(new ArrayList<>(Arrays.asList(nakedPair.field1.row)));
             showTooltip("In dieser Reihe befindet sich ein Naked Pair", 5000);
         } else if (nakedPairFinder.getNakedPairInColumn() != null) {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInColumn();
-            highlightColumn(nakedPair.field1.column);
+            highlightColumn(new ArrayList<>(Arrays.asList(nakedPair.field1.column)));
             showTooltip("In dieser Spalte befindet sich ein Naked Pair", 5000);
         } else if (nakedPairFinder.getNakedPairInBlock() != null) {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInBlock();
@@ -223,11 +225,11 @@ public class SolverActivity extends AppCompatActivity {
             showTooltip("In diesem Block befindet sich ein Naked Pair", 5000);
         } else if (nakedTripleFinder.getNakedTripleInRow() != null) {
             NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInRow();
-            highlightRow(nakedTriple.field1.row);
+            highlightRow(new ArrayList<>(Arrays.asList(nakedTriple.field1.row)));
             showTooltip("In diese Reihe befindet sich ein Naked Triple", 5000);
         } else if (nakedTripleFinder.getNakedTripleInColumn() != null) {
             NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInColumn();
-            highlightColumn(nakedTriple.field1.column);
+            highlightColumn(new ArrayList<>(Arrays.asList(nakedTriple.field1.column)));
             showTooltip("In diese Spalte befindet sich ein Naked Triple", 5000);
         } else if (nakedTripleFinder.getNakedTripleInBlock() != null) {
             NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInBlock();
@@ -235,11 +237,11 @@ public class SolverActivity extends AppCompatActivity {
             showTooltip("In diesem Block befindet sich ein Naked Triple", 5000);
         } else if (nakedQuadFinder.getNakedQuadInRow() != null) {
             NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInRow();
-            highlightRow(nakedQuad.field1.row);
+            highlightRow(new ArrayList<>(Arrays.asList(nakedQuad.field1.row)));
             showTooltip("In dieser Reihe befindet sich ein Naked Quad", 5000);
         } else if (nakedQuadFinder.getNakedQuadInColumn() != null) {
             NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInColumn();
-            highlightColumn(nakedQuad.field1.column);
+            highlightColumn(new ArrayList<>(Arrays.asList(nakedQuad.field1.column)));
             showTooltip("In dieser Spalte befindet sich ein Naked Quad", 5000);
         } else if (nakedQuadFinder.getNakedQuadInBlock() != null) {
             NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInBlock();
@@ -247,11 +249,11 @@ public class SolverActivity extends AppCompatActivity {
             showTooltip("In diesem Block befindet sich ein Naked Quad", 5000);
         } else if (hiddenPairFinder.getHiddenPairInRow() != null) {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInRow();
-            highlightRow(hiddenPair.field1.row);
+            highlightRow(new ArrayList<>(Arrays.asList(hiddenPair.field1.row)));
             showTooltip("In dieser Zeile befindet sich ein Hidden Pair", 5000);
         } else if (hiddenPairFinder.getHiddenPairInColumn() != null) {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInColumn();
-            highlightColumn(hiddenPair.field1.column);
+            highlightColumn(new ArrayList<>(Arrays.asList(hiddenPair.field1.column)));
             showTooltip("In dieser Spalte befindet sich ein Hidden Pair", 5000);
         } else if (hiddenPairFinder.getHiddenPairInBlock() != null) {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInBlock();
@@ -259,11 +261,11 @@ public class SolverActivity extends AppCompatActivity {
             showTooltip("In diesem Block befindet sich ein Hidden Pair", 5000);
         } /*else if (hiddenTripleFinder.getHiddenTripleInRow() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInRow();
-            highlightRow(hiddenTriple.field1.row);
+            highlightRow(new ArrayList<>(Arrays.asList(hiddenTriple.field1.row)));
             showTooltip("In dieser Zeile befindet sich ein Hidden Triple", 5000);
         } else if (hiddenTripleFinder.getHiddenTripleInColumn() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInColumn();
-            highlightColumn(hiddenTriple.field1.column);
+            highlightColumn(new ArrayList<>(Arrays.asList(hiddenTriple.field1.column)));
             showTooltip("In dieser Spalte befindet sich ein Hidden Triple", 5000);
         } else if (hiddenTripleFinder.getHiddenTripleInBlock() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInBlock();
@@ -271,11 +273,11 @@ public class SolverActivity extends AppCompatActivity {
             showTooltip("In diesem Block befindet sich ein Hidden Triple", 5000);
         } /*else if (hiddenQuadFinder.getHiddenQuadInRow() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInRow();
-            highlightRow(hiddenQuad.field1.row);
+            highlightRow(new ArrayList<>(Arrays.asList(hiddenQuad.field1.row)));
             showTooltip("In dieser Zeile befindet sich ein Hidden Quad", 5000);
         } else if (hiddenQuadFinder.getHiddenQuadInColumn() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInColumn();
-            highlightColumn(hiddenQuad.field1.column);
+            highlightColumn(new ArrayList<>(Arrays.asList(hiddenQuad.field1.column)));
             showTooltip("In dieser Spalte befindet sich ein Hidden Quad", 5000);
         } else if (hiddenQuadFinder.getHiddenQuadInBlock() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInBlock();
@@ -283,11 +285,11 @@ public class SolverActivity extends AppCompatActivity {
             showTooltip("In diesem Block befindet sich ein Hidden Quad", 5000);
         } */else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
-            highlightRow(rowBlockCheck.candidate1.row);
+            highlightRow(new ArrayList<>(Arrays.asList(rowBlockCheck.candidate1.row)));
             showTooltip("In dieser Zeile kann ein Reihe-Block-Check angewendet werden", 5000);
         } else if (rowBlockCheckFinder.getRowBlockCheckInColumn() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInColumn();
-            highlightColumn(rowBlockCheck.candidate1.column);
+            highlightColumn(new ArrayList<>(Arrays.asList(rowBlockCheck.candidate1.column)));
             showTooltip("In dieser Spalte kann ein Reihe-Block-Check angewendet werden", 5000);
         } else if (blockRowCheckFinder.getBlockRowCheckInRow() != null) {
             BlockRowCheck blockRowCheck = blockRowCheckFinder.getBlockRowCheckInRow();
@@ -299,14 +301,11 @@ public class SolverActivity extends AppCompatActivity {
             showTooltip("In diesem Block kann ein Block-Reihe-Check auf eine Spalte angewendet werden", 5000);
         } else if (xWingFinder.getXWingInRow() != null) {
             XWing xWing = xWingFinder.getXWingInRow();
-            // TODO: This doesnt highlight both columns, just one
-            highlightColumn(xWing.pair1.field1.column);
-            highlightColumn(xWing.pair1.field2.column);
+            highlightColumn(new ArrayList<>(Arrays.asList(xWing.pair1.field1.column, xWing.pair1.field2.column)));
             showTooltip("In diesen Spalten kann die X-Wing Strategie angewendet werden", 5000);
         } else if (xWingFinder.getXWingInColumn() != null) {
             XWing xWing = xWingFinder.getXWingInColumn();
-            highlightRow(xWing.pair1.field1.row);
-            highlightRow(xWing.pair1.field2.row);
+            highlightRow(new ArrayList<>(Arrays.asList(xWing.pair1.field1.row, xWing.pair1.field2.row)));
             showTooltip("In diesen Zeilen kann die X-Wing Strategie angewendet werden", 5000);
         } else if (thirdEyeFinder.getThirdEye() != null) {
             ThirdEye thirdEye = thirdEyeFinder.getThirdEye();
@@ -315,7 +314,7 @@ public class SolverActivity extends AppCompatActivity {
         }
 
         else {
-            gameBoard.setTipLocationBlock(null);
+            gameBoard.setTipLocationBlocks(null);
             gameBoard.invalidate();
 
             showTooltip("Kein Tipp verfügbar", 3000);
@@ -336,137 +335,135 @@ public class SolverActivity extends AppCompatActivity {
     public void solutionButtonPress(View view) {
         if (nakedSingleFinder.getNakedSingle() != null) {
             nakedSingleFinder.enterNakedSingle();
-            showTooltip("Auf dieses Feld konnte die Naked Single Strategie angewendet werden", 5000);
+            showSolutionTooltip("Auf dieses Feld konnte die Naked Single Strategie angewendet werden", 5000);
         } else if (hiddenSingleFinder.getHiddenSingle() != null) {
             hiddenSingleFinder.enterHiddenSingle();
-            showTooltip("Auf dieses Feld konnte die Hidden Single Strategie angewendet werden", 5000);
+            showSolutionTooltip("Auf dieses Feld konnte die Hidden Single Strategie angewendet werden", 5000);
         } else if (nakedPairFinder.getNakedPairInRow() != null) {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInRow();
-            highlightRow(nakedPair.field1.row);
+            highlightRowSolution(new ArrayList<>(Arrays.asList(nakedPair.field1.row)));
             nakedPairFinder.applyNakedPairToRow();
-            showTooltip("Mit dem Naked Pair konnten in dieser Reihe Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Naked Pair konnten in dieser Reihe Kandidaten entfernt werden", 5000);
         } else if (nakedPairFinder.getNakedPairInColumn() != null) {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInColumn();
-            highlightColumn(nakedPair.field1.column);
+            highlightColumnSolution(new ArrayList<>(Arrays.asList(nakedPair.field1.column)));
             nakedPairFinder.applyNakedPairToColumn();
-            showTooltip("Mit dem Naked Pair konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Naked Pair konnten in dieser Spalte Kandidaten entfernt werden", 5000);
         } else if (nakedPairFinder.getNakedPairInBlock() != null) {
             NakedPair nakedPair = nakedPairFinder.getNakedPairInBlock();
-            highlightBlock(nakedPair.field1.row, nakedPair.field1.column);
+            highlightBlockSolution(nakedPair.field1.row, nakedPair.field1.column);
             nakedPairFinder.applyNakedPairToBlock();
-            showTooltip("Mit dem Naked Pair konnten in diesem Block Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Naked Pair konnten in diesem Block Kandidaten entfernt werden", 5000);
         } else if (nakedTripleFinder.getNakedTripleInRow() != null) {
             NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInRow();
-            highlightRow(nakedTriple.field1.row);
+            highlightRowSolution(new ArrayList<>(Arrays.asList(nakedTriple.field1.row)));
             nakedTripleFinder.applyNakedTripleToRow();
-            showTooltip("Mit dem Naked Triple konnten in dieser Reihe Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Naked Triple konnten in dieser Reihe Kandidaten entfernt werden", 5000);
         } else if (nakedTripleFinder.getNakedTripleInColumn() != null) {
             NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInColumn();
-            highlightColumn(nakedTriple.field1.column);
+           highlightColumnSolution(new ArrayList<>(Arrays.asList(nakedTriple.field1.column)));
             nakedTripleFinder.applyNakedTripleToColumn();
-            showTooltip("Mit dem Naked Triple konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Naked Triple konnten in dieser Spalte Kandidaten entfernt werden", 5000);
         } else if (nakedTripleFinder.getNakedTripleInBlock() != null) {
             NakedTriple nakedTriple = nakedTripleFinder.getNakedTripleInBlock();
-            highlightBlock(nakedTriple.field1.row, nakedTriple.field1.column);
+            highlightBlockSolution(nakedTriple.field1.row, nakedTriple.field1.column);
             nakedTripleFinder.applyNakedTripleToBlock();
-            showTooltip("Mit dem Naked Triple konnten in dieser Reihe Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Naked Triple konnten in dieser Reihe Kandidaten entfernt werden", 5000);
         } else if (nakedQuadFinder.getNakedQuadInRow() != null) {
             NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInRow();
-            highlightRow(nakedQuad.field1.row);
+            highlightRowSolution(new ArrayList<>(Arrays.asList(nakedQuad.field1.row)));
             nakedQuadFinder.applyNakedQuadToRow();
-            showTooltip("Mit dem Naked Quad konnten in dieser Reihe Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Naked Quad konnten in dieser Reihe Kandidaten entfernt werden", 5000);
         } else if (nakedQuadFinder.getNakedQuadInColumn() != null) {
             NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInColumn();
-            highlightColumn(nakedQuad.field1.column);
+            highlightColumnSolution(new ArrayList<>(Arrays.asList(nakedQuad.field1.column)));
             nakedQuadFinder.getNakedQuadInColumn();
-            showTooltip("Mit dem Naked Quad konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Naked Quad konnten in dieser Spalte Kandidaten entfernt werden", 5000);
         } else if (nakedQuadFinder.getNakedQuadInBlock() != null) {
             NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInBlock();
-            highlightBlock(nakedQuad.field1.row, nakedQuad.field1.column);
+            highlightBlockSolution(nakedQuad.field1.row, nakedQuad.field1.column);
             nakedQuadFinder.applyNakedQuadToBlock();
-            showTooltip("Mit dem Naked Quad konnten in diesem Block Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Naked Quad konnten in diesem Block Kandidaten entfernt werden", 5000);
         } else if (hiddenPairFinder.getHiddenPairInRow() != null) {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInRow();
-            highlightRow(hiddenPair.field1.row);
+            highlightRowSolution(new ArrayList<>(Arrays.asList(hiddenPair.field1.row)));
             hiddenPairFinder.applyHiddenPairToRow();
-            showTooltip("Mit dem Hidden Pair konnten in dieser Zeile Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Hidden Pair konnten in dieser Zeile Kandidaten entfernt werden", 5000);
         } else if (hiddenPairFinder.getHiddenPairInColumn() != null) {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInColumn();
-            highlightColumn(hiddenPair.field1.column);
+            highlightColumnSolution(new ArrayList<>(Arrays.asList(hiddenPair.field1.column)));
             hiddenPairFinder.applyHiddenPairToColumn();
-            showTooltip("Mit dem Hidden Pair konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Hidden Pair konnten in dieser Spalte Kandidaten entfernt werden", 5000);
         } else if (hiddenPairFinder.getHiddenPairInBlock() != null) {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInBlock();
-            highlightBlock(hiddenPair.field1.row, hiddenPair.field1.column);
+            highlightBlockSolution(hiddenPair.field1.row, hiddenPair.field1.column);
             hiddenPairFinder.applyHiddenPairToBlock();
-            showTooltip("Mit dem Hidden Pair konnten in diesem Block Kandidaten entfernt werden", 5000);
-        } else if (hiddenTripleFinder.getHiddenTripleInRow() != null) {
+            showSolutionTooltip("Mit dem Hidden Pair konnten in diesem Block Kandidaten entfernt werden", 5000);
+        } /*else if (hiddenTripleFinder.getHiddenTripleInRow() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInRow();
-            highlightRow(hiddenTriple.field1.row);
+            highlightRowSolution(new ArrayList<>(Arrays.asList(hiddenTriple.field1.row)));
             hiddenTripleFinder.applyHiddenTripleToRow();
-            showTooltip("Mit dem Hidden Triple konnten in dieser Zeile Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Hidden Triple konnten in dieser Zeile Kandidaten entfernt werden", 5000);
         } else if (hiddenTripleFinder.getHiddenTripleInColumn() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInColumn();
-            highlightColumn(hiddenTriple.field1.column);
+            highlightColumnSolution(new ArrayList<>(Arrays.asList(hiddenTriple.field1.column)));
             hiddenTripleFinder.applyHiddenTripleToColumn();
-            showTooltip("Mit dem Hidden Triple konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Hidden Triple konnten in dieser Spalte Kandidaten entfernt werden", 5000);
         } else if (hiddenTripleFinder.getHiddenTripleInBlock() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInBlock();
-            highlightBlock(hiddenTriple.field1.row, hiddenTriple.field1.column);
+            highlightBlockSolution(hiddenTriple.field1.row, hiddenTriple.field1.column);
             hiddenTripleFinder.applyHiddenTripleToBlock();
-            showTooltip("Mit dem Hidden Triple konnten in diesem Block Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Hidden Triple konnten in diesem Block Kandidaten entfernt werden", 5000);
         } else if (hiddenQuadFinder.getHiddenQuadInRow() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInRow();
-            highlightRow(hiddenQuad.field1.row);
+            highlightRowSolution(new ArrayList<>(Arrays.asList(hiddenQuad.field1.row)));
             hiddenQuadFinder.applyHiddenQuadToRow();
-            showTooltip("Mit dem Hidden Quad konnten in dieser Zeile Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Hidden Quad konnten in dieser Zeile Kandidaten entfernt werden", 5000);
         } else if (hiddenQuadFinder.getHiddenQuadInColumn() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInColumn();
-            highlightColumn(hiddenQuad.field1.column);
+            highlightColumnSolution(new ArrayList<>(Arrays.asList(hiddenQuad.field1.column)));
             hiddenQuadFinder.applyHiddenQuadToColumn();
-            showTooltip("Mit dem Hidden Quad konnten in dieser Spalte Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Hidden Quad konnten in dieser Spalte Kandidaten entfernt werden", 5000);
         } else if (hiddenQuadFinder.getHiddenQuadInBlock() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInBlock();
-            highlightBlock(hiddenQuad.field1.row, hiddenQuad.field1.column);
+            highlightBlockSolution(hiddenQuad.field1.row, hiddenQuad.field1.column);
             hiddenQuadFinder.applyHiddenQuadToBlock();
-            showTooltip("Mit dem Hidden Quad konnten in diesem Block Kandidaten entfernt werden", 5000);
-        } else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
+            showSolutionTooltip("Mit dem Hidden Quad konnten in diesem Block Kandidaten entfernt werden", 5000);
+        } */else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
-            highlightBlock(rowBlockCheck.candidate1.row, rowBlockCheck.candidate1.column);
+            highlightBlockSolution(rowBlockCheck.candidate1.row, rowBlockCheck.candidate1.column);
             rowBlockCheckFinder.applyRowBlockCheckToBlock();
-            showTooltip("Mit dem Reihe-Block-Check konnten in diesem Block Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Reihe-Block-Check konnten in diesem Block Kandidaten entfernt werden", 5000);
         } else if (rowBlockCheckFinder.getRowBlockCheckInColumn() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInColumn();
-            highlightBlock(rowBlockCheck.candidate1.row, rowBlockCheck.candidate1.column);
+            highlightBlockSolution(rowBlockCheck.candidate1.row, rowBlockCheck.candidate1.column);
             rowBlockCheckFinder.applyColumnBlockCheckToBlock();
-            showTooltip("Mit dem Reihe-Block-Check konnten in diesem Block Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Reihe-Block-Check konnten in diesem Block Kandidaten entfernt werden", 5000);
         } else if (blockRowCheckFinder.getBlockRowCheckInRow() != null) {
             BlockRowCheck blockRowCheck = blockRowCheckFinder.getBlockRowCheckInRow();
-            highlightRow(blockRowCheck.candidate1.row);
+            highlightRowSolution(new ArrayList<>(Arrays.asList(blockRowCheck.candidate1.row)));
             blockRowCheckFinder.applyBlockRowCheckToRow();
-            showTooltip("Mit dem Block-Reihe-Check konnten in dieser Zeile Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Block-Reihe-Check konnten in dieser Zeile Kandidaten entfernt werden", 5000);
         } else if (blockRowCheckFinder.getBlockRowCheckInColumn() != null) {
             BlockRowCheck blockRowCheck = blockRowCheckFinder.getBlockRowCheckInColumn();
-            highlightColumn(blockRowCheck.candidate1.column);
+            highlightColumnSolution(new ArrayList<>(Arrays.asList(blockRowCheck.candidate1.column)));
             blockRowCheckFinder.applyBlockRowCheckToColumn();
-            showTooltip("Mit dem Block-Reihe-Check konnten in dieser Zeile Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("Mit dem Block-Reihe-Check konnten in dieser Zeile Kandidaten entfernt werden", 5000);
         } else if (xWingFinder.getXWingInRow() != null) {
             XWing xWing = xWingFinder.getXWingInRow();
-            highlightColumn(xWing.pair1.field1.column);
-            highlightColumn(xWing.pair1.field2.column);
+            highlightColumnSolution(new ArrayList<>(Arrays.asList(xWing.pair1.field1.column, xWing.pair1.field2.column)));
             xWingFinder.applyXWingToColumn();
-            showTooltip("In diesen Spalten konnten mit dem X-Wing Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("In diesen Spalten konnten mit dem X-Wing Kandidaten entfernt werden", 5000);
         } else if (xWingFinder.getXWingInColumn() != null) {
             XWing xWing = xWingFinder.getXWingInColumn();
-            highlightRow(xWing.pair1.field1.row);
-            highlightRow(xWing.pair1.field2.row);
+            highlightRowSolution(new ArrayList<>(Arrays.asList(xWing.pair1.field1.row, xWing.pair1.field2.row)));
             xWingFinder.applyXWingToRow();
-            showTooltip("In diesen Zeilen konnten mit dem X-Wing Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("In diesen Zeilen konnten mit dem X-Wing Kandidaten entfernt werden", 5000);
         } else if (thirdEyeFinder.getThirdEye() != null) {
             ThirdEye thirdEye = thirdEyeFinder.getThirdEye();
-            highlightBlock(thirdEye.thirdEye.row, thirdEye.thirdEye.column);
+            highlightBlockSolution(thirdEye.thirdEye.row, thirdEye.thirdEye.column);
             thirdEyeFinder.applyThirdEye();
-            showTooltip("In diesem Block konnten mit der Drittes Auge Strategie Kandidaten entfernt werden", 5000);
+            showSolutionTooltip("In diesem Block konnten mit der Drittes Auge Strategie Kandidaten entfernt werden", 5000);
         }
 
         else{
@@ -489,46 +486,96 @@ public class SolverActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, message, duration);
         toast.setGravity(Gravity.BOTTOM, 0, 200);
         toast.show();
+    }
+
+    private void showSolutionTooltip(String message, int duration) {
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, message, duration);
+        toast.setGravity(Gravity.BOTTOM, 0, 200);
+        toast.show();
         savedToolTip = () -> showTooltip(message, duration);
     }
 
-    private void highlightRow(int row) {
-        gameBoard.setTipLocationRow(row);
+    private void highlightRow(ArrayList<Integer> rows) {
+        gameBoard.setTipLocationRows(rows);
         gameBoard.invalidate();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                gameBoard.setTipLocationRow(null);
+                gameBoard.setTipLocationRows(null);
                 gameBoard.invalidate();
             }
         }, 3000);
-        savedHighlight = () -> highlightRow(row);
     }
 
-    private void highlightColumn(int column) {
-        gameBoard.setTipLocationCol(column);
+    // highlighted solution gets saved
+    private void highlightRowSolution(ArrayList<Integer> rows) {
+        gameBoard.setTipLocationRows(rows);
         gameBoard.invalidate();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                gameBoard.setTipLocationCol(null);
+                gameBoard.setTipLocationRows(null);
                 gameBoard.invalidate();
             }
         }, 3000);
-        savedHighlight = () -> highlightColumn(column);
+        savedHighlight = () -> highlightRow(rows);
+    }
+
+    private void highlightColumn(ArrayList<Integer> columns) {
+        gameBoard.setTipLocationCols(columns);
+        gameBoard.invalidate();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                gameBoard.setTipLocationCols(null);
+                gameBoard.invalidate();
+            }
+        }, 3000);
+    }
+
+    // highlighted solution gets saved
+    private void highlightColumnSolution(ArrayList<Integer> columns) {
+        gameBoard.setTipLocationCols(columns);
+        gameBoard.invalidate();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                gameBoard.setTipLocationCols(null);
+                gameBoard.invalidate();
+            }
+        }, 3000);
+        savedHighlight = () -> highlightColumn(columns);
     }
 
     private void highlightBlock(int row, int column) {
         BlockLocation tipLocationBlock = gameBoardSolver.calculateTipLocationBlock(row, column);
-        gameBoard.setTipLocationBlock(tipLocationBlock);
+        gameBoard.setTipLocationBlocks(tipLocationBlock);
         gameBoard.invalidate();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                gameBoard.setTipLocationBlock(null);
+                gameBoard.setTipLocationBlocks(null);
+                gameBoard.invalidate();
+            }
+        }, 3000);
+    }
+
+    // highlighted solution gets saved
+    private void highlightBlockSolution(int row, int column) {
+        BlockLocation tipLocationBlock = gameBoardSolver.calculateTipLocationBlock(row, column);
+        gameBoard.setTipLocationBlocks(tipLocationBlock);
+        gameBoard.invalidate();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                gameBoard.setTipLocationBlocks(null);
                 gameBoard.invalidate();
             }
         }, 3000);

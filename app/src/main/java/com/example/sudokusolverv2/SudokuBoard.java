@@ -38,9 +38,9 @@ public class SudokuBoard extends View {
     private final Solver solver = new Solver();
     private boolean showAllCandidates;
 
-    private Integer tipLocationRow;
-    private Integer tipLocationCol;
-    private BlockLocation tipLocationBlock;
+    private ArrayList<Integer> tipLocationRows;
+    private ArrayList<Integer> tipLocationCols;
+    private BlockLocation tipLocationBlocks;
 
     public SudokuBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -459,31 +459,31 @@ public class SudokuBoard extends View {
      */
 
     private void drawBlockTip(Canvas canvas) {
-        if (tipLocationBlock == BlockLocation.TOP_LEFT) {
+        if (tipLocationBlocks == BlockLocation.TOP_LEFT) {
             canvas.drawRect(0, 0, 3 * cellSize, 3 * cellSize,
                     tipHighlightColorPaint);
-        } else if (tipLocationBlock == BlockLocation.TOP) {
+        } else if (tipLocationBlocks == BlockLocation.TOP) {
             canvas.drawRect(3 * cellSize, 0, 6 * cellSize, 3 * cellSize,
                     tipHighlightColorPaint);
-        } else if (tipLocationBlock == BlockLocation.TOP_RIGHT) {
+        } else if (tipLocationBlocks == BlockLocation.TOP_RIGHT) {
             canvas.drawRect(6 * cellSize, 0, 9 * cellSize, 3 * cellSize,
                     tipHighlightColorPaint);
-        } else if (tipLocationBlock == BlockLocation.LEFT) {
+        } else if (tipLocationBlocks == BlockLocation.LEFT) {
             canvas.drawRect(0, 3 * cellSize, 3 * cellSize, 6 * cellSize,
                     tipHighlightColorPaint);
-        } else if (tipLocationBlock == BlockLocation.CENTER) {
+        } else if (tipLocationBlocks == BlockLocation.CENTER) {
             canvas.drawRect(3 * cellSize, 3 * cellSize, 6 * cellSize,
                     6 * cellSize, tipHighlightColorPaint);
-        } else if (tipLocationBlock == BlockLocation.RIGHT) {
+        } else if (tipLocationBlocks == BlockLocation.RIGHT) {
             canvas.drawRect(6 * cellSize, 3 * cellSize, 9 * cellSize,
                     6 * cellSize, tipHighlightColorPaint);
-        } else if (tipLocationBlock == BlockLocation.BOTTOM_LEFT) {
+        } else if (tipLocationBlocks == BlockLocation.BOTTOM_LEFT) {
             canvas.drawRect(0, 6 * cellSize, 3 * cellSize, 9 * cellSize,
                     tipHighlightColorPaint);
-        } else if (tipLocationBlock == BlockLocation.BOTTOM) {
+        } else if (tipLocationBlocks == BlockLocation.BOTTOM) {
             canvas.drawRect(3 * cellSize, 6 * cellSize, 6 * cellSize,
                     9 * cellSize, tipHighlightColorPaint);
-        } else if (tipLocationBlock == BlockLocation.BOTTOM_RIGHT) {
+        } else if (tipLocationBlocks == BlockLocation.BOTTOM_RIGHT) {
             canvas.drawRect(6 * cellSize, 6 * cellSize, 9 * cellSize,
                     9 * cellSize, tipHighlightColorPaint);
         } else {
@@ -493,19 +493,23 @@ public class SudokuBoard extends View {
     }
 
     private void drawRowTip(Canvas canvas) {
-        if (tipLocationRow != null) {
-            canvas.drawRect(0, tipLocationRow * cellSize, 9 * cellSize,
-                    (tipLocationRow + 1) * cellSize, tipHighlightColorPaint);
+        if (tipLocationRows != null) {
+            for (int tipLocationRow : tipLocationRows) {
+                canvas.drawRect(0, tipLocationRow * cellSize, 9 * cellSize,
+                        (tipLocationRow + 1) * cellSize, tipHighlightColorPaint);
+            }
         } else {
             canvas.drawRect(0, 0, 0, 0, tipHighlightColorPaint);
         }
     }
 
     private void drawColTip(Canvas canvas) {
-        if (tipLocationCol != null) {
-            canvas.drawRect(tipLocationCol * cellSize, 0,
-                    (tipLocationCol + 1) * cellSize,
-                    9 * cellSize, tipHighlightColorPaint);
+        if (tipLocationCols != null) {
+            for (int tipLocationCol : tipLocationCols) {
+                canvas.drawRect(tipLocationCol * cellSize, 0,
+                        (tipLocationCol + 1) * cellSize,
+                        9 * cellSize, tipHighlightColorPaint);
+            }
         } else {
             canvas.drawRect(0, 0, 0, 0, tipHighlightColorPaint);
         }
@@ -589,15 +593,15 @@ public class SudokuBoard extends View {
         showAllCandidates = bool;
     }
 
-    public void setTipLocationBlock(BlockLocation location) {
-        tipLocationBlock = location;
+    public void setTipLocationBlocks(BlockLocation location) {
+        tipLocationBlocks = location;
     }
 
-    public void setTipLocationRow(Integer row) {
-        tipLocationRow = row;
+    public void setTipLocationRows(ArrayList<Integer> rows) {
+        tipLocationRows = rows;
     }
 
-    public void setTipLocationCol(Integer col) {
-        tipLocationCol = col;
+    public void setTipLocationCols(ArrayList<Integer> cols) {
+        tipLocationCols = cols;
     }
 }
