@@ -4,6 +4,7 @@ import com.example.sudokusolverv2.Solver;
 import com.example.sudokusolverv2.candidateSystem.Candidate;
 import com.example.sudokusolverv2.candidateSystem.FieldCandidates;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.Serializable;
@@ -174,7 +175,74 @@ public class HiddenTripleFinder implements Serializable {
         return null;
     }
 
+    private boolean checkHiddenTripleValidity(HiddenTriple hiddenTriple, ArrayList<FieldCandidates> completeUnit) {
+        int unitOccurrences = 0;
+        int hiddenTripleOccurrences = 0;
+        for (int numberToCheck : hiddenTriple.candidates) {
+            if (hiddenTriple.field1.candidateSet.contains(numberToCheck)) {
+                hiddenTripleOccurrences++;
+            }
+            if (hiddenTriple.field2.candidateSet.contains(numberToCheck)) {
+                hiddenTripleOccurrences++;
+            }
+            if (hiddenTriple.field3.candidateSet.contains(numberToCheck)) {
+                hiddenTripleOccurrences++;
+            }
+
+            for (FieldCandidates candidates : completeUnit) {
+                if (candidates.candidateSet.contains(numberToCheck)) {
+                    unitOccurrences++;
+                }
+            }
+
+            if (unitOccurrences != hiddenTripleOccurrences) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private ArrayList<HiddenTriple> getPossibleHiddenTriples(FieldCandidates candidates,
+                                                             FieldCandidates candidates2,
+                                                             FieldCandidates candidates3) {
+        ArrayList<HiddenTriple> hiddenTriples = new ArrayList<>();
+        Permutation permutation = new Permutation();
+        permutation.getCombination(candidates.candidateSet, 2);
+        permutation.getCombination(candidates.candidateSet, 3);
+        Permutation permutation2 = new Permutation();
+        permutation2.getCombination(candidates2.candidateSet, 2);
+        permutation2.getCombination(candidates2.candidateSet, 3);
+        Permutation permutation3 = new Permutation();
+        permutation3.getCombination(candidates3.candidateSet, 2);
+        permutation3.getCombination(candidates3.candidateSet, 3);
+        for (HashSet<Integer> subSet : permutation.combinations) {
+            for (HashSet<Integer> subSet2 : permutation2.combinations) {
+                for (HashSet<Integer> subSet3 : permutation3.combinations) {
+                    FieldCandidates candidatesCopy = new FieldCandidates(candidates.row,
+                            candidates.column, subSet);
+                    FieldCandidates candidatesCopy2 = new FieldCandidates(candidates2.row,
+                            candidates2.column, subSet2);
+                    FieldCandidates candidatesCopy3 = new FieldCandidates(candidates3.row,
+                            candidates3.column, subSet3);
+                    HashSet<Integer> result = new HashSet<>(candidatesCopy.candidateSet);
+                    result.addAll(candidatesCopy2.candidateSet);
+                    result.addAll(candidatesCopy3.candidateSet);
+                    if (result.size() == 3) {
+                        HiddenTriple hiddenTriple = new HiddenTriple(candidatesCopy, candidatesCopy2,
+                                candidatesCopy3, result);
+                        hiddenTriples.add(hiddenTriple);
+                    }
+                }
+            }
+        }
+
+
+        return hiddenTriples;
+    }
+
     // https://www.youtube.com/watch?v=mwoy-1B4qYw
+    // TODO: Fix bug in hidden triple selection (check for valid triple part)
     public HiddenTriple getHiddenTripleInRow() {
 
         for (int r = 0; r < 9; r++) {
@@ -212,6 +280,14 @@ public class HiddenTripleFinder implements Serializable {
                 }
             }
 
+            ArrayList<FieldCandidates> found = new ArrayList<>();
+            for (FieldCandidates candidates : completeRow) {
+                if (candidates.candidateSet.size() == 0) {
+                    found.add(candidates);
+                }
+            }
+            completeRow.removeAll(found);
+
             // if only two cells are left for consideration, it is not enough for a valid triple
             if (completeRow.size() < 3) {
                 continue;
@@ -225,17 +301,13 @@ public class HiddenTripleFinder implements Serializable {
                                     || candidates2 == candidates3) {
                                 continue;
                             }
-                            // if the size of the union set of all three sets is three, it should be
-                            // a valid triple
-                            HashSet<Integer> result = new HashSet<>(candidates.candidateSet);
-                            result.addAll(candidates2.candidateSet);
-                            result.addAll(candidates3.candidateSet);
-                            if (result.size() == 3 && candidates.candidateSet.size() >= 2
-                                    && candidates2.candidateSet.size() >= 2
-                                    && candidates3.candidateSet.size() >= 2) {
-                                HiddenTriple hiddenTriple = new HiddenTriple(candidates, candidates2,
-                                        candidates3, result);
-                                if (checkIfHiddenTripleCanRemoveCandidatesFromRow(hiddenTriple)) {
+
+                            ArrayList<HiddenTriple> hiddenTriples = getPossibleHiddenTriples
+                                    (candidates, candidates2, candidates3);
+
+                            for (HiddenTriple hiddenTriple : hiddenTriples) {
+                                if (checkIfHiddenTripleCanRemoveCandidatesFromBlock(hiddenTriple)
+                                        && checkHiddenTripleValidity(hiddenTriple, completeRow)) {
                                     return hiddenTriple;
                                 }
                             }
@@ -283,6 +355,14 @@ public class HiddenTripleFinder implements Serializable {
                 }
             }
 
+            ArrayList<FieldCandidates> found = new ArrayList<>();
+            for (FieldCandidates candidates : completeColumn) {
+                if (candidates.candidateSet.size() == 0) {
+                    found.add(candidates);
+                }
+            }
+            completeColumn.removeAll(found);
+
             // if only two cells are left for consideration, it is not enough for a valid triple
             if (completeColumn.size() < 3) {
                 continue;
@@ -296,17 +376,13 @@ public class HiddenTripleFinder implements Serializable {
                                     || candidates2 == candidates3) {
                                 continue;
                             }
-                            // if the size of the union set of all three sets is three, it should be
-                            // a valid triple
-                            HashSet<Integer> result = new HashSet<>(candidates.candidateSet);
-                            result.addAll(candidates2.candidateSet);
-                            result.addAll(candidates3.candidateSet);
-                            if (result.size() == 3 && candidates.candidateSet.size() >= 2
-                                    && candidates2.candidateSet.size() >= 2
-                                    && candidates3.candidateSet.size() >= 2) {
-                                HiddenTriple hiddenTriple = new HiddenTriple(candidates, candidates2,
-                                        candidates3, result);
-                                if (checkIfHiddenTripleCanRemoveCandidatesFromColumn(hiddenTriple)) {
+
+                            ArrayList<HiddenTriple> hiddenTriples = getPossibleHiddenTriples
+                                    (candidates, candidates2, candidates3);
+
+                            for (HiddenTriple hiddenTriple : hiddenTriples) {
+                                if (checkIfHiddenTripleCanRemoveCandidatesFromBlock(hiddenTriple)
+                                        && checkHiddenTripleValidity(hiddenTriple, completeColumn)) {
                                     return hiddenTriple;
                                 }
                             }
@@ -356,6 +432,14 @@ public class HiddenTripleFinder implements Serializable {
                     }
                 }
 
+                ArrayList<FieldCandidates> found = new ArrayList<>();
+                for (FieldCandidates candidates : completeBlock) {
+                    if (candidates.candidateSet.size() == 0) {
+                        found.add(candidates);
+                    }
+                }
+                completeBlock.removeAll(found);
+
                 // if only two cells are left for consideration, it is not enough for a valid triple
                 if (completeBlock.size() < 3) {
                     continue;
@@ -369,17 +453,13 @@ public class HiddenTripleFinder implements Serializable {
                                         || candidates2 == candidates3) {
                                     continue;
                                 }
-                                // if the size of the union set of all three sets is three, it should be
-                                // a valid triple
-                                HashSet<Integer> result = new HashSet<>(candidates.candidateSet);
-                                result.addAll(candidates2.candidateSet);
-                                result.addAll(candidates3.candidateSet);
-                                if (result.size() == 3 && candidates.candidateSet.size() >= 2
-                                        && candidates2.candidateSet.size() >= 2
-                                        && candidates3.candidateSet.size() >= 2) {
-                                    HiddenTriple hiddenTriple = new HiddenTriple(candidates, candidates2,
-                                            candidates3, result);
-                                    if (checkIfHiddenTripleCanRemoveCandidatesFromBlock(hiddenTriple)) {
+
+                                ArrayList<HiddenTriple> hiddenTriples = getPossibleHiddenTriples
+                                        (candidates, candidates2, candidates3);
+
+                                for (HiddenTriple hiddenTriple : hiddenTriples) {
+                                    if (checkIfHiddenTripleCanRemoveCandidatesFromBlock(hiddenTriple)
+                                            && checkHiddenTripleValidity(hiddenTriple, completeBlock)) {
                                         return hiddenTriple;
                                     }
                                 }
@@ -394,5 +474,64 @@ public class HiddenTripleFinder implements Serializable {
 
     public void setSolver(Solver solver) {
         this.solver = solver;
+    }
+}
+
+// Java program to print all combination of size
+// r in an array of size n
+class Permutation {
+
+    ArrayList<HashSet<Integer>> combinations = new ArrayList<>();
+
+    /* arr[]  ---> Input Array
+    data[] ---> Temporary array to store current combination
+    start & end ---> Staring and Ending indexes in arr[]
+    index  ---> Current index in data[]
+    r ---> Size of a combination to be printed */
+    private void combinationUtil(int arr[], int n, int r,
+                                 int index, int data[], int i) {
+        // Current combination is ready to be printed,
+        // print it
+        if (index == r) {
+            HashSet<Integer> set = new HashSet<>();
+            for (int j = 0; j < r; j++) {
+                set.add(data[j]);
+            }
+            combinations.add(set);
+            return;
+        }
+
+        // When no more elements are there to put in data[]
+        if (i >= n)
+            return;
+
+        // current is included, put next at next
+        // location
+        data[index] = arr[i];
+        combinationUtil(arr, n, r, index + 1,
+                data, i + 1);
+
+        // current is excluded, replace it with
+        // next (Note that i+1 is passed, but
+        // index is not changed)
+        combinationUtil(arr, n, r, index, data, i + 1);
+    }
+
+    // The main function that prints all combinations
+    // of size r in arr[] of size n. This function
+    // mainly uses combinationUtil()
+    public void getCombination(HashSet<Integer> canidateSet, int r) {
+        if (canidateSet.size() <= 2) {
+            combinations.add(canidateSet);
+            return;
+        }
+        // A temporary array to store all combination
+        // one by one
+        int data[] = new int[r];
+        int arr[] = canidateSet.stream().mapToInt(Number::intValue).toArray();
+        int n = canidateSet.size();
+        // Print all combination using temprary
+        // array 'data[]'
+        combinationUtil(arr, n, r, 0, data, 0);
     }
 }
