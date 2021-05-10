@@ -253,7 +253,7 @@ public class SolverActivity extends AppCompatActivity {
             HiddenPair hiddenPair = hiddenPairFinder.getHiddenPairInBlock();
             highlightBlock(hiddenPair.field1.row, hiddenPair.field1.column);
             showTooltip("In diesem Block befindet sich ein Hidden Pair", 5000);
-        } else if (hiddenTripleFinder.getHiddenTripleInRow() != null) {
+        } /*else if (hiddenTripleFinder.getHiddenTripleInRow() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInRow();
             highlightRow(hiddenTriple.field1.row);
             showTooltip("In dieser Zeile befindet sich ein Hidden Triple", 5000);
@@ -265,7 +265,7 @@ public class SolverActivity extends AppCompatActivity {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInBlock();
             highlightBlock(hiddenTriple.field1.row, hiddenTriple.field1.column);
             showTooltip("In diesem Block befindet sich ein Hidden Triple", 5000);
-        } else if (hiddenQuadFinder.getHiddenQuadInRow() != null) {
+        } /*else if (hiddenQuadFinder.getHiddenQuadInRow() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInRow();
             highlightRow(hiddenQuad.field1.row);
             showTooltip("In dieser Zeile befindet sich ein Hidden Quad", 5000);
@@ -277,7 +277,7 @@ public class SolverActivity extends AppCompatActivity {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInBlock();
             highlightBlock(hiddenQuad.field1.row, hiddenQuad.field1.column);
             showTooltip("In diesem Block befindet sich ein Hidden Quad", 5000);
-        } else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
+        } */else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
             highlightRow(rowBlockCheck.candidate1.row);
             showTooltip("In dieser Zeile kann ein Reihe-Block-Check angewendet werden", 5000);

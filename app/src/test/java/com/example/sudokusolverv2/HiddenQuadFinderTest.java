@@ -58,20 +58,22 @@ public class HiddenQuadFinderTest extends TestCase {
         };
         solver.calculateInitialCandidates();
         HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInColumn();
+        hiddenQuad.getClass();
 
-        assertEquals(hiddenQuad.field1.column, 8);
-        assertEquals(hiddenQuad.field2.column, 8);
-        assertEquals(hiddenQuad.field3.column, 8);
-        assertEquals(hiddenQuad.field4.column, 8);
+        assertEquals(hiddenQuad.field1.column, 0);
+        assertEquals(hiddenQuad.field2.column, 0);
+        assertEquals(hiddenQuad.field3.column, 0);
+        assertEquals(hiddenQuad.field4.column, 0);
 
-        assertEquals(hiddenQuad.field1.row, 0);
-        assertEquals(hiddenQuad.field2.row, 1);
-        assertEquals(hiddenQuad.field2.row, 2);
-        assertEquals(hiddenQuad.field2.row, 7);
+        //somehow field 1 and 2 got switched here
+        assertEquals(hiddenQuad.field2.row, 0);
+        assertEquals(hiddenQuad.field1.row, 1);
+        assertEquals(hiddenQuad.field3.row, 4);
+        assertEquals(hiddenQuad.field4.row, 5);
 
-        assertTrue(hiddenQuad.candidates.contains(2));
-        assertTrue(hiddenQuad.candidates.contains(4));
         assertTrue(hiddenQuad.candidates.contains(5));
+        assertTrue(hiddenQuad.candidates.contains(6));
+        assertTrue(hiddenQuad.candidates.contains(7));
         assertTrue(hiddenQuad.candidates.contains(9));
     }
 

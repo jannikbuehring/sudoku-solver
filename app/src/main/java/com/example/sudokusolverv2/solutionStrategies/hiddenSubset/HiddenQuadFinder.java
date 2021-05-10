@@ -7,6 +7,7 @@ import org.apache.commons.lang3.SerializationUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class HiddenQuadFinder {
 
@@ -159,9 +160,101 @@ public class HiddenQuadFinder {
         }
     }
 
-    // TODO: this does not find all possible hidden quads yet
+    private Integer checkForOneRemainingCandidate(ArrayList<FieldCandidates> completeUnit) {
+
+        for (FieldCandidates candidates : completeUnit) {
+            if (candidates.candidateSet.size() == 1) {
+                Iterator<Integer> iterator = candidates.candidateSet.iterator();
+                return iterator.next();
+            }
+        }
+
+        return null;
+    }
+
+    private boolean checkHiddenQuadValidity(HiddenQuad hiddenQuad, ArrayList<FieldCandidates> completeUnit) {
+        int unitOccurrences = 0;
+        int hiddenQuadOccurrences = 0;
+        for (int numberToCheck : hiddenQuad.candidates) {
+            if (hiddenQuad.field1.candidateSet.contains(numberToCheck)) {
+                hiddenQuadOccurrences++;
+            }
+            if (hiddenQuad.field2.candidateSet.contains(numberToCheck)) {
+                hiddenQuadOccurrences++;
+            }
+            if (hiddenQuad.field3.candidateSet.contains(numberToCheck)) {
+                hiddenQuadOccurrences++;
+            }
+            if (hiddenQuad.field4.candidateSet.contains(numberToCheck)) {
+                hiddenQuadOccurrences++;
+            }
+
+            for (FieldCandidates candidates : completeUnit) {
+                if (candidates.candidateSet.contains(numberToCheck)) {
+                    unitOccurrences++;
+                }
+            }
+
+            if (unitOccurrences != hiddenQuadOccurrences) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private ArrayList<HiddenQuad> getPossibleHiddenQuads(FieldCandidates candidates,
+                                                           FieldCandidates candidates2,
+                                                           FieldCandidates candidates3,
+                                                           FieldCandidates candidates4) {
+        ArrayList<HiddenQuad> hiddenQuads = new ArrayList<>();
+        Permutation permutation = new Permutation();
+        permutation.getCombination(candidates.candidateSet, 2);
+        permutation.getCombination(candidates.candidateSet, 3);
+        permutation.getCombination(candidates.candidateSet, 4);
+        Permutation permutation2 = new Permutation();
+        permutation2.getCombination(candidates2.candidateSet, 2);
+        permutation2.getCombination(candidates2.candidateSet, 3);
+        permutation2.getCombination(candidates2.candidateSet, 4);
+        Permutation permutation3 = new Permutation();
+        permutation3.getCombination(candidates3.candidateSet, 2);
+        permutation3.getCombination(candidates3.candidateSet, 3);
+        permutation3.getCombination(candidates3.candidateSet, 4);
+        Permutation permutation4 = new Permutation();
+        permutation4.getCombination(candidates4.candidateSet, 2);
+        permutation4.getCombination(candidates4.candidateSet, 3);
+        permutation4.getCombination(candidates4.candidateSet, 4);
+        for (HashSet<Integer> subSet : permutation.combinations) {
+            for (HashSet<Integer> subSet2 : permutation2.combinations) {
+                for (HashSet<Integer> subSet3 : permutation3.combinations) {
+                    for (HashSet<Integer> subSet4 : permutation4.combinations) {
+                        FieldCandidates candidatesCopy = new FieldCandidates(candidates.row,
+                                candidates.column, subSet);
+                        FieldCandidates candidatesCopy2 = new FieldCandidates(candidates2.row,
+                                candidates2.column, subSet2);
+                        FieldCandidates candidatesCopy3 = new FieldCandidates(candidates3.row,
+                                candidates3.column, subSet3);
+                        FieldCandidates candidatesCopy4 = new FieldCandidates(candidates4.row,
+                                candidates4.column, subSet4);
+                        HashSet<Integer> result = new HashSet<>(candidatesCopy.candidateSet);
+                        result.addAll(candidatesCopy2.candidateSet);
+                        result.addAll(candidatesCopy3.candidateSet);
+                        result.addAll(candidatesCopy4.candidateSet);
+                        if (result.size() == 4) {
+                            HiddenQuad hiddenQuad = new HiddenQuad(candidatesCopy, candidatesCopy2,
+                                    candidatesCopy3, candidatesCopy4, result);
+                            hiddenQuads.add(hiddenQuad);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return hiddenQuads;
+    }
+
     public HiddenQuad getHiddenQuadInRow() {
-        /*
         for (int r = 0; r < 9; r++) {
 
             // get a list of all current candidates for this row
@@ -190,10 +283,16 @@ public class HiddenQuadFinder {
                 }
             }
 
-            // if there is only one candidate left, it cannot be part of a hidden quad
+            while (checkForOneRemainingCandidate(completeRow) != null) {
+                int remainingNumber = checkForOneRemainingCandidate(completeRow);
+                for (FieldCandidates candidates : completeRow) {
+                    candidates.candidateSet.remove(remainingNumber);
+                }
+            }
+
             ArrayList<FieldCandidates> found = new ArrayList<>();
             for (FieldCandidates candidates : completeRow) {
-                if (candidates.candidateSet.size() <= 1) {
+                if (candidates.candidateSet.size() == 0) {
                     found.add(candidates);
                 }
             }
@@ -203,21 +302,6 @@ public class HiddenQuadFinder {
             if (completeRow.size() < 4) {
                 continue;
             } else {
-                // if a number occurs once in the remaining set, it cannot be part of a valid quad
-                for (int i = 1; i < 10; i++) {
-                    ArrayList<Integer> occurrences = new ArrayList<>();
-                    for (FieldCandidates candidates : completeRow) {
-                        if (candidates.candidateSet.contains(i)) {
-                            occurrences.add(i);
-                        }
-                    }
-                    if (occurrences.size() == 1) {
-                        for (FieldCandidates candidates : completeRow) {
-                            candidates.candidateSet.remove(i);
-                        }
-                    }
-                }
-
                 // check for a valid quad
                 for (FieldCandidates candidates : completeRow) {
                     for (FieldCandidates candidates2 : completeRow) {
@@ -229,18 +313,13 @@ public class HiddenQuadFinder {
                                         || candidates2 == candidates4 || candidates3 == candidates4) {
                                     continue;
                                 }
-                                // if the size of the union set of all four sets is four, it should be
-                                // a valid quad
-                                HashSet<Integer> result = new HashSet<>(candidates.candidateSet);
-                                result.addAll(candidates2.candidateSet);
-                                result.addAll(candidates3.candidateSet);
-                                result.addAll(candidates4.candidateSet);
-                                if (result.size() == 4 && candidates.candidateSet.size() >= 2
-                                        && candidates2.candidateSet.size() >= 2
-                                        && candidates3.candidateSet.size() >= 2) {
-                                    HiddenQuad hiddenQuad = new HiddenQuad(candidates, candidates2,
-                                            candidates3, candidates4, result);
-                                    if (checkIfHiddenQuadCanRemoveCandidatesFromRow(hiddenQuad)) {
+
+                                ArrayList<HiddenQuad> hiddenQuads = getPossibleHiddenQuads
+                                        (candidates, candidates2, candidates3, candidates4);
+
+                                for (HiddenQuad hiddenQuad : hiddenQuads) {
+                                    if (checkIfHiddenQuadCanRemoveCandidatesFromRow(hiddenQuad)
+                                            && checkHiddenQuadValidity(hiddenQuad, completeRow)) {
                                         return hiddenQuad;
                                     }
                                 }
@@ -249,12 +328,11 @@ public class HiddenQuadFinder {
                     }
                 }
             }
-        }*/
+        }
         return null;
     }
 
     public HiddenQuad getHiddenQuadInColumn() {
-        /*
         for (int c = 0; c < 9; c++) {
 
             // get a list of all current candidates for this row
@@ -283,10 +361,16 @@ public class HiddenQuadFinder {
                 }
             }
 
-            // if there is only one candidate left, it cannot be part of a hidden quad
+            while (checkForOneRemainingCandidate(completeColumn) != null) {
+                int remainingNumber = checkForOneRemainingCandidate(completeColumn);
+                for (FieldCandidates candidates : completeColumn) {
+                    candidates.candidateSet.remove(remainingNumber);
+                }
+            }
+
             ArrayList<FieldCandidates> found = new ArrayList<>();
             for (FieldCandidates candidates : completeColumn) {
-                if (candidates.candidateSet.size() <= 1) {
+                if (candidates.candidateSet.size() == 0) {
                     found.add(candidates);
                 }
             }
@@ -296,21 +380,6 @@ public class HiddenQuadFinder {
             if (completeColumn.size() < 4) {
                 continue;
             } else {
-                // if a number occurs once in the remaining set, it cannot be part of a valid quad
-                for (int i = 1; i < 10; i++) {
-                    ArrayList<Integer> occurrences = new ArrayList<>();
-                    for (FieldCandidates candidates : completeColumn) {
-                        if (candidates.candidateSet.contains(i)) {
-                            occurrences.add(i);
-                        }
-                    }
-                    if (occurrences.size() == 1) {
-                        for (FieldCandidates candidates : completeColumn) {
-                            candidates.candidateSet.remove(i);
-                        }
-                    }
-                }
-
                 // check for a valid quad
                 for (FieldCandidates candidates : completeColumn) {
                     for (FieldCandidates candidates2 : completeColumn) {
@@ -322,18 +391,13 @@ public class HiddenQuadFinder {
                                         || candidates2 == candidates4 || candidates3 == candidates4) {
                                     continue;
                                 }
-                                // if the size of the union set of all four sets is four, it should be
-                                // a valid quad
-                                HashSet<Integer> result = new HashSet<>(candidates.candidateSet);
-                                result.addAll(candidates2.candidateSet);
-                                result.addAll(candidates3.candidateSet);
-                                result.addAll(candidates4.candidateSet);
-                                if (result.size() == 4 && candidates.candidateSet.size() >= 2
-                                        && candidates2.candidateSet.size() >= 2
-                                        && candidates3.candidateSet.size() >= 2) {
-                                    HiddenQuad hiddenQuad = new HiddenQuad(candidates, candidates2,
-                                            candidates3, candidates4, result);
-                                    if (checkIfHiddenQuadCanRemoveCandidatesFromColumn(hiddenQuad)) {
+
+                                ArrayList<HiddenQuad> hiddenQuads = getPossibleHiddenQuads
+                                        (candidates, candidates2, candidates3, candidates4);
+
+                                for (HiddenQuad hiddenQuad : hiddenQuads) {
+                                    if (checkIfHiddenQuadCanRemoveCandidatesFromRow(hiddenQuad)
+                                            && checkHiddenQuadValidity(hiddenQuad, completeColumn)) {
                                         return hiddenQuad;
                                     }
                                 }
@@ -342,12 +406,11 @@ public class HiddenQuadFinder {
                     }
                 }
             }
-        }*/
+        }
         return null;
     }
 
     public HiddenQuad getHiddenQuadInBlock() {
-        /*
         for (int row = 0; row < 9; row = row + 3) {
             for (int col = 0; col < 9; col = col + 3) {
                 // get a list of all current candidates for this row
@@ -378,10 +441,16 @@ public class HiddenQuadFinder {
                     }
                 }
 
-                // if there is only one candidate left, it cannot be part of a hidden quad
+                while (checkForOneRemainingCandidate(completeBlock) != null) {
+                    int remainingNumber = checkForOneRemainingCandidate(completeBlock);
+                    for (FieldCandidates candidates : completeBlock) {
+                        candidates.candidateSet.remove(remainingNumber);
+                    }
+                }
+
                 ArrayList<FieldCandidates> found = new ArrayList<>();
                 for (FieldCandidates candidates : completeBlock) {
-                    if (candidates.candidateSet.size() <= 1) {
+                    if (candidates.candidateSet.size() == 0) {
                         found.add(candidates);
                     }
                 }
@@ -391,21 +460,6 @@ public class HiddenQuadFinder {
                 if (completeBlock.size() < 4) {
                     continue;
                 } else {
-                    // if a number occurs once in the remaining set, it cannot be part of a valid quad
-                    for (int i = 1; i < 10; i++) {
-                        ArrayList<Integer> occurrences = new ArrayList<>();
-                        for (FieldCandidates candidates : completeBlock) {
-                            if (candidates.candidateSet.contains(i)) {
-                                occurrences.add(i);
-                            }
-                        }
-                        if (occurrences.size() == 1) {
-                            for (FieldCandidates candidates : completeBlock) {
-                                candidates.candidateSet.remove(i);
-                            }
-                        }
-                    }
-
                     // check for a valid quad
                     for (FieldCandidates candidates : completeBlock) {
                         for (FieldCandidates candidates2 : completeBlock) {
@@ -417,18 +471,13 @@ public class HiddenQuadFinder {
                                             || candidates2 == candidates4 || candidates3 == candidates4) {
                                         continue;
                                     }
-                                    // if the size of the union set of all four sets is four, it should be
-                                    // a valid quad
-                                    HashSet<Integer> result = new HashSet<>(candidates.candidateSet);
-                                    result.addAll(candidates2.candidateSet);
-                                    result.addAll(candidates3.candidateSet);
-                                    result.addAll(candidates4.candidateSet);
-                                    if (result.size() == 4 && candidates.candidateSet.size() >= 2
-                                            && candidates2.candidateSet.size() >= 2
-                                            && candidates3.candidateSet.size() >= 2) {
-                                        HiddenQuad hiddenQuad = new HiddenQuad(candidates, candidates2,
-                                                candidates3, candidates4, result);
-                                        if (checkIfHiddenQuadCanRemoveCandidatesFromRow(hiddenQuad)) {
+
+                                    ArrayList<HiddenQuad> hiddenQuads = getPossibleHiddenQuads
+                                            (candidates, candidates2, candidates3, candidates4);
+
+                                    for (HiddenQuad hiddenQuad : hiddenQuads) {
+                                        if (checkIfHiddenQuadCanRemoveCandidatesFromRow(hiddenQuad)
+                                                && checkHiddenQuadValidity(hiddenQuad, completeBlock)) {
                                             return hiddenQuad;
                                         }
                                     }
@@ -438,7 +487,7 @@ public class HiddenQuadFinder {
                     }
                 }
             }
-        }*/
+        }
         return null;
     }
 

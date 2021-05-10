@@ -242,7 +242,6 @@ public class HiddenTripleFinder implements Serializable {
     }
 
     // https://www.youtube.com/watch?v=mwoy-1B4qYw
-    // TODO: Fix bug in hidden triple selection (check for valid triple part)
     public HiddenTriple getHiddenTripleInRow() {
 
         for (int r = 0; r < 9; r++) {
