@@ -315,6 +315,25 @@ public class Solver implements Serializable {
         return occurrencesList;
     }
 
+    public int countCandidateOccurrencesInBlock(int row, int column, int candidate) {
+        int occurrences = 0;
+        int boxRow = row / 3;
+        int boxCol = column / 3;
+        for (int r = boxRow * 3; r < boxRow * 3 + 3; r++) {
+            for (int c = boxCol * 3; c < boxCol * 3 + 3; c++) {
+                HashSet<Integer> candidates = calculatedCandidates.get(r * 9 + c);
+                if(candidates.contains(candidate)) {
+                    occurrences++;
+                }
+            }
+        }
+        return occurrences;
+    }
+
+    public int countCandidates(int row, int column) {
+        return calculatedCandidates.get(row * 9 + column).size();
+    }
+
     //-------------------------------------TIP FUNCTIONALITY----------------------------------------
 
     /* NOT IN USE ATM

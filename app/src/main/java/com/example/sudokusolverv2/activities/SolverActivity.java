@@ -13,6 +13,8 @@ import com.example.sudokusolverv2.BlockLocation;
 import com.example.sudokusolverv2.R;
 import com.example.sudokusolverv2.Solver;
 import com.example.sudokusolverv2.SudokuBoard;
+import com.example.sudokusolverv2.solutionStrategies.advancedStrategies.ThirdEye;
+import com.example.sudokusolverv2.solutionStrategies.advancedStrategies.ThirdEyeFinder;
 import com.example.sudokusolverv2.solutionStrategies.advancedStrategies.XWing;
 import com.example.sudokusolverv2.solutionStrategies.advancedStrategies.XWingFinder;
 import com.example.sudokusolverv2.solutionStrategies.blockRowCheck.BlockRowCheck;
@@ -56,6 +58,7 @@ public class SolverActivity extends AppCompatActivity {
     private final RowBlockCheckFinder rowBlockCheckFinder = new RowBlockCheckFinder();
     private final BlockRowCheckFinder blockRowCheckFinder = new BlockRowCheckFinder();
     private final XWingFinder xWingFinder = new XWingFinder();
+    private final ThirdEyeFinder thirdEyeFinder = new ThirdEyeFinder();
 
     private boolean editCandidatesButtonSelected = false;
 
@@ -82,6 +85,7 @@ public class SolverActivity extends AppCompatActivity {
         rowBlockCheckFinder.setSolver(gameBoardSolver);
         blockRowCheckFinder.setSolver(gameBoardSolver);
         xWingFinder.setSolver(gameBoardSolver);
+        thirdEyeFinder.setSolver(gameBoardSolver);
     }
 
     public void BTNOnePress(View view) {
@@ -304,6 +308,10 @@ public class SolverActivity extends AppCompatActivity {
             highlightRow(xWing.pair1.field1.row);
             highlightRow(xWing.pair1.field2.row);
             showTooltip("In diesen Zeilen kann die X-Wing Strategie angewendet werden", 5000);
+        } else if (thirdEyeFinder.getThirdEye() != null) {
+            ThirdEye thirdEye = thirdEyeFinder.getThirdEye();
+            highlightBlock(thirdEye.thirdEye.row, thirdEye.thirdEye.column);
+            showTooltip("In diesem Block kann die Drittes Auge Strategie angewendet werden", 5000);
         }
 
         else {
@@ -454,6 +462,11 @@ public class SolverActivity extends AppCompatActivity {
             highlightRow(xWing.pair1.field2.row);
             xWingFinder.applyXWingToRow();
             showTooltip("In diesen Zeilen konnten mit dem X-Wing Kandidaten entfernt werden", 5000);
+        } else if (thirdEyeFinder.getThirdEye() != null) {
+            ThirdEye thirdEye = thirdEyeFinder.getThirdEye();
+            highlightBlock(thirdEye.thirdEye.row, thirdEye.thirdEye.column);
+            thirdEyeFinder.applyThirdEye();
+            showTooltip("In diesem Block konnten mit der Drittes Auge Strategie Kandidaten entfernt werden", 5000);
         }
 
         else{
