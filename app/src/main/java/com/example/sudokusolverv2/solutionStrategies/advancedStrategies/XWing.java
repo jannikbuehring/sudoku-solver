@@ -1,7 +1,5 @@
 package com.example.sudokusolverv2.solutionStrategies.advancedStrategies;
 
-import com.example.sudokusolverv2.candidateSystem.FieldCandidates;
-
 public class XWing {
 
     public XWingPair pair1;
