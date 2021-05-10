@@ -13,7 +13,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-public class HiddenTripleFinder implements Serializable {
+public class HiddenTripleFinder {
+
+    //TODO: fix calculation time
 
     private Solver solver;
 

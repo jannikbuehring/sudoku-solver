@@ -11,6 +11,8 @@ import java.util.Iterator;
 
 public class HiddenQuadFinder {
 
+    //TODO: fix calculation time
+
     private Solver solver;
 
     private boolean checkIfHiddenQuadCanRemoveCandidatesFromRow(HiddenQuad hiddenQuad) {

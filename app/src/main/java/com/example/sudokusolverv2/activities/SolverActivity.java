@@ -1,8 +1,10 @@
 package com.example.sudokusolverv2.activities;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -44,6 +46,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SolverActivity extends AppCompatActivity {
+
+    // TODO: implement solved board detection
 
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
@@ -89,6 +93,8 @@ public class SolverActivity extends AppCompatActivity {
         xWingFinder.setSolver(gameBoardSolver);
         thirdEyeFinder.setSolver(gameBoardSolver);
     }
+
+
 
     public void BTNOnePress(View view) {
         if (this.editCandidatesButtonSelected) {

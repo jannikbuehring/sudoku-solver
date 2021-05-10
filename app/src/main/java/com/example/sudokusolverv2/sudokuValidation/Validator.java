@@ -272,6 +272,10 @@ public class Validator {
         return false;
     }
 
+    public void clearSolutions() {
+        this.solutions.clear();
+    }
+
     public void getEmptyBoxIndexes() {
         for (int r = 0; r < 9; r++) {
             for (int c = 0; c < 9; c++) {

@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void validate(View view) {
 
+        validator.clearSolutions();
         Solver gameBoardSolverUnsolved;
         gameBoardSolverUnsolved = (Solver) SerializationUtils.clone(gameBoardSolver);
 
