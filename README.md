@@ -17,10 +17,14 @@ A sudoku solver and helper android app for my student research project at DHBW S
 - Naked Quad
 - Hidden Pair
 - Hidden Triple
+- Hidden Quad
 - Row-Block-Check
 - Block-Row-Check
+- X-Wing
+- Third Eye
 
 # Planned features:
-- new Solving strategies (Hidden Quad, X-Wing)
+- new Solving strategies (Swordfish)
+- detection for finished sudoku
 
 ## Development environment: Android Studio
