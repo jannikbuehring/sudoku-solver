@@ -7,7 +7,7 @@ A sudoku solver and helper android app for my student research project at DHBW S
 - toggleable system to show all current candidates to help the user solving the sudoku ("easy mode")
 - tip system (which solution strategy can be used where?)
 - use solution strategy to solve next step of sudoku 
-- solution strategies (currently 9) to help solving the sudoku in an understandable way
+- solution strategies (currently 12) to help solving the sudoku in an understandable way
 
 # Currently implemented solution strategies:
 - Naked single
