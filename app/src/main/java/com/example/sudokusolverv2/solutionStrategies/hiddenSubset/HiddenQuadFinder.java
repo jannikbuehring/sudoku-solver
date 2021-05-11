@@ -162,15 +162,213 @@ public class HiddenQuadFinder {
         }
     }
 
+    private boolean checkForFourDistinctFields(ArrayList<FieldCandidates> fields,
+                                               ArrayList<FieldCandidates> fields2,
+                                               ArrayList<FieldCandidates> fields3,
+                                               ArrayList<FieldCandidates> fields4) {
+        ArrayList<FieldCandidates> distinctFields = new ArrayList<>();
+        distinctFields.addAll(fields);
+
+        for (FieldCandidates field : fields2) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
+            }
+        }
+
+        for (FieldCandidates field : fields3) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
+            }
+        }
+
+        for (FieldCandidates field : fields4) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
+            }
+        }
+
+        if (distinctFields.size() == 4) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private ArrayList<FieldCandidates> findDistinctFields(ArrayList<FieldCandidates> fields,
+                                                          ArrayList<FieldCandidates> fields2,
+                                                          ArrayList<FieldCandidates> fields3,
+                                                          ArrayList<FieldCandidates> fields4) {
+        ArrayList<FieldCandidates> distinctFields = new ArrayList<>();
+        distinctFields.addAll(fields);
+
+        for (FieldCandidates field : fields2) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
+            }
+        }
+
+        for (FieldCandidates field : fields3) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
+            }
+        }
+
+        for (FieldCandidates field : fields4) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
+            }
+        }
+
+        return distinctFields;
+    }
+
     public HiddenQuad getHiddenQuadInRow() {
+        for (int r = 0; r < 9; r++) {
+            HashSet<Integer> possibleQuadNumbers = new HashSet<>();
+            for (int i = 1; i < 10; i++) {
+                if (solver.countCandidateOccurrencesInRow(r, i) >= 2
+                        && solver.countCandidateOccurrencesInRow(r, i) <= 4) {
+                    possibleQuadNumbers.add(i);
+                }
+            }
+
+            if (possibleQuadNumbers.size() >= 3) {
+                for (int possibleQuadNumber : possibleQuadNumbers) {
+                    ArrayList<FieldCandidates> fields = solver.findCandidateOccurrencesInRow(r, possibleQuadNumber);
+                    for (int possibleQuadNumber2 : possibleQuadNumbers) {
+                        ArrayList<FieldCandidates> fields2 = solver.findCandidateOccurrencesInRow(r, possibleQuadNumber2);
+                        for (int possibleQuadNumber3 : possibleQuadNumbers) {
+                            ArrayList<FieldCandidates> fields3 = solver.findCandidateOccurrencesInRow(r, possibleQuadNumber3);
+                            for (int possibleQuadNumber4 : possibleQuadNumbers) {
+                                ArrayList<FieldCandidates> fields4 = solver.findCandidateOccurrencesInRow(r, possibleQuadNumber4);
+                                if (possibleQuadNumber == possibleQuadNumber2 || possibleQuadNumber == possibleQuadNumber3
+                                        || possibleQuadNumber2 == possibleQuadNumber3 || possibleQuadNumber == possibleQuadNumber4
+                                        || possibleQuadNumber2 == possibleQuadNumber4 || possibleQuadNumber3 == possibleQuadNumber4) {
+                                    continue;
+                                }
+
+                                if (checkForFourDistinctFields(fields, fields2, fields3, fields4)) {
+                                    ArrayList<FieldCandidates> distinctFields = findDistinctFields(fields, fields2, fields3, fields4);
+                                    HashSet<Integer> candidates = new HashSet<>();
+                                    candidates.add(possibleQuadNumber);
+                                    candidates.add(possibleQuadNumber2);
+                                    candidates.add(possibleQuadNumber3);
+                                    candidates.add(possibleQuadNumber4);
+                                    HiddenQuad hiddenQuad = new HiddenQuad(distinctFields.get(0),
+                                            distinctFields.get(1), distinctFields.get(2),
+                                            distinctFields.get(3), candidates);
+                                    if (checkIfHiddenQuadCanRemoveCandidatesFromRow(hiddenQuad)) {
+                                        return hiddenQuad;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return null;
     }
 
     public HiddenQuad getHiddenQuadInColumn() {
+        for (int c = 0; c < 9; c++) {
+            HashSet<Integer> possibleQuadNumbers = new HashSet<>();
+            for (int i = 1; i < 10; i++) {
+                if (solver.countCandidateOccurrencesInColumn(c, i) >= 2
+                        && solver.countCandidateOccurrencesInColumn(c, i) <= 4) {
+                    possibleQuadNumbers.add(i);
+                }
+            }
+
+            if (possibleQuadNumbers.size() >= 3) {
+                for (int possibleQuadNumber : possibleQuadNumbers) {
+                    ArrayList<FieldCandidates> fields = solver.findCandidateOccurrencesInColumn(c, possibleQuadNumber);
+                    for (int possibleQuadNumber2 : possibleQuadNumbers) {
+                        ArrayList<FieldCandidates> fields2 = solver.findCandidateOccurrencesInColumn(c, possibleQuadNumber2);
+                        for (int possibleQuadNumber3 : possibleQuadNumbers) {
+                            ArrayList<FieldCandidates> fields3 = solver.findCandidateOccurrencesInColumn(c, possibleQuadNumber3);
+                            for (int possibleQuadNumber4 : possibleQuadNumbers) {
+                                ArrayList<FieldCandidates> fields4 = solver.findCandidateOccurrencesInColumn(c, possibleQuadNumber4);
+                                if (possibleQuadNumber == possibleQuadNumber2 || possibleQuadNumber == possibleQuadNumber3
+                                        || possibleQuadNumber2 == possibleQuadNumber3 || possibleQuadNumber == possibleQuadNumber4
+                                        || possibleQuadNumber2 == possibleQuadNumber4 || possibleQuadNumber3 == possibleQuadNumber4) {
+                                    continue;
+                                }
+
+                                if (checkForFourDistinctFields(fields, fields2, fields3, fields4)) {
+                                    ArrayList<FieldCandidates> distinctFields = findDistinctFields(fields, fields2, fields3, fields4);
+                                    HashSet<Integer> candidates = new HashSet<>();
+                                    candidates.add(possibleQuadNumber);
+                                    candidates.add(possibleQuadNumber2);
+                                    candidates.add(possibleQuadNumber3);
+                                    candidates.add(possibleQuadNumber4);
+                                    HiddenQuad hiddenQuad = new HiddenQuad(distinctFields.get(0),
+                                            distinctFields.get(1), distinctFields.get(2),
+                                            distinctFields.get(3), candidates);
+                                    if (checkIfHiddenQuadCanRemoveCandidatesFromColumn(hiddenQuad)) {
+                                        return hiddenQuad;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return null;
     }
 
     public HiddenQuad getHiddenQuadInBlock() {
+        for (int row = 0; row < 9; row = row + 3) {
+            for (int col = 0; col < 9; col = col + 3) {
+                HashSet<Integer> possibleQuadNumbers = new HashSet<>();
+                for (int r = row; r < row + 3; r++) {
+                    for (int c = col; c < col + 3; c++) {
+                        for (int i = 1; i < 10; i++) {
+                            if (solver.countCandidateOccurrencesInBlock(r, c, i) >= 2
+                                    && solver.countCandidateOccurrencesInBlock(r, c, i) <= 4) {
+                                possibleQuadNumbers.add(i);
+                            }
+                        }
+
+                        if (possibleQuadNumbers.size() >= 3) {
+                            for (int possibleQuadNumber : possibleQuadNumbers) {
+                                ArrayList<FieldCandidates> fields = solver.findCandidateOccurrencesInBlock(r, c, possibleQuadNumber);
+                                for (int possibleQuadNumber2 : possibleQuadNumbers) {
+                                    ArrayList<FieldCandidates> fields2 = solver.findCandidateOccurrencesInBlock(r, c, possibleQuadNumber2);
+                                    for (int possibleQuadNumber3 : possibleQuadNumbers) {
+                                        ArrayList<FieldCandidates> fields3 = solver.findCandidateOccurrencesInBlock(r, c, possibleQuadNumber3);
+                                        for (int possibleQuadNumber4 : possibleQuadNumbers) {
+                                            ArrayList<FieldCandidates> fields4 = solver.findCandidateOccurrencesInBlock(r, c, possibleQuadNumber4);
+                                            if (possibleQuadNumber == possibleQuadNumber2 || possibleQuadNumber == possibleQuadNumber3
+                                                    || possibleQuadNumber2 == possibleQuadNumber3 || possibleQuadNumber == possibleQuadNumber4
+                                                    || possibleQuadNumber2 == possibleQuadNumber4 || possibleQuadNumber3 == possibleQuadNumber4) {
+                                                continue;
+                                            }
+
+                                            if (checkForFourDistinctFields(fields, fields2, fields3, fields4)) {
+                                                ArrayList<FieldCandidates> distinctFields = findDistinctFields(fields, fields2, fields3, fields4);
+                                                HashSet<Integer> candidates = new HashSet<>();
+                                                candidates.add(possibleQuadNumber);
+                                                candidates.add(possibleQuadNumber2);
+                                                candidates.add(possibleQuadNumber3);
+                                                candidates.add(possibleQuadNumber4);
+                                                HiddenQuad hiddenQuad = new HiddenQuad(distinctFields.get(0),
+                                                        distinctFields.get(1), distinctFields.get(2),
+                                                        distinctFields.get(3), candidates);
+                                                if (checkIfHiddenQuadCanRemoveCandidatesFromBlock(hiddenQuad)) {
+                                                    return hiddenQuad;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return null;
     }
 

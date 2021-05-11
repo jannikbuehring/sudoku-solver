@@ -314,7 +314,7 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlock(hiddenTriple.field1.row, hiddenTriple.field1.column);
             showTooltip("In diesem Block befindet sich ein Hidden Triple", 5000);
             detectedStrategy = 72;
-        } /*else if (hiddenQuadFinder.getHiddenQuadInRow() != null) {
+        } else if (hiddenQuadFinder.getHiddenQuadInRow() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInRow();
             highlightRow(new ArrayList<>(Arrays.asList(hiddenQuad.field1.row)));
             showTooltip("In dieser Zeile befindet sich ein Hidden Quad", 5000);
@@ -329,7 +329,7 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlock(hiddenQuad.field1.row, hiddenQuad.field1.column);
             showTooltip("In diesem Block befindet sich ein Hidden Quad", 5000);
             detectedStrategy = 82;
-        }  */else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
+        }  else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
             highlightRow(new ArrayList<>(Arrays.asList(rowBlockCheck.candidate1.row)));
             showTooltip("In dieser Zeile kann ein Reihe-Block-Check angewendet werden");
@@ -463,7 +463,7 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlockSolution(hiddenTriple.field1.row, hiddenTriple.field1.column);
             hiddenTripleFinder.applyHiddenTripleToBlock();
             showSolutionTooltip("Mit dem Hidden Triple konnten in diesem Block Kandidaten entfernt werden", 5000);
-        } /*else if (detectedStrategy == 80 || detectedStrategy == 0 && hiddenQuadFinder.getHiddenQuadInRow() != null) {
+        } else if (detectedStrategy == 80 || detectedStrategy == 0 && hiddenQuadFinder.getHiddenQuadInRow() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInRow();
             highlightRowSolution(new ArrayList<>(Arrays.asList(hiddenQuad.field1.row)));
             hiddenQuadFinder.applyHiddenQuadToRow();
@@ -478,7 +478,7 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlockSolution(hiddenQuad.field1.row, hiddenQuad.field1.column);
             hiddenQuadFinder.applyHiddenQuadToBlock();
             showSolutionTooltip("Mit dem Hidden Quad konnten in diesem Block Kandidaten entfernt werden", 5000);
-        } */else if (detectedStrategy == 90 || detectedStrategy == 0 && rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
+        } else if (detectedStrategy == 90 || detectedStrategy == 0 && rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
             highlightBlockSolution(rowBlockCheck.candidate1.row, rowBlockCheck.candidate1.column);
             rowBlockCheckFinder.applyRowBlockCheckToBlock();

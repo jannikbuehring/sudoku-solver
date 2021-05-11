@@ -66,10 +66,10 @@ public class HiddenQuadFinderTest extends TestCase {
         assertEquals(hiddenQuad.field4.column, 0);
 
         //somehow field 1 and 2 got switched here
-        assertEquals(hiddenQuad.field2.row, 0);
-        assertEquals(hiddenQuad.field1.row, 1);
-        assertEquals(hiddenQuad.field3.row, 4);
-        assertEquals(hiddenQuad.field4.row, 5);
+        assertEquals(hiddenQuad.field1.row, 0);
+        assertEquals(hiddenQuad.field2.row, 1);
+        assertEquals(hiddenQuad.field3.row, 5);
+        assertEquals(hiddenQuad.field4.row, 4);
 
         assertTrue(hiddenQuad.candidates.contains(5));
         assertTrue(hiddenQuad.candidates.contains(6));
@@ -101,10 +101,10 @@ public class HiddenQuadFinderTest extends TestCase {
         assertEquals(hiddenQuad.field3.column, 4);
         assertEquals(hiddenQuad.field4.column, 5);
 
-        assertEquals(hiddenQuad.field1.row, 6);
-        assertEquals(hiddenQuad.field2.row, 6);
-        assertEquals(hiddenQuad.field3.row, 7);
-        assertEquals(hiddenQuad.field4.row, 7);
+        assertEquals(hiddenQuad.field1.row, 7);
+        assertEquals(hiddenQuad.field2.row, 7);
+        assertEquals(hiddenQuad.field3.row, 6);
+        assertEquals(hiddenQuad.field4.row, 6);
 
         assertTrue(hiddenQuad.candidates.contains(2));
         assertTrue(hiddenQuad.candidates.contains(4));
