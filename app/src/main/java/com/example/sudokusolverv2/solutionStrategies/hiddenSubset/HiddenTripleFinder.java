@@ -165,150 +165,87 @@ public class HiddenTripleFinder {
         }
     }
 
-    private Integer checkForOneRemainingCandidate(ArrayList<FieldCandidates> completeUnit) {
+    private boolean checkForThreeDistinctFields(ArrayList<FieldCandidates> fields,
+                                                ArrayList<FieldCandidates> fields2,
+                                                ArrayList<FieldCandidates> fields3) {
+        ArrayList<FieldCandidates> distinctFields = new ArrayList<>();
+        distinctFields.addAll(fields);
 
-        for (FieldCandidates candidates : completeUnit) {
-            if (candidates.candidateSet.size() == 1) {
-                Iterator<Integer> iterator = candidates.candidateSet.iterator();
-                return iterator.next();
+        for (FieldCandidates field : fields2) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
             }
         }
 
-        return null;
-    }
-
-    private boolean checkHiddenTripleValidity(HiddenTriple hiddenTriple, ArrayList<FieldCandidates> completeUnit) {
-        int unitOccurrences = 0;
-        int hiddenTripleOccurrences = 0;
-        for (int numberToCheck : hiddenTriple.candidates) {
-            if (hiddenTriple.field1.candidateSet.contains(numberToCheck)) {
-                hiddenTripleOccurrences++;
-            }
-            if (hiddenTriple.field2.candidateSet.contains(numberToCheck)) {
-                hiddenTripleOccurrences++;
-            }
-            if (hiddenTriple.field3.candidateSet.contains(numberToCheck)) {
-                hiddenTripleOccurrences++;
-            }
-
-            for (FieldCandidates candidates : completeUnit) {
-                if (candidates.candidateSet.contains(numberToCheck)) {
-                    unitOccurrences++;
-                }
-            }
-
-            if (unitOccurrences != hiddenTripleOccurrences) {
-                return false;
+        for (FieldCandidates field : fields3) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
             }
         }
 
-        return true;
+        if (distinctFields.size() == 3) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    private ArrayList<HiddenTriple> getPossibleHiddenTriples(FieldCandidates candidates,
-                                                             FieldCandidates candidates2,
-                                                             FieldCandidates candidates3) {
-        ArrayList<HiddenTriple> hiddenTriples = new ArrayList<>();
-        Permutation permutation = new Permutation();
-        permutation.getCombination(candidates.candidateSet, 2);
-        permutation.getCombination(candidates.candidateSet, 3);
-        Permutation permutation2 = new Permutation();
-        permutation2.getCombination(candidates2.candidateSet, 2);
-        permutation2.getCombination(candidates2.candidateSet, 3);
-        Permutation permutation3 = new Permutation();
-        permutation3.getCombination(candidates3.candidateSet, 2);
-        permutation3.getCombination(candidates3.candidateSet, 3);
-        for (HashSet<Integer> subSet : permutation.combinations) {
-            for (HashSet<Integer> subSet2 : permutation2.combinations) {
-                for (HashSet<Integer> subSet3 : permutation3.combinations) {
-                    FieldCandidates candidatesCopy = new FieldCandidates(candidates.row,
-                            candidates.column, subSet);
-                    FieldCandidates candidatesCopy2 = new FieldCandidates(candidates2.row,
-                            candidates2.column, subSet2);
-                    FieldCandidates candidatesCopy3 = new FieldCandidates(candidates3.row,
-                            candidates3.column, subSet3);
-                    HashSet<Integer> result = new HashSet<>(candidatesCopy.candidateSet);
-                    result.addAll(candidatesCopy2.candidateSet);
-                    result.addAll(candidatesCopy3.candidateSet);
-                    if (result.size() == 3) {
-                        HiddenTriple hiddenTriple = new HiddenTriple(candidatesCopy, candidatesCopy2,
-                                candidatesCopy3, result);
-                        hiddenTriples.add(hiddenTriple);
-                    }
-                }
+    private ArrayList<FieldCandidates> findDistinctFields(ArrayList<FieldCandidates> fields,
+                                                          ArrayList<FieldCandidates> fields2,
+                                                          ArrayList<FieldCandidates> fields3) {
+        ArrayList<FieldCandidates> distinctFields = new ArrayList<>();
+        for (FieldCandidates field : fields) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
             }
         }
 
+        for (FieldCandidates field : fields2) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
+            }
+        }
 
-        return hiddenTriples;
+        for (FieldCandidates field : fields3) {
+            if (!distinctFields.contains(field)) {
+                distinctFields.add(field);
+            }
+        }
+
+        return distinctFields;
     }
 
-    // https://www.youtube.com/watch?v=mwoy-1B4qYw
     public HiddenTriple getHiddenTripleInRow() {
-
         for (int r = 0; r < 9; r++) {
-
-            // get a list of all current candidates for this row
-            ArrayList<FieldCandidates> completeRow = new ArrayList<>();
-            for (int c = 0; c < 9; c++) {
-                if (solver.board[r][c] == 0) {
-                    // we need to make a deep copy of the candidates because we want to edit it
-                    HashSet<Integer> candidates = SerializationUtils.clone(solver.calculatedCandidates.get(r * 9 + c));
-                    FieldCandidates candidateSet = new FieldCandidates(r, c, candidates);
-                    completeRow.add(candidateSet);
-                }
-            }
-
-            // if a number occurs more than three times, it cannot be part of a hidden triple
+            HashSet<Integer> possibleTripleNumbers = new HashSet<>();
             for (int i = 1; i < 10; i++) {
-                ArrayList<Integer> occurrences = new ArrayList<>();
-                for (FieldCandidates candidates : completeRow) {
-                    if (candidates.candidateSet.contains(i)) {
-                        occurrences.add(i);
-                    }
-                }
-                if (occurrences.size() > 3) {
-                    for (FieldCandidates candidates : completeRow) {
-                        candidates.candidateSet.remove(i);
-                    }
+                if (solver.countCandidateOccurrencesInRow(r, i) == 2
+                        || solver.countCandidateOccurrencesInRow(r, i) == 3) {
+                    possibleTripleNumbers.add(i);
                 }
             }
 
-            while (checkForOneRemainingCandidate(completeRow) != null) {
-                int remainingNumber = checkForOneRemainingCandidate(completeRow);
-                for (FieldCandidates candidates : completeRow) {
-                    candidates.candidateSet.remove(remainingNumber);
-                }
-            }
-
-            ArrayList<FieldCandidates> found = new ArrayList<>();
-            for (FieldCandidates candidates : completeRow) {
-                if (candidates.candidateSet.size() == 0) {
-                    found.add(candidates);
-                }
-            }
-            completeRow.removeAll(found);
-
-            // if only two cells are left for consideration, it is not enough for a valid triple
-            if (completeRow.size() < 3) {
-                continue;
-            } else {
-                // check for a valid triple
-                for (FieldCandidates candidates : completeRow) {
-                    for (FieldCandidates candidates2 : completeRow) {
-                        for (FieldCandidates candidates3 : completeRow) {
-                            // making sure we are not comparing the same fields
-                            if (candidates == candidates2 || candidates == candidates3
-                                    || candidates2 == candidates3) {
+            if (possibleTripleNumbers.size() >= 3) {
+                for (int possibleTripleNumber : possibleTripleNumbers) {
+                    ArrayList<FieldCandidates> fields = solver.findCandidateOccurrencesInRow(r, possibleTripleNumber);
+                    for (int possibleTripleNumber2 : possibleTripleNumbers) {
+                        ArrayList<FieldCandidates> fields2 = solver.findCandidateOccurrencesInRow(r, possibleTripleNumber2);
+                        for (int possibleTripleNumber3 : possibleTripleNumbers) {
+                            ArrayList<FieldCandidates> fields3 = solver.findCandidateOccurrencesInRow(r, possibleTripleNumber3);
+                            if (possibleTripleNumber == possibleTripleNumber2 || possibleTripleNumber == possibleTripleNumber3
+                                    || possibleTripleNumber2 == possibleTripleNumber3) {
                                 continue;
                             }
 
-                            ArrayList<HiddenTriple> hiddenTriples = getPossibleHiddenTriples
-                                    (candidates, candidates2, candidates3);
-
-                            for (HiddenTriple hiddenTriple : hiddenTriples) {
-                                if (checkIfHiddenTripleCanRemoveCandidatesFromBlock(hiddenTriple)
-                                        && checkHiddenTripleValidity(hiddenTriple, completeRow)) {
+                            if (checkForThreeDistinctFields(fields, fields2, fields3)) {
+                                ArrayList<FieldCandidates> distinctFields = findDistinctFields(fields, fields2, fields3);
+                                HashSet<Integer> candidates = new HashSet<>();
+                                candidates.add(possibleTripleNumber);
+                                candidates.add(possibleTripleNumber2);
+                                candidates.add(possibleTripleNumber3);
+                                HiddenTriple hiddenTriple = new HiddenTriple(distinctFields.get(0),
+                                        distinctFields.get(1), distinctFields.get(2), candidates);
+                                if (checkIfHiddenTripleCanRemoveCandidatesFromRow(hiddenTriple)) {
                                     return hiddenTriple;
                                 }
                             }
@@ -317,73 +254,42 @@ public class HiddenTripleFinder {
                 }
             }
         }
+
 
         return null;
     }
 
     public HiddenTriple getHiddenTripleInColumn() {
         for (int c = 0; c < 9; c++) {
-
-            // get a list of all current candidates for this column
-            ArrayList<FieldCandidates> completeColumn = new ArrayList<>();
-            for (int r = 0; r < 9; r++) {
-                if (solver.board[r][c] == 0) {
-                    HashSet<Integer> candidates = SerializationUtils.clone(solver.calculatedCandidates.get(r * 9 + c));
-                    FieldCandidates candidateSet = new FieldCandidates(r, c, candidates);
-                    completeColumn.add(candidateSet);
-                }
-            }
-
-            // if a number occurs more than three times, it cannot be part of a hidden triple
+            HashSet<Integer> possibleTripleNumbers = new HashSet<>();
             for (int i = 1; i < 10; i++) {
-                ArrayList<Integer> occurrences = new ArrayList<>();
-                for (FieldCandidates candidates : completeColumn) {
-                    if (candidates.candidateSet.contains(i)) {
-                        occurrences.add(i);
-                    }
-                }
-                if (occurrences.size() > 3) {
-                    for (FieldCandidates candidates : completeColumn) {
-                        candidates.candidateSet.remove(i);
-                    }
+                if (solver.countCandidateOccurrencesInColumn(c, i) == 2
+                        || solver.countCandidateOccurrencesInColumn(c, i) == 3) {
+                    possibleTripleNumbers.add(i);
                 }
             }
 
-            while (checkForOneRemainingCandidate(completeColumn) != null) {
-                int remainingNumber = checkForOneRemainingCandidate(completeColumn);
-                for (FieldCandidates candidates : completeColumn) {
-                    candidates.candidateSet.remove(remainingNumber);
-                }
-            }
-
-            ArrayList<FieldCandidates> found = new ArrayList<>();
-            for (FieldCandidates candidates : completeColumn) {
-                if (candidates.candidateSet.size() == 0) {
-                    found.add(candidates);
-                }
-            }
-            completeColumn.removeAll(found);
-
-            // if only two cells are left for consideration, it is not enough for a valid triple
-            if (completeColumn.size() < 3) {
-                continue;
-            } else {
-                // check for a valid triple
-                for (FieldCandidates candidates : completeColumn) {
-                    for (FieldCandidates candidates2 : completeColumn) {
-                        for (FieldCandidates candidates3 : completeColumn) {
-                            // making sure we are not comparing the same fields
-                            if (candidates == candidates2 || candidates == candidates3
-                                    || candidates2 == candidates3) {
+            if (possibleTripleNumbers.size() >= 3) {
+                for (int possibleTripleNumber : possibleTripleNumbers) {
+                    ArrayList<FieldCandidates> fields = solver.findCandidateOccurrencesInColumn(c, possibleTripleNumber);
+                    for (int possibleTripleNumber2 : possibleTripleNumbers) {
+                        ArrayList<FieldCandidates> fields2 = solver.findCandidateOccurrencesInColumn(c, possibleTripleNumber2);
+                        for (int possibleTripleNumber3 : possibleTripleNumbers) {
+                            ArrayList<FieldCandidates> fields3 = solver.findCandidateOccurrencesInColumn(c, possibleTripleNumber3);
+                            if (possibleTripleNumber == possibleTripleNumber2 || possibleTripleNumber == possibleTripleNumber3
+                                    || possibleTripleNumber2 == possibleTripleNumber3) {
                                 continue;
                             }
 
-                            ArrayList<HiddenTriple> hiddenTriples = getPossibleHiddenTriples
-                                    (candidates, candidates2, candidates3);
-
-                            for (HiddenTriple hiddenTriple : hiddenTriples) {
-                                if (checkIfHiddenTripleCanRemoveCandidatesFromBlock(hiddenTriple)
-                                        && checkHiddenTripleValidity(hiddenTriple, completeColumn)) {
+                            if (checkForThreeDistinctFields(fields, fields2, fields3)) {
+                                ArrayList<FieldCandidates> distinctFields = findDistinctFields(fields, fields2, fields3);
+                                HashSet<Integer> candidates = new HashSet<>();
+                                candidates.add(possibleTripleNumber);
+                                candidates.add(possibleTripleNumber2);
+                                candidates.add(possibleTripleNumber3);
+                                HiddenTriple hiddenTriple = new HiddenTriple(distinctFields.get(0),
+                                        distinctFields.get(1), distinctFields.get(2), candidates);
+                                if (checkIfHiddenTripleCanRemoveCandidatesFromColumn(hiddenTriple)) {
                                     return hiddenTriple;
                                 }
                             }
@@ -392,6 +298,7 @@ public class HiddenTripleFinder {
                 }
             }
         }
+
 
         return null;
     }
@@ -399,69 +306,40 @@ public class HiddenTripleFinder {
     public HiddenTriple getHiddenTripleInBlock() {
         for (int row = 0; row < 9; row = row + 3) {
             for (int col = 0; col < 9; col = col + 3) {
-                // get a list of all current candidates for this block
-                ArrayList<FieldCandidates> completeBlock = new ArrayList<>();
+                HashSet<Integer> possibleTripleNumbers = new HashSet<>();
                 for (int r = row; r < row + 3; r++) {
                     for (int c = col; c < col + 3; c++) {
-                        if (solver.board[r][c] == 0) {
-                            HashSet<Integer> candidates = SerializationUtils.clone(solver.calculatedCandidates.get(r * 9 + c));
-                            FieldCandidates candidateSet = new FieldCandidates(r, c, candidates);
-                            completeBlock.add(candidateSet);
+                        for (int i = 1; i < 10; i++) {
+                            if (solver.countCandidateOccurrencesInBlock(r, c, i) == 2
+                                    || solver.countCandidateOccurrencesInBlock(r, c, i) == 3) {
+                                possibleTripleNumbers.add(i);
+                            }
                         }
-                    }
-                }
 
-                // if a number occurs more than three times, it cannot be part of a hidden triple
-                for (int i = 1; i < 10; i++) {
-                    ArrayList<Integer> occurrences = new ArrayList<>();
-                    for (FieldCandidates candidates : completeBlock) {
-                        if (candidates.candidateSet.contains(i)) {
-                            occurrences.add(i);
-                        }
-                    }
-                    if (occurrences.size() > 3) {
-                        for (FieldCandidates candidates : completeBlock) {
-                            candidates.candidateSet.remove(i);
-                        }
-                    }
-                }
+                        if (possibleTripleNumbers.size() >= 3) {
+                            for (int possibleTripleNumber : possibleTripleNumbers) {
+                                ArrayList<FieldCandidates> fields = solver.findCandidateOccurrencesInBlock(r, c, possibleTripleNumber);
+                                for (int possibleTripleNumber2 : possibleTripleNumbers) {
+                                    ArrayList<FieldCandidates> fields2 = solver.findCandidateOccurrencesInBlock(r, c, possibleTripleNumber2);
+                                    for (int possibleTripleNumber3 : possibleTripleNumbers) {
+                                        ArrayList<FieldCandidates> fields3 = solver.findCandidateOccurrencesInBlock(r, c, possibleTripleNumber3);
+                                        if (possibleTripleNumber == possibleTripleNumber2 || possibleTripleNumber == possibleTripleNumber3
+                                                || possibleTripleNumber2 == possibleTripleNumber3) {
+                                            continue;
+                                        }
 
-                while (checkForOneRemainingCandidate(completeBlock) != null) {
-                    int remainingNumber = checkForOneRemainingCandidate(completeBlock);
-                    for (FieldCandidates candidates : completeBlock) {
-                        candidates.candidateSet.remove(remainingNumber);
-                    }
-                }
-
-                ArrayList<FieldCandidates> found = new ArrayList<>();
-                for (FieldCandidates candidates : completeBlock) {
-                    if (candidates.candidateSet.size() == 0) {
-                        found.add(candidates);
-                    }
-                }
-                completeBlock.removeAll(found);
-
-                // if only two cells are left for consideration, it is not enough for a valid triple
-                if (completeBlock.size() < 3) {
-                    continue;
-                } else {
-                    // check for a valid triple
-                    for (FieldCandidates candidates : completeBlock) {
-                        for (FieldCandidates candidates2 : completeBlock) {
-                            for (FieldCandidates candidates3 : completeBlock) {
-                                // making sure we are not comparing the same fields
-                                if (candidates == candidates2 || candidates == candidates3
-                                        || candidates2 == candidates3) {
-                                    continue;
-                                }
-
-                                ArrayList<HiddenTriple> hiddenTriples = getPossibleHiddenTriples
-                                        (candidates, candidates2, candidates3);
-
-                                for (HiddenTriple hiddenTriple : hiddenTriples) {
-                                    if (checkIfHiddenTripleCanRemoveCandidatesFromBlock(hiddenTriple)
-                                            && checkHiddenTripleValidity(hiddenTriple, completeBlock)) {
-                                        return hiddenTriple;
+                                        if (checkForThreeDistinctFields(fields, fields2, fields3)) {
+                                            ArrayList<FieldCandidates> distinctFields = findDistinctFields(fields, fields2, fields3);
+                                            HashSet<Integer> candidates = new HashSet<>();
+                                            candidates.add(possibleTripleNumber);
+                                            candidates.add(possibleTripleNumber2);
+                                            candidates.add(possibleTripleNumber3);
+                                            HiddenTriple hiddenTriple = new HiddenTriple(distinctFields.get(0),
+                                                    distinctFields.get(1), distinctFields.get(2), candidates);
+                                            if (checkIfHiddenTripleCanRemoveCandidatesFromColumn(hiddenTriple)) {
+                                                return hiddenTriple;
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -470,69 +348,12 @@ public class HiddenTripleFinder {
                 }
             }
         }
+
+
         return null;
     }
 
     public void setSolver(Solver solver) {
         this.solver = solver;
-    }
-}
-
-// Java program to print all combination of size
-// r in an array of size n
-class Permutation {
-
-    ArrayList<HashSet<Integer>> combinations = new ArrayList<>();
-
-    /* arr[]  ---> Input Array
-    data[] ---> Temporary array to store current combination
-    start & end ---> Staring and Ending indexes in arr[]
-    index  ---> Current index in data[]
-    r ---> Size of a combination to be printed */
-    private void combinationUtil(int arr[], int n, int r,
-                                 int index, int data[], int i) {
-        // Current combination is ready to be printed,
-        // print it
-        if (index == r) {
-            HashSet<Integer> set = new HashSet<>();
-            for (int j = 0; j < r; j++) {
-                set.add(data[j]);
-            }
-            combinations.add(set);
-            return;
-        }
-
-        // When no more elements are there to put in data[]
-        if (i >= n)
-            return;
-
-        // current is included, put next at next
-        // location
-        data[index] = arr[i];
-        combinationUtil(arr, n, r, index + 1,
-                data, i + 1);
-
-        // current is excluded, replace it with
-        // next (Note that i+1 is passed, but
-        // index is not changed)
-        combinationUtil(arr, n, r, index, data, i + 1);
-    }
-
-    // The main function that prints all combinations
-    // of size r in arr[] of size n. This function
-    // mainly uses combinationUtil()
-    public void getCombination(HashSet<Integer> canidateSet, int r) {
-        if (canidateSet.size() <= 2) {
-            combinations.add(canidateSet);
-            return;
-        }
-        // A temporary array to store all combination
-        // one by one
-        int data[] = new int[r];
-        int arr[] = canidateSet.stream().mapToInt(Number::intValue).toArray();
-        int n = canidateSet.size();
-        // Print all combination using temprary
-        // array 'data[]'
-        combinationUtil(arr, n, r, 0, data, 0);
     }
 }

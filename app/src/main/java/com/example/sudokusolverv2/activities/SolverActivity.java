@@ -50,6 +50,8 @@ public class SolverActivity extends AppCompatActivity {
 
     // TODO: implement solved board detection
 
+    // TODO: apply functions can be made less expensive
+
     private SudokuBoard gameBoard;
     private Solver gameBoardSolver;
     Runnable savedToolTip;
@@ -297,7 +299,7 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlock(hiddenPair.field1.row, hiddenPair.field1.column);
             showTooltip("In diesem Block befindet sich ein Hidden Pair", 5000);
             detectedStrategy = 62;
-        } /*else if (hiddenTripleFinder.getHiddenTripleInRow() != null) {
+        } else if (hiddenTripleFinder.getHiddenTripleInRow() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInRow();
             highlightRow(new ArrayList<>(Arrays.asList(hiddenTriple.field1.row)));
             showTooltip("In dieser Zeile befindet sich ein Hidden Triple", 5000);
@@ -327,7 +329,7 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlock(hiddenQuad.field1.row, hiddenQuad.field1.column);
             showTooltip("In diesem Block befindet sich ein Hidden Quad", 5000);
             detectedStrategy = 82;
-        } */ else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
+        }  */else if (rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
             highlightRow(new ArrayList<>(Arrays.asList(rowBlockCheck.candidate1.row)));
             showTooltip("In dieser Zeile kann ein Reihe-Block-Check angewendet werden");
@@ -446,7 +448,7 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlockSolution(hiddenPair.field1.row, hiddenPair.field1.column);
             hiddenPairFinder.applyHiddenPairToBlock();
             showSolutionTooltip("Mit dem Hidden Pair konnten in diesem Block Kandidaten entfernt werden", 5000);
-        } /*else if (detectedStrategy == 70 || detectedStrategy == 0 && hiddenTripleFinder.getHiddenTripleInRow() != null) {
+        } else if (detectedStrategy == 70 || detectedStrategy == 0 && hiddenTripleFinder.getHiddenTripleInRow() != null) {
             HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInRow();
             highlightRowSolution(new ArrayList<>(Arrays.asList(hiddenTriple.field1.row)));
             hiddenTripleFinder.applyHiddenTripleToRow();
@@ -461,7 +463,7 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlockSolution(hiddenTriple.field1.row, hiddenTriple.field1.column);
             hiddenTripleFinder.applyHiddenTripleToBlock();
             showSolutionTooltip("Mit dem Hidden Triple konnten in diesem Block Kandidaten entfernt werden", 5000);
-        } else if (detectedStrategy == 80 || detectedStrategy == 0 && hiddenQuadFinder.getHiddenQuadInRow() != null) {
+        } /*else if (detectedStrategy == 80 || detectedStrategy == 0 && hiddenQuadFinder.getHiddenQuadInRow() != null) {
             HiddenQuad hiddenQuad = hiddenQuadFinder.getHiddenQuadInRow();
             highlightRowSolution(new ArrayList<>(Arrays.asList(hiddenQuad.field1.row)));
             hiddenQuadFinder.applyHiddenQuadToRow();
@@ -476,7 +478,7 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlockSolution(hiddenQuad.field1.row, hiddenQuad.field1.column);
             hiddenQuadFinder.applyHiddenQuadToBlock();
             showSolutionTooltip("Mit dem Hidden Quad konnten in diesem Block Kandidaten entfernt werden", 5000);
-        } */ else if (detectedStrategy == 90 || detectedStrategy == 0 && rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
+        } */else if (detectedStrategy == 90 || detectedStrategy == 0 && rowBlockCheckFinder.getRowBlockCheckInRow() != null) {
             RowBlockCheck rowBlockCheck = rowBlockCheckFinder.getRowBlockCheckInRow();
             highlightBlockSolution(rowBlockCheck.candidate1.row, rowBlockCheck.candidate1.column);
             rowBlockCheckFinder.applyRowBlockCheckToBlock();

@@ -33,8 +33,8 @@ public class HiddenTripleFinderTest extends TestCase {
         assertEquals(hiddenTriple.field3.row, 4);
 
         assertEquals(hiddenTriple.field1.column, 1);
-        assertEquals(hiddenTriple.field2.column, 2);
-        assertEquals(hiddenTriple.field3.column, 6);
+        assertEquals(hiddenTriple.field2.column, 6);
+        assertEquals(hiddenTriple.field3.column, 2);
 
         assertTrue(hiddenTriple.candidates.contains(4));
         assertTrue(hiddenTriple.candidates.contains(5));
@@ -93,12 +93,12 @@ public class HiddenTripleFinderTest extends TestCase {
         HiddenTriple hiddenTriple = hiddenTripleFinder.getHiddenTripleInBlock();
 
         assertEquals(hiddenTriple.field1.column, 1);
-        assertEquals(hiddenTriple.field2.column, 1);
-        assertEquals(hiddenTriple.field3.column, 2);
+        assertEquals(hiddenTriple.field2.column, 2);
+        assertEquals(hiddenTriple.field3.column, 1);
 
-        assertEquals(hiddenTriple.field1.row, 7);
+        assertEquals(hiddenTriple.field1.row, 8);
         assertEquals(hiddenTriple.field2.row, 8);
-        assertEquals(hiddenTriple.field3.row, 8);
+        assertEquals(hiddenTriple.field3.row, 7);
 
         assertTrue(hiddenTriple.candidates.contains(2));
         assertTrue(hiddenTriple.candidates.contains(4));
