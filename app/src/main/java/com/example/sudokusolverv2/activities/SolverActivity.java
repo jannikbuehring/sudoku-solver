@@ -438,7 +438,7 @@ public class SolverActivity extends AppCompatActivity {
         } else if (detectedStrategy == 51 || detectedStrategy == 0 && nakedQuadFinder.getNakedQuadInColumn() != null) {
             NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInColumn();
             highlightColumnSolution(new ArrayList<>(Arrays.asList(nakedQuad.field1.column)));
-            nakedQuadFinder.getNakedQuadInColumn();
+            nakedQuadFinder.applyNakedQuadToColumn();
             showSolutionTooltip("Mit dem Naked Quad konnten in dieser Spalte Kandidaten entfernt werden", 5000);
         } else if (detectedStrategy == 52 || detectedStrategy == 0 && nakedQuadFinder.getNakedQuadInBlock() != null) {
             NakedQuad nakedQuad = nakedQuadFinder.getNakedQuadInBlock();

@@ -91,7 +91,7 @@ public class NakedQuadFinder {
             return;
         }
         for (int r = 0; r < 9; r++) {
-            //skip the actual naked triple
+            //skip the actual naked quad
             if (r == nakedQuad.field1.row || r == nakedQuad.field2.row
                     || r == nakedQuad.field3.row || r == nakedQuad.field4.row) {
                 continue;

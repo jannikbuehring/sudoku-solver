@@ -15,8 +15,6 @@ import java.util.List;
 
 public class HiddenTripleFinder {
 
-    //TODO: Beispiele prüfen
-
     private Solver solver;
 
     private boolean checkIfHiddenTripleCanRemoveCandidatesFromRow(HiddenTriple hiddenTriple) {
