@@ -16,6 +16,8 @@ import com.example.sudokusolverv2.BlockLocation;
 import com.example.sudokusolverv2.R;
 import com.example.sudokusolverv2.Solver;
 import com.example.sudokusolverv2.SudokuBoard;
+import com.example.sudokusolverv2.solutionStrategies.advancedStrategies.Kite;
+import com.example.sudokusolverv2.solutionStrategies.advancedStrategies.KiteFinder;
 import com.example.sudokusolverv2.solutionStrategies.advancedStrategies.ThirdEye;
 import com.example.sudokusolverv2.solutionStrategies.advancedStrategies.ThirdEyeFinder;
 import com.example.sudokusolverv2.solutionStrategies.advancedStrategies.XWing;
@@ -68,6 +70,7 @@ public class SolverActivity extends AppCompatActivity {
     private final BlockRowCheckFinder blockRowCheckFinder = new BlockRowCheckFinder();
     private final XWingFinder xWingFinder = new XWingFinder();
     private final ThirdEyeFinder thirdEyeFinder = new ThirdEyeFinder();
+    private final KiteFinder kiteFinder = new KiteFinder();
 
     private boolean editCandidatesButtonSelected = false;
 
@@ -100,6 +103,7 @@ public class SolverActivity extends AppCompatActivity {
         blockRowCheckFinder.setSolver(gameBoardSolver);
         xWingFinder.setSolver(gameBoardSolver);
         thirdEyeFinder.setSolver(gameBoardSolver);
+        kiteFinder.setSolver(gameBoardSolver);
     }
 
 
@@ -364,7 +368,15 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlock(thirdEye.thirdEye.row, thirdEye.thirdEye.column);
             showTooltip("In diesem Block kann die Drittes Auge Strategie angewendet werden", 5000);
             detectedStrategy = 120;
-        } else {
+        } else if (kiteFinder.getKite() != null) {
+            Kite kite = kiteFinder.getKite();
+            highlightRow(new ArrayList<>(Arrays.asList(kite.pair1.field1.row)));
+            highlightColumn(new ArrayList<>(Arrays.asList(kite.pair2.field1.column)));
+            showTooltip("Hier kann die Strategie des Drachen angewendet werden", 5000);
+            detectedStrategy = 130;
+        }
+
+        else {
             showTooltip("Kein Tipp verfügbar", 3000);
         }
     }
@@ -513,7 +525,15 @@ public class SolverActivity extends AppCompatActivity {
             highlightBlockSolution(thirdEye.thirdEye.row, thirdEye.thirdEye.column);
             thirdEyeFinder.applyThirdEye();
             showSolutionTooltip("In diesem Block konnten mit der Drittes Auge Strategie Kandidaten entfernt werden", 5000);
-        } else {
+        } else if (detectedStrategy == 130 || detectedStrategy == 0 && kiteFinder.getKite() != null) {
+            Kite kite = kiteFinder.getKite();
+            // TODO: nur field highlighten
+            highlightBlock(kite.field.row, kite.field.column);
+            kiteFinder.applyKite(kite);
+            showSolutionTooltip("In diesem Feld konnte mit dem Drachen ein Kandidat entfernt werden");
+        }
+
+        else {
             showTooltip("Aktuell keine Lösungsstrategie verfügbar", 5000);
         }
 

@@ -11,7 +11,7 @@ import java.util.Iterator;
 
 public class HiddenQuadFinder {
 
-    //TODO: fix calculation time
+    //TODO: beispiele Prüfen
 
     private Solver solver;
 

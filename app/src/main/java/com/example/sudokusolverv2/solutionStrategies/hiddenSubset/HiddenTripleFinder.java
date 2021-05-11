@@ -15,7 +15,7 @@ import java.util.List;
 
 public class HiddenTripleFinder {
 
-    //TODO: fix calculation time
+    //TODO: Beispiele prüfen
 
     private Solver solver;
 

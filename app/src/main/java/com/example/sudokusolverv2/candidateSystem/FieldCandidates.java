@@ -27,4 +27,11 @@ public class FieldCandidates {
 
         return false;
     }
+
+    public boolean isInSameBlock(FieldCandidates field) {
+        if (this.row / 3 == field.row / 3 && this.column / 3 == field.column / 3) {
+            return true;
+        }
+        return false;
+    }
 }
