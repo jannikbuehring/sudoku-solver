@@ -27,5 +27,6 @@ A sudoku solver and helper android app for my student research project at DHBW S
 # Planned features:
 - new Solving strategies (Swordfish)
 - detection for finished sudoku
+- detection of mistakes while solving
 
 ## Development environment: Android Studio
