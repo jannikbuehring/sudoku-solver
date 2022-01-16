@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SudokuSolverV2">
         <activity android:name=".activities.SolverActivity"></activity>
+        <activity android:name=".imageHandling.ImageHandler"></activity>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

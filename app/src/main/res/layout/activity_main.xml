@@ -173,17 +173,41 @@
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
 
-    <Button
-        android:id="@+id/resetButton"
+    <LinearLayout
+        android:id="@+id/LinearLayout4"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:background="@drawable/default_btn_selector"
-        android:onClick="reset"
-        android:text="@string/Reset"
-        android:textSize="18sp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@+id/LinearLayout3" />
+        custom:layout_constraintTop_toBottomOf="@+id/validateButton">
+
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/default_btn_selector"
+            android:onClick="reset"
+            android:text="@string/Reset"
+            android:textSize="18sp"
+            custom:layout_constraintTop_toBottomOf="@+id/LinearLayout4" />
+
+    <Button
+        android:id="@+id/imageButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/default_btn_selector"
+        android:onClick="selectImage"
+        android:text="@string/Image"
+        android:textSize="18sp"
+        custom:layout_constraintTop_toBottomOf="@+id/LinearLayout4" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,19 +2,30 @@ package com.example.sudokusolverv2.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.sudokusolverv2.R;
 import com.example.sudokusolverv2.Solver;
 import com.example.sudokusolverv2.SudokuBoard;
+import com.example.sudokusolverv2.imageHandling.ImageHandler;
 import com.example.sudokusolverv2.sudokuValidation.Validator;
 
 import org.apache.commons.lang3.SerializationUtils;
+import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Mat;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -106,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
     public void reset(View view) {
         gameBoardSolver.resetBoard();
         gameBoard.invalidate();
+    }
+
+    public void selectImage(View view) {
+        Intent intent = new Intent(MainActivity.this, ImageHandler.class);
+        MainActivity.this.startActivity(intent);
     }
 
     public void validate(View view) {
